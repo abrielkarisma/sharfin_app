@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sharfin_app/cancel/onBoarding.dart';
 import 'package:sharfin_app/view/onBoarding.dart';
 import 'package:sharfin_app/view/splashScreen.dart';
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       home: splashScreen(),
       theme: ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: Color(0XFF14B5AE),
+        colorSchemeSeed: Color(0XFF15AC97),
       ),
     );
   }

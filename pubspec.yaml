@@ -83,6 +83,13 @@ flutter:
       fonts:
         - asset: assets/fonts/Poppins-Regular.otf
         - asset: assets/fonts/Poppins-Bold.otf
+        - asset: assets/fonts/Poppins-SemiBold.otf
           style: normal
+    
+    - family: Jakarta Sans
+      fonts:
+        - asset: assets/fonts/PlusJakartaSans-Regular.ttf
+          style: normal
+    
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

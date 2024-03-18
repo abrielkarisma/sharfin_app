@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:sharfin_app/view/onBoarding.dart';
+import 'package:sharfin_app/cancel/onboarding.dart';
+import 'package:sharfin_app/view/onboarding.dart';
 
 class splashScreen extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class _splashScreenState extends State<splashScreen> {
     super.initState();
     timer = Timer(Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => onBoarding()),
+        MaterialPageRoute(builder: (_) => onboarding()),
       );
     });
   }
