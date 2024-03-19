@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sharfin_app/view/homepage.dart';
 import 'package:sharfin_app/view/splashScreen.dart';
+import 'package:sharfin_app/widget/botNav.dart';
 
 class onboarding extends StatefulWidget {
   const onboarding({super.key});
@@ -326,7 +328,7 @@ class _onboardingState extends State<onboarding> {
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (context) {
-                        return splashScreen();
+                        return botnav();
                       }));
                     },
                   ),

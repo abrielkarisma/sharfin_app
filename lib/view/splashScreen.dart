@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:sharfin_app/cancel/onboarding.dart';
 import 'package:sharfin_app/view/onboarding.dart';
 
 class splashScreen extends StatefulWidget {
