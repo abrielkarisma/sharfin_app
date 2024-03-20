@@ -3,9 +3,9 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sharfin_app/view/ebooks.dart';
 import 'package:sharfin_app/view/homepage.dart';
 import 'package:sharfin_app/view/insight.dart';
-import 'package:sharfin_app/view/kebijakanprivasi.dart';
+import 'package:sharfin_app/view/others/kebijakanprivasi.dart';
 import 'package:sharfin_app/view/profilguest.dart';
-import 'package:sharfin_app/view/syaratketentuan.dart';
+import 'package:sharfin_app/view/others/syaratketentuan.dart';
 
 class botnav extends StatefulWidget {
   const botnav({super.key});
