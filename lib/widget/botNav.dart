@@ -6,6 +6,7 @@ import 'package:sharfin_app/view/insight.dart';
 import 'package:sharfin_app/view/others/kebijakanprivasi.dart';
 import 'package:sharfin_app/view/profilguest.dart';
 import 'package:sharfin_app/view/others/syaratketentuan.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 class botnav extends StatefulWidget {
   const botnav({super.key});
@@ -28,7 +29,11 @@ class _botnavState extends State<botnav> {
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.star_border),
+        icon: Image(
+          width: 260,
+          height: 260,
+          image: Svg('assets/Star.svg'),
+        ),
         title: ("Insight"),
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: Colors.grey,
