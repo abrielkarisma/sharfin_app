@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:sharfin_app/view/splashScreen.dart';
+import 'package:sharfin_app/view/homePage.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+
 
 class onBoarding extends StatefulWidget {
   const onBoarding({super.key});
@@ -205,9 +207,8 @@ class _onBoardingState extends State<onBoarding> {
               child: FilledButton(
                   onPressed: () {
                     Navigator.of(context)
-                        .pushReplacement(MaterialPageRoute(builder: (context) {
-                      return splashScreen();
-                    }));
+                        .pushReplacement(MaterialPageRoute(builder: (context) => HomePage()
+                    ),);
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
