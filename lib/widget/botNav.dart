@@ -17,7 +17,7 @@ class botnav extends StatefulWidget {
 
 class _botnavState extends State<botnav> {
   List<Widget> _buildScreens() {
-    return [homepage(), insight(), ebooks(), profilguest()];
+    return [HomePage(), insight(), ebooks(), profilguest()];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {

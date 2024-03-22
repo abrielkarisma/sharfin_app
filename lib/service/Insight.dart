@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:sharfin_app/models/Insight.dart';
+import 'package:sharfin_app/data/models/Insight.dart';
 import 'package:sharfin_app/view/insight.dart';
 
 class InsightService {

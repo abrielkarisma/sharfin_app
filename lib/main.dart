@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sharfin_app/view/detailInsight.dart';
+import 'package:sharfin_app/view/homepage.dart';
 import 'package:sharfin_app/view/insight.dart';
 import 'package:sharfin_app/view/onBoarding.dart';
 import 'package:sharfin_app/view/profilguest.dart';
@@ -16,8 +17,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: detailInsight(),
+      home: splashScreen(),
       theme: ThemeData(
+        fontFamily: 'Poppins',
         useMaterial3: true,
         colorSchemeSeed: Color(0XFF15AC97),
       ),

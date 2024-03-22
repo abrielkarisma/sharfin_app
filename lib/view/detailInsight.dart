@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:sharfin_app/models/Insight.dart';
+import 'package:sharfin_app/data/models/Insight.dart';
 import 'package:sharfin_app/service/Insight.dart';
 import 'package:sharfin_app/view/insight.dart';
 import 'dart:io';
