@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sharfin_app/models/Insight.dart';
+import 'package:sharfin_app/service/Insight.dart';
+import 'package:sharfin_app/view/detailInsight.dart';
 
 class insight extends StatefulWidget {
   const insight({super.key});
@@ -8,16 +11,9 @@ class insight extends StatefulWidget {
 }
 
 class _insightState extends State<insight> {
-  final List<String> _imgIns = [
-    "assets/examInsight.png",
-    "assets/examInsight.png",
-    "assets/examInsight.png",
-    "assets/examInsight.png",
-    "assets/examInsight.png",
-    "assets/examInsight.png",
-    "assets/examInsight.png",
-    "assets/examInsight.png",
-  ];
+  final Future<List<Insight>>? insights =
+      InsightService.getImageInsight(); // Get insights
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,32 +28,60 @@ class _insightState extends State<insight> {
           ),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16),
-        child: GridView.count(
-          crossAxisCount: 2,
-          childAspectRatio: 16.5 / 20,
-          children: List.generate(_imgIns.length, (index) {
-            return GestureDetector(
-              onTap: () {
-                print("bisa cuy");
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Container(
-                  width: 165,
-                  height: 200,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image(
-                      image: AssetImage(_imgIns[index]),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+      body: Center(
+        child: FutureBuilder<List<Insight>>(
+          future: InsightService.getImageInsight(), // Use insights future
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final List<Insight> insightsData = snapshot.data!;
+              return Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  childAspectRatio: 16.5 / 20,
+                  children: List.generate(insightsData.length, (index) {
+                    final insight = insightsData[index]; // Access insight data
+
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => detailInsight(
+                                id: insight.id), // Pass ID directly
+                          ),
+                        );
+                      },
+                      child: Stack(
+                        alignment: Alignment.center,
+                        fit: StackFit.expand,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 165,
+                              height: 200,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.network(
+                                  insight
+                                      .image, // Use image from Insight object
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
                 ),
-              ),
-            );
-          }),
+              );
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
+            return Center(child: CircularProgressIndicator());
+          },
         ),
       ),
     );

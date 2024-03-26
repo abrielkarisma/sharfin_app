@@ -1,57 +1,48 @@
+import 'dart:developer';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:sharfin_app/models/Insight.dart';
 import 'package:sharfin_app/service/Insight.dart';
-import 'package:sharfin_app/view/insight.dart';
-import 'dart:io';
 
 class detailInsight extends StatefulWidget {
-  const detailInsight({super.key});
+  const detailInsight({super.key, required this.id});
 
+  final String id;
   @override
   State<detailInsight> createState() => _detailInsightState();
 }
 
 class _detailInsightState extends State<detailInsight> {
   Insight? insight;
+
   @override
   void initState() {
     super.initState();
-    _getInsight();
+    final insightService = InsightService(); // Create instance
+    _fetchData(insightService, widget.id); // Pass instance and ID
   }
 
-  _getInsight() async {
-    final insightService = InsightService();
+  Future<void> _fetchData(InsightService insightService, String id) async {
     try {
-      final fetchedInsight = await insightService
-          .getInsight("https://65fa56d03909a9a65b1a38a0.mockapi.io/Insight/1");
-      setState(() {
-        insight = fetchedInsight;
-        print(fetchedInsight);
-      });
-    } catch (error) {
-      print("Failed to fetch insight: $error");
-      // Print more details if available
-      if (error is SocketException) {
-        print("SocketException: ${error.osError?.message}");
+      Insight? result = await insightService.getInsight(id); // Use string ID
+      if (result != null) {
+        setState(() {
+          insight = result;
+        });
       }
+    } catch (e) {
+      print("Error fetching data: $e");
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(children: [
-          Icon(
-            Icons.arrow_back,
-            color: Color(0xFFA0A3BD),
-          ),
-          SizedBox(
-            width: 40,
-          ),
-          Text(
-            insight?.title ?? "",
+        appBar: AppBar(
+          title: Text(
+            "Detail Insight",
             style: const TextStyle(
               fontFamily: "Poppins",
               fontSize: 18,
@@ -59,92 +50,104 @@ class _detailInsightState extends State<detailInsight> {
               color: Colors.black,
             ),
           ),
-        ]),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16),
-        child: insight == null
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    child: Text(
-                      "Kejayaan Ekonomi Islam yang Tertutup Kabut Bernama Dark Age",
-                      // insight!.title,
-                      style: TextStyle(
-                        fontFamily: "Poppins",
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF14142B),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(top: 8),
-                    child: Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(60),
-                          child: Image(
-                            image: AssetImage("assets/profunlog.png"),
-                            width: 24,
-                            height: 24,
+        ),
+        body: Padding(
+            padding: EdgeInsets.all(16),
+            child: insight == null
+                ? Center(child: CircularProgressIndicator())
+                : SingleChildScrollView(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            child: Text(
+                              insight!.title,
+                              style: TextStyle(
+                                fontFamily: "Poppins",
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xFF14142B),
+                              ),
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text("David Kendrick",
-                            style: TextStyle(
-                              fontFamily: "Poppins",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: Color(0xFF4E4B66),
-                            ))
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(top: 8),
-                    child: Text(
-                      // "",
-                      insight?.releaseDate?.toString() ?? "",
-                      style: TextStyle(
-                        fontFamily: "Poppins",
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xFF15AC97),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(top: 8),
-                    child: Text(insight?.description ?? "",
-                        // "Kejayaan Ekonomi Islam yang Tertutup Kabut Bernama Dark Age mengacu pada periode sejarah di mana peradaban Islam mencapai tingkat kemajuan ekonomi yang mengesankan, namun kemudian tertutup oleh masa Dark Age atau Zaman Gelap.",
-                        style: TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF4E4B66),
-                        )),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(top: 16, bottom: 16),
-                    child: SizedBox(
-                      width: 343,
-                      height: 415,
-                      child: Image(
-                        image: AssetImage("assets/examInsight.png"),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-      ),
-    );
+                          Container(
+                            padding: EdgeInsets.only(top: 8),
+                            child: Row(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(60),
+                                  child: Image(
+                                    image: AssetImage("assets/profunlog.png"),
+                                    width: 24,
+                                    height: 24,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Text(
+                                  "David Kendrick",
+                                  style: TextStyle(
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color(0xFF4E4B66),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(top: 8),
+                            child: Text(
+                              "",
+                              style: TextStyle(
+                                fontFamily: "Poppins",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xFF15AC97),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(top: 8),
+                            child: Text(
+                              insight!.description,
+                              style: TextStyle(
+                                fontFamily: "Poppins",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xFF4E4B66),
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Container(
+                              padding: EdgeInsets.only(top: 16, bottom: 16),
+                              child: SizedBox(
+                                width: 343,
+                                height: 415,
+                                child: Image(
+                                  image: AssetImage("assets/examInsight.png"),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Container(
+                              padding: EdgeInsets.only(top: 16, bottom: 16),
+                              child: SizedBox(
+                                width: 343,
+                                height: 415,
+                                child: Image(
+                                  image: AssetImage("assets/examInsight.png"),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
+                          )
+                        ]),
+                  )));
   }
 }

@@ -29,11 +29,7 @@ class _botnavState extends State<botnav> {
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
-        icon: Image(
-          width: 260,
-          height: 260,
-          image: Svg('assets/Star.svg'),
-        ),
+        icon: Icon(Icons.star_outline_rounded),
         title: ("Insight"),
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: Colors.grey,
