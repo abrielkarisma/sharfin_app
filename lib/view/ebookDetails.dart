@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sharfin_app/data/models/Ebook.dart';
 import 'package:sharfin_app/data/service/Ebook.dart';
+import 'package:sharfin_app/view/ebookContent.dart';
 
 class detailEbook extends StatefulWidget {
   const detailEbook({super.key, required this.id});
@@ -180,7 +181,15 @@ class _detailEbookState extends State<detailEbook> {
                           Container(
                             padding: EdgeInsets.only(top: 24),
                             child: FilledButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ebookContent(
+                                          id: widget.id), // Pass the id here
+                                    ),
+                                  );
+                                },
                                 style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
                                       Color(0xFF15AC97)), // Adjust color

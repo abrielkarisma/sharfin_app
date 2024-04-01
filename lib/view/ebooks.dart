@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sharfin_app/models/Ebook.dart';
-import 'package:sharfin_app/service/Ebook.dart';
-import 'package:sharfin_app/view/detailEbook.dart';
+import 'package:sharfin_app/data/models/Ebook.dart';
+import 'package:sharfin_app/data/service/Ebook.dart';
+import 'package:sharfin_app/view/ebookDetails.dart';
 
 class ebooks extends StatefulWidget {
   const ebooks({super.key});

@@ -1,4 +1,4 @@
-import 'package:sharfin_app/models/Insight.dart';
+import 'package:sharfin_app/data/models/Insight.dart';
 
 class Insight {
   final String id;

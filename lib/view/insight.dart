@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sharfin_app/models/Insight.dart';
-import 'package:sharfin_app/service/Insight.dart';
-import 'package:sharfin_app/view/detailInsight.dart';
+import 'package:sharfin_app/data/models/Insight.dart';
+import 'package:sharfin_app/data/service/Insight.dart';
+import 'package:sharfin_app/view/insightDetails.dart';
 
 class insight extends StatefulWidget {
   const insight({super.key});

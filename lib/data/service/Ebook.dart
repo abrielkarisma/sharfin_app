@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:sharfin_app/models/Ebook.dart';
+import 'package:sharfin_app/data/models/Ebook.dart';
 import 'package:sharfin_app/view/ebooks.dart';
 
 class EbookService {
