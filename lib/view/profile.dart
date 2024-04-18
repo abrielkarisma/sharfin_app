@@ -3,6 +3,8 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:sharfin_app/data/models/Users.dart';
 import 'package:sharfin_app/data/service/Users.dart';
 
+import 'package:flutter/gestures.dart';
+
 class Profile extends StatefulWidget {
   const Profile({super.key});
 
@@ -420,7 +422,98 @@ class _ProfileState extends State<Profile> {
                         padding: EdgeInsets.only(top: 16),
                         child: GestureDetector(
                           onTap: () {
-                            print("bisa");
+                            showModalBottomSheet(
+                              backgroundColor: Color(0xFFFFFFFF),
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SizedBox(
+                                  width: 500,
+                                  height: 360,
+                                  child: Container(
+                                    padding: EdgeInsets.all(20.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SizedBox(height: 20),
+                                        Text(
+                                          "Apakah kamu yakin akan keluar aplikasi?",
+                                          style: TextStyle(
+                                            fontFamily: "Poppins",
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.w600,
+                                            color: Color(0XFF14142B),
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        SizedBox(height: 8.0),
+                                        SizedBox(
+                                          height: 32,
+                                        ),
+                                        Container(
+                                            child: FilledButton(
+                                          onPressed: () {},
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(Color(
+                                                    0xffFFF2F4)), // Adjust color
+                                            foregroundColor:
+                                                MaterialStateProperty.all(Colors
+                                                    .white), // Adjust text color
+                                            padding: MaterialStateProperty.all(
+                                                EdgeInsets.symmetric(
+                                                    horizontal: 20,
+                                                    vertical:
+                                                        10)), // Adjust padding
+                                            minimumSize:
+                                                MaterialStateProperty.all(
+                                                    Size(327, 48)),
+                                            shape: MaterialStateProperty.all<
+                                                RoundedRectangleBorder>(
+                                              RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                                side: BorderSide(
+                                                  color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255), // Border color
+                                                  width: 1.0, // Border width
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          child: Text("Ya, Logout",
+                                              style: TextStyle(
+                                                fontFamily: "Poppins",
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500,
+                                                color: Color(0XFFC0001A),
+                                              )),
+                                        )),
+                                        Container(
+                                          padding: EdgeInsets.only(top: 28),
+                                          child: TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text(
+                                              "Batal",
+                                              style: TextStyle(
+                                                fontFamily: "Poppins",
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500,
+                                                color: Color(0XFFA0A3BD),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
                           },
                           child: Stack(
                             alignment: Alignment.center,

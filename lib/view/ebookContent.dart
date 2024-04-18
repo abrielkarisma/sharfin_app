@@ -13,75 +13,82 @@ class ebookContent extends StatefulWidget {
 
 class _ebookContentState extends State<ebookContent> {
   Ebook? ebook;
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    final ebookService = EbookService(); // Create instance
-    _fetchData(ebookService, widget.id); // Pass instance and ID
+    final ebookService = EbookService();
+    _fetchData(ebookService, widget.id);
   }
 
   Future<void> _fetchData(EbookService ebookService, String id) async {
     try {
-      Ebook? result = await ebookService.getEbook(id); // Use string ID
-      if (result != null) {
-        setState(() {
-          ebook = result;
-        });
-      }
+      Ebook? result = await ebookService.getEbook(id);
+      setState(() {
+        ebook = result;
+        isLoading = false;
+      });
     } catch (e) {
       print("Error fetching data: $e");
+      setState(() {
+        isLoading = false;
+      });
+      // Handle error appropriately (e.g., display an error message)
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(children: [
-              Container(
-                width: 415,
-                height: 519,
-                child: Image(
-                  image: AssetImage("assets/examEbook.png"),
-                  fit: BoxFit.cover,
+      body: Center(
+        child: SingleChildScrollView(
+          child: isLoading
+              ? CircularProgressIndicator()
+              : Column(
+                  children: [
+                    Stack(children: [
+                      Container(
+                          width: 415,
+                          height: 519,
+                          child:
+                              Image.network(ebook!.image, fit: BoxFit.cover)),
+                      Container(
+                        padding: EdgeInsets.only(left: 16, top: 60),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Icon(
+                            Icons.arrow_back_rounded,
+                            color: Colors.white,
+                            size: 26,
+                          ),
+                        ),
+                      ),
+                    ]),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Container(
+                        padding: EdgeInsets.only(top: 20),
+                        child: Text(
+                          ebook != null
+                              ? ebook!.content +
+                                  ebook!.content +
+                                  ebook!.content +
+                                  ebook!.content
+                              : "",
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF14142B),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              Container(
-                padding: EdgeInsets.only(left: 16, top: 60),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Icon(
-                    Icons.arrow_back_rounded,
-                    color: Colors.white,
-                    size: 26,
-                  ),
-                ),
-              ),
-            ]),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Container(
-                padding: EdgeInsets.only(top: 20),
-                child: Text(
-                  ebook!.content +
-                      ebook!.content +
-                      ebook!.content +
-                      ebook!.content,
-                  style: TextStyle(
-                    fontFamily: "Poppins",
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF14142B),
-                  ),
-                ),
-              ),
-            )
-          ],
         ),
       ),
     );

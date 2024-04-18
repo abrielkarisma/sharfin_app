@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-// Import Smooth Compass package
 
-class KiblatPage extends StatelessWidget {
+class KiblatPage extends StatefulWidget {
   const KiblatPage({Key? key}) : super(key: key);
 
+  @override
+  State<KiblatPage> createState() => _KiblatPageState();
+}
+
+class _KiblatPageState extends State<KiblatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,8 +18,7 @@ class KiblatPage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Center(
-      ),
+      body: Center(),
     );
   }
 }
