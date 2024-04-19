@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sharfin_app/cubit/surat/surat_cubit.dart';
+import 'package:sharfin_app/cubit/Surat/surat_cubit.dart';
 import 'package:sharfin_app/view/ayatPage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,7 +21,7 @@ class _SuratPageState extends State<SuratPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('All Surat')),
+      backgroundColor: Colors.white,
       body: BlocBuilder<SuratCubit, SuratState>(
         builder: (context, state) {
           if (state is SuratLoading) {
@@ -32,25 +32,32 @@ class _SuratPageState extends State<SuratPage> {
           if (state is SuratLoaded) {
             return ListView.builder(
               itemBuilder: (context, index) {
-                final surat = state.listSurat[index];
+                final surat = state.listSurah[index];
                 return InkWell(
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
                       return AyatPage(surat: surat);
-                    }));
+                    }
+                    )
+                    );
                   },
                   child: Card(
-                    child: ListTile(
-                      leading: CircleAvatar(backgroundColor:Colors.transparent , child: Text("${surat.nomor}"),),
-                      title: Text('${surat.namaLatin}'),
-                      subtitle:
-                          Text('${surat.tempatTurun.name}, ${surat.jumlahAyat} Ayat.'),
-                    ),
+                    color: Colors.white,
+                      child: ListTile(
+                        tileColor: Colors.white,
+                        leading: Stack(children: [
+                          SvgPicture.asset('assets/border_nomer.svg'),
+                          SizedBox(height: 32, width: 32, child: Center(child: Text("${surat.number}", style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500, color: Color(0xffa0a3bd)),),),)
+                        ],),
+                        title: Text('${surat.name}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
+                        subtitle:
+                            Text('${surat.revelation} . ${surat.numberOfAyahs} Ayat.', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Color(0xffa0a3bd)),),
+                      ),
                   ),
                 );
               },
-              itemCount: state.listSurat.length,
+              itemCount: state.listSurah.length,
             );
           }
 
@@ -65,6 +72,46 @@ class _SuratPageState extends State<SuratPage> {
           );
         },
       ),
+    );
+  }
+}
+
+class SearchBarDelegate extends SearchDelegate<String> {
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, '');
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // Build the search results based on the query
+    return Center(
+      child: Text('Search Results for: $query'),
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // Build suggestions that appear when typing in the search bar
+    return Center(
+      child: Text('Search Suggestions'),
     );
   }
 }

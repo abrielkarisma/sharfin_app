@@ -1,14 +1,13 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:sharfin_app/data/api_service.dart';
 import 'package:sharfin_app/data/models/surat_model.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 part 'surat_state.dart';
+
 
 class SuratCubit extends Cubit<SuratState> {
   SuratCubit(
-    this.apiService,
+    this.apiService
   ) : super(SuratInitial());
 
   final ApiService apiService;
@@ -17,8 +16,8 @@ class SuratCubit extends Cubit<SuratState> {
     emit(SuratLoading());
     final result = await apiService.getAllSurat();
     result.fold(
-      (error) => emit(SuratError(message: error)),
-      (data) => emit(SuratLoaded(listSurat: data)),
+      (l) => emit(SuratError(message: l)), 
+      (r) => emit(SuratLoaded(listSurah: r)),
     );
   }
 }

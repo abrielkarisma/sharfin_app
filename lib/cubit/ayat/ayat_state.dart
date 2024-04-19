@@ -15,7 +15,7 @@ class AyatInitial extends AyatState {}
 class AyatLoading extends AyatState {}
 
 class AyatLoaded extends AyatState {
-  final SuratDetailModel detail;
+  final SuratDetail detail;
   const AyatLoaded({
     required this.detail,
   });

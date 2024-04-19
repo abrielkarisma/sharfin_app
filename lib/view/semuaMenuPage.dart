@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:sharfin_app/util/My_button.dart';
 
-class MenuPage extends StatelessWidget {
+class MenuPage extends StatefulWidget {
+  const MenuPage({super.key});
+
+  @override
+  State<MenuPage> createState() => _MenuPageState();
+}
+
+class _MenuPageState extends State<MenuPage> {
   final List<Map<String, dynamic>> categories = [
     {
       'title': 'Keuangan Syariah',
@@ -10,7 +17,12 @@ class MenuPage extends StatelessWidget {
         {'icon': 'assets/Internet.png', 'text': 'Internet'},
         {'icon': 'assets/pln.png', 'text': 'PLN'},
         {'icon': 'assets/pdam.png', 'text': 'PDAM'},
+        {'icon': 'assets/pdam.png', 'text': 'P'},
+        {'icon': 'assets/pdam.png', 'text': 'D'},
+        {'icon': 'assets/pdam.png', 'text': 'PD'},
+        {'icon': 'assets/pdam.png', 'text': 'AM'},
       ],
+      // 'isExpanded': false,
     },
     {
       'title': 'Pembelian',
@@ -19,6 +31,7 @@ class MenuPage extends StatelessWidget {
         {'icon': 'assets/Internet.png', 'text': 'Internet'},
         {'icon': 'assets/pln.png', 'text': 'PLN'},
       ],
+      // 'isExpanded': false,
     },
     // Add more categories as needed
   ];
@@ -27,7 +40,7 @@ class MenuPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Semua Menu',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
@@ -50,7 +63,9 @@ class MenuPage extends StatelessWidget {
               return ExpansionPanelList(
                 elevation: 1,
                 expandedHeaderPadding: EdgeInsets.all(0),
-                expansionCallback: (int panelIndex, bool isExpanded) {
+                expansionCallback: (int panelIndex, bool isExpanded) { isExpanded;
+                  // setState(() {
+                  // categories[index]['isExpanded'] = !isExpanded;});
                   // Toggle the expansion state of the panel
                   // This is optional if you want to manually control expansion
                 },
@@ -65,10 +80,10 @@ class MenuPage extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      );
+                      ); 
                     },
-                    body: GridView.count(
-                      crossAxisCount: constraints.maxWidth > 600 ? 4 : 2,
+                    body: GridView.count( // Adjust the spacing between columns as needed
+                      crossAxisCount: 4,
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       children: List.generate(
@@ -79,7 +94,7 @@ class MenuPage extends StatelessWidget {
                             iconImagePath: item['icon'],
                             buttonText: item['text'],
                             pathss: () {
-                              print('pressed');
+                              print('pressed'); 
                               // Handle navigation here based on item
                               // For example:
                               // if (item['text'] == 'Pulsa & Paket') {
@@ -95,7 +110,8 @@ class MenuPage extends StatelessWidget {
                         },
                       ),
                     ),
-                    isExpanded: false, // Set initial expansion state if needed
+                    isExpanded:true
+                    // categories[index]['isExpanded'], // Set initial expansion state if needed
                   ),
                 ],
               );

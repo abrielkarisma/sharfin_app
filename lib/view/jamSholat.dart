@@ -105,14 +105,14 @@ class _PrayTimeState extends State<PrayTime> {
       appBar: AppBar(
         title: Row(
           children: [
-            GestureDetector(
-              onTap: () {},
-              child: Icon(
-                Icons.arrow_back_sharp,
-                size: 24,
-                color: Color(0xFFA0A3BD),
-              ),
-            ),
+            // GestureDetector(
+            //   onTap: () {},
+            //   child: Icon(
+            //     Icons.arrow_back_sharp,
+            //     size: 24,
+            //     color: Color(0xFFA0A3BD),
+            //   ),
+            // ),
             Container(
               padding: EdgeInsets.only(left: 12),
               width: 255,

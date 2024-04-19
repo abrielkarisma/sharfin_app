@@ -10,6 +10,7 @@ import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:sharfin_app/view/jamSholat.dart';
 import 'package:sharfin_app/view/qiblaPage.dart';
+import 'package:sharfin_app/view/quranPage.dart';
 import 'package:sharfin_app/view/suraPage.dart';
 import 'package:intl/intl.dart';
 import 'package:sharfin_app/view/jamSholat.dart';
@@ -237,7 +238,7 @@ class _IslamPageState extends State<IslamPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SuratPage()));
+                                  builder: (context) => QuranPage()));
                           // Add your logic here for Mutasi
                         },
                       ),

@@ -1,24 +1,25 @@
 part of 'surat_cubit.dart';
 
-abstract class SuratState extends Equatable {
+
+sealed class SuratState extends Equatable {
   const SuratState();
 
   @override
   List<Object> get props => [];
 }
 
-class SuratInitial extends SuratState {}
+final class SuratInitial extends SuratState {}
 
-class SuratLoading extends SuratState {}
+class SuratLoading extends SuratState{}
 
-class SuratLoaded extends SuratState {
-  final List<SuratModel> listSurat;
+class SuratLoaded extends SuratState{
+  final List<Surah> listSurah;
   const SuratLoaded({
-    required this.listSurat,
+    required this.listSurah,
   });
+  @override 
 
-  @override
-  List<Object> get props => [listSurat];
+List<Object> get props => (listSurah);
 }
 
 class SuratError extends SuratState {
@@ -27,6 +28,6 @@ class SuratError extends SuratState {
     required this.message,
   });
 
-  @override
+  @override 
   List<Object> get props => [message];
 }
