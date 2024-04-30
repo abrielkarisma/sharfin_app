@@ -8,12 +8,11 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:sharfin_app/view/jamSholat.dart';
 import 'package:sharfin_app/view/qiblaPage.dart';
 import 'package:sharfin_app/view/quranPage.dart';
-import 'package:sharfin_app/view/suraPage.dart';
-import 'package:intl/intl.dart';
-import 'package:sharfin_app/view/jamSholat.dart';
+import 'package:sharfin_app/data/service/JamSholat.dart';
 
 class IslamPage extends StatefulWidget {
   @override
@@ -21,7 +20,22 @@ class IslamPage extends StatefulWidget {
 }
 
 class _IslamPageState extends State<IslamPage> {
+  final prayerTimesService = PrayerTimesService();
   bool _isLoading = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchSholat();
+  }
+
+  Future<void> fetchSholat() async {
+    await prayerTimesService.getPrayerTimes();
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   void _handleRefresh() {
     setState(() {
@@ -83,99 +97,121 @@ class _IslamPageState extends State<IslamPage> {
             child: Column(
               children: [
                 Container(
-                  padding: EdgeInsets.only(top: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 150,
-                            height: 40,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  DateFormat('HH:mm').format(DateTime.now()),
-                                  style: const TextStyle(
-                                    fontFamily: "Poppins",
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Container(
-                                  height: 20,
-                                  child: Text(
-                                    "(-5.32)",
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(left: 32, right: 32, top: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    DateFormat('HH:mm').format(DateTime.now()),
                                     style: const TextStyle(
                                       fontFamily: "Poppins",
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.w600,
                                       color: Colors.white,
                                     ),
-                                    textAlign: TextAlign.center,
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Text(
-                            "Waktu Adzan Dzuhur",
-                            style: const TextStyle(
-                              fontFamily: "Poppins",
-                              fontSize: 10,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(left: 20),
-                        child: Column(
-                          children: [
-                            Text(
-                              DateFormat('EEEE, dd MMM yyyy')
-                                  .format(DateTime.now()),
-                              style: const TextStyle(
-                                fontFamily: "Poppins",
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
+                                  Container(
+                                    height: 20,
+                                    child: Text(
+                                      '(-${formatDuration(prayerTimesService.timeUntilNextPrayer)})',
+                                      style: const TextStyle(
+                                        fontFamily: "Poppins",
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             Text(
-                              HijriCalendar.now()
-                                  .toFormat("dd MMMM yyyy" + " H"),
+                              "Waktu Adzan ${prayerTimesService.nextPrayerName}",
                               style: const TextStyle(
                                 fontFamily: "Poppins",
-                                fontSize: 12,
+                                fontSize: 10,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.white,
                               ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                        Container(
+                          child: Column(
+                            children: [
+                              Text(
+                                DateFormat('EEEE, dd MMM yyyy')
+                                    .format(DateTime.now()),
+                                style: const TextStyle(
+                                  fontFamily: "Poppins",
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                HijriCalendar.now()
+                                    .toFormat("dd MMMM yyyy" + " H"),
+                                style: const TextStyle(
+                                  fontFamily: "Poppins",
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(top: 11),
-                  child: Container(
-                      width: 149,
-                      height: 26,
-                      decoration: BoxDecoration(
-                          color: Color(0xFF000000).withOpacity(0.25),
-                          borderRadius: BorderRadius.circular(100)),
-                      child: Row(
-                        children: [
-                          Image(image: Svg("assets/LocationWhite.svg")),
-                        ],
-                      )),
-                ),
+                    padding: EdgeInsets.only(top: 11),
+                    child: IntrinsicWidth(
+                      child: Container(
+                        height: 26,
+                        decoration: BoxDecoration(
+                            color: Color(0xFF000000).withOpacity(0.25),
+                            borderRadius: BorderRadius.circular(100)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Image(
+                              image: Svg("assets/LocationWhite.svg"),
+                            ),
+                            Flexible(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Text(
+                                  prayerTimesService.address,
+                                  style: const TextStyle(
+                                    fontFamily: "Poppins",
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white,
+                                  ),
+                                  // Overflow handling if the text exceeds the container width
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    )),
                 SizedBox(
                   height: 80,
                 ),

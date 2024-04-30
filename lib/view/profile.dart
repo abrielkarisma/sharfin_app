@@ -4,6 +4,7 @@ import 'package:sharfin_app/data/models/Users.dart';
 import 'package:sharfin_app/data/service/Users.dart';
 
 import 'package:flutter/gestures.dart';
+import 'package:sharfin_app/view/onBoarding.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -451,7 +452,14 @@ class _ProfileState extends State<Profile> {
                                         ),
                                         Container(
                                             child: FilledButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Navigator.of(context)
+                                                .pushReplacement(
+                                                    MaterialPageRoute(
+                                                        builder: (context) {
+                                              return onboarding();
+                                            }));
+                                          },
                                           style: ButtonStyle(
                                             backgroundColor:
                                                 MaterialStateProperty.all(Color(

@@ -1,15 +1,21 @@
-// ignore_for_file: prefer_const_constructors
-
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter/rendering.dart";
 import "package:flutter/widgets.dart";
 import "package:persistent_bottom_nav_bar/persistent_tab_view.dart";
+import "package:sharfin_app/data/models/Ebook.dart";
+import "package:sharfin_app/data/models/Insight.dart";
+import "package:sharfin_app/data/service/Ebook.dart";
+import "package:sharfin_app/data/service/Insight.dart";
 import "package:sharfin_app/util/My_button.dart";
 import "package:sharfin_app/util/My_card.dart";
+import "package:sharfin_app/view/ebooks.dart";
+import "package:sharfin_app/view/insight.dart";
+import "package:sharfin_app/view/insightDetails.dart";
 import "package:sharfin_app/view/islamicFeature.dart";
 import "package:sharfin_app/view/semuaMenuPage.dart";
 import 'package:flutter_svg/svg.dart';
+import "package:sharfin_app/widget/bottomNavigation.dart";
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,17 +25,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Map<String, dynamic>> insights = [
-    {
-      'image': "assets/examInsight.png",
-    },
-    {
-      'image': "assets/examInsight.png",
-    },
-    {
-      'image': "assets/examInsight.png",
-    },
-  ];
+  final Future<List<Insight>>? insights = InsightService.getImageInsight();
+
+  final Future<List<Ebook>>? ebooks = EbookService.getImageEbook();
 
   bool _obsecureText = true;
   final _controller = PageController();
@@ -344,154 +342,277 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              SizedBox(height: 25),
-              SingleChildScrollView(
+              Padding(
                 padding: EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
                     Text(
-                      'Insights:',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      "Insight",
+                      style: const TextStyle(
+                        fontFamily: "Poppins",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
                     ),
-                    SizedBox(height: 8),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          for (Map<String, dynamic> insight in insights)
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  // Handle insight tap
-                                },
-                                child: Column(
-                                  children: <Widget>[
-                                    Container(
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  bottomNavigation(selectedIndex: 1),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "Lihat Semua",
+                          style: const TextStyle(
+                            fontFamily: "Poppins",
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xFF15AC97),
+                          ),
+                        ))
+                  ],
+                ),
+              ),
+              FutureBuilder<List<Insight>>(
+                future: insights,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final List<Insight> insights = snapshot.data!;
+                    return SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 150,
+                            width: screenWidth,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: insights.length,
+                              itemBuilder: (context, index) {
+                                final insight = insights[index];
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  detailInsight(
+                                                      id: insight.id)));
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(insight.image),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
                                       width: 125,
                                       height: 150,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        borderRadius: BorderRadius.circular(12),
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: AssetImage(insight['image']),
-                                        ),
-                                      ),
                                     ),
-                                  ],
-                                ),
-                              ),
+                                  ),
+                                );
+                              },
                             ),
+                          ),
                         ],
                       ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error fetching insights'));
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Reels",
+                      style: const TextStyle(
+                        fontFamily: "Poppins",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
                     ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  bottomNavigation(selectedIndex: 1),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "Lihat Semua",
+                          style: const TextStyle(
+                            fontFamily: "Poppins",
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xFF15AC97),
+                          ),
+                        ))
                   ],
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              SingleChildScrollView(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Text(
-                      'Reels:',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 8),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          for (Map<String, dynamic> insight in insights)
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  // Handle insight tap
-                                },
-                                child: Column(
-                                  children: <Widget>[
-                                    Container(
+              FutureBuilder<List<Insight>>(
+                future: insights,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final List<Insight> insights = snapshot.data!;
+                    return SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 150,
+                            width: screenWidth,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: insights.length,
+                              itemBuilder: (context, index) {
+                                final insight = insights[index];
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  detailInsight(
+                                                      id: insight.id)));
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(insight.image),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
                                       width: 103,
                                       height: 150,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        borderRadius: BorderRadius.circular(12),
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: AssetImage(insight['image']),
-                                        ),
-                                      ),
                                     ),
-                                  ],
-                                ),
-                              ),
+                                  ),
+                                );
+                              },
                             ),
+                          ),
                         ],
                       ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error fetching insights'));
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Ebook",
+                      style: const TextStyle(
+                        fontFamily: "Poppins",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
                     ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  bottomNavigation(selectedIndex: 2),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "Lihat Semua",
+                          style: const TextStyle(
+                            fontFamily: "Poppins",
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xFF15AC97),
+                          ),
+                        ))
                   ],
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              SingleChildScrollView(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Text(
-                      'Ebook:',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 8),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          for (Map<String, dynamic> insight in insights)
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  // Handle insight tap
-                                },
-                                child: Column(
-                                  children: <Widget>[
-                                    Container(
+              FutureBuilder<List<Ebook>>(
+                future: ebooks,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final List<Ebook> ebooks = snapshot.data!;
+                    return SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 200,
+                            width: screenWidth,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: ebooks.length,
+                              itemBuilder: (context, index) {
+                                final ebook = ebooks[index];
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              detailInsight(id: ebook.id),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(ebook.image),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
                                       width: 160,
                                       height: 200,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        borderRadius: BorderRadius.circular(12),
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: AssetImage(insight['image']),
-                                        ),
-                                      ),
                                     ),
-                                  ],
-                                ),
-                              ),
+                                  ),
+                                );
+                              },
                             ),
+                          ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error fetching Ebook'));
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                },
               ),
+              SizedBox(
+                height: 20,
+              )
             ],
           ),
         ),

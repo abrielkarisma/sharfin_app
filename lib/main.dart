@@ -9,12 +9,15 @@ import 'package:sharfin_app/view/ayatPage.dart';
 import 'package:sharfin_app/view/detailInsight.dart';
 import 'package:sharfin_app/view/homepage.dart';
 import 'package:sharfin_app/view/insight.dart';
+import 'package:sharfin_app/view/loginPage.dart';
 import 'package:sharfin_app/view/onBoarding.dart';
+import 'package:sharfin_app/view/profile.dart';
 import 'package:sharfin_app/view/qiblaPage.dart';
+import 'package:sharfin_app/view/registerPage.dart';
 import 'package:sharfin_app/view/splashScreen.dart';
 import 'package:sharfin_app/view/others/syaratketentuan.dart';
-import 'package:sharfin_app/widget/botNav.dart';
 import 'package:http/http.dart' as http;
+import 'package:sharfin_app/widget/bottomNavigation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -64,26 +67,27 @@ class _MyAppState extends State<MyApp> {
         //   ),
         // ),
         BlocProvider(
-                create: (context) => AyatBloc(
-                  ApiService(
-                    client: http.Client(),
-                  ),
-                ),
-              ),
+          create: (context) => AyatBloc(
+            ApiService(
+              client: http.Client(),
+            ),
+          ),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: FutureBuilder(  
+        home: FutureBuilder(
           builder: (context, snapshot) {
             if (hasPermission) {
-              return splashScreen();
-            } else {    
+              return bottomNavigation(selectedIndex: 0);
+            } else {
               return const Scaffold(
                 backgroundColor: Color.fromARGB(255, 48, 48, 48),
               );
             }
           },
-          future: getPermission(),),
+          future: getPermission(),
+        ),
         theme: ThemeData(
           fontFamily: 'Poppins',
           useMaterial3: true,

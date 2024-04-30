@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sharfin_app/view/homepage.dart';
+import 'package:sharfin_app/view/loginPage.dart';
 import 'package:sharfin_app/view/profileguest.dart';
 import 'package:sharfin_app/view/splashScreen.dart';
-import 'package:sharfin_app/widget/botNav.dart';
+import 'package:sharfin_app/widget/bottomNavigation.dart';
 
 class onboarding extends StatefulWidget {
   const onboarding({super.key});
@@ -232,9 +233,33 @@ class _onboardingState extends State<onboarding> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Padding(padding: EdgeInsets.only(top: 8)),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushReplacement(MaterialPageRoute(builder: (context) {
+                      return bottomNavigation(
+                        selectedIndex: 0,
+                      );
+                    }));
+                  },
+                  child: SizedBox(
+                    width: 320,
+                    child: Text(
+                      "Lewati",
+                      style: const TextStyle(
+                        fontFamily: "Poppins",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0XFFFFFFFF),
+                      ),
+                      textAlign: TextAlign.end,
+                    ),
+                  ),
+                ),
                 Container(
                   padding: EdgeInsets.only(
-                    top: 68,
+                    top: 16,
                   ),
                   child: Stack(alignment: Alignment.bottomCenter, children: [
                     Image(
@@ -315,25 +340,46 @@ class _onboardingState extends State<onboarding> {
                           ])),
                 ),
                 Container(
-                  padding: EdgeInsets.only(top: 20),
-                  child: TextButton(
-                    child: Text(
-                      "Lewati",
-                      style: const TextStyle(
-                        fontFamily: "Poppins",
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0XFFFFFFFF),
+                  padding: EdgeInsets.only(top: 8),
+                  child: FilledButton(
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) {
+                          return login();
+                        }));
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                            Colors.white), // Adjust color
+                        foregroundColor: MaterialStateProperty.all(
+                            Colors.white), // Adjust text color
+                        padding: MaterialStateProperty.all(EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10)), // Adjust padding
+                        minimumSize: MaterialStateProperty.all(Size(343, 48)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                12.0), // Adjust radius as desired
+                          ),
+                        ),
                       ),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) {
-                        return botnav();
-                      }));
-                    },
-                  ),
-                )
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Masuk Dengan Akun Anda",
+                              style: const TextStyle(
+                                fontFamily: "Poppins",
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0XFF14142B),
+                                height: 18 / 12,
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                          ])),
+                ),
               ],
             ),
           ),
