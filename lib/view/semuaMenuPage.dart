@@ -2,7 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:sharfin_app/util/My_button.dart';
 import 'package:sharfin_app/view/search_page.dart';
 
+<<<<<<< Updated upstream
 class MenuPage extends StatelessWidget {
+=======
+class MenuPage extends StatefulWidget {
+  const MenuPage({super.key});
+
+  @override
+  State<MenuPage> createState() => _MenuPageState();
+}
+
+class _MenuPageState extends State<MenuPage> {
+  final List<Map<String, dynamic>> categories = [
+    {
+      'title': 'Keuangan Syariah',
+      'items': [
+        {'icon': 'assets/paket_data.png', 'text': 'Pulsa & Paket'},
+        {'icon': 'assets/Internet.png', 'text': 'Internet'},
+        {'icon': 'assets/pln.png', 'text': 'PLN'},
+        {'icon': 'assets/pdam.png', 'text': 'PDAM' },
+        {'icon': 'assets/pdam.png', 'text': 'P'},
+        {'icon': 'assets/pdam.png', 'text': 'D'},
+        {'icon': 'assets/pdam.png', 'text': 'PD'},
+        {'icon': 'assets/pdam.png', 'text': 'AM'},
+      ],
+      // 'isExpanded': false,
+    },
+    {
+      'title': 'Pembelian',
+      'items': [
+        {'icon': 'assets/paket_data.png', 'text': 'Pulsa & Paket'},
+        {'icon': 'assets/Internet.png', 'text': 'Internet'},
+        {'icon': 'assets/pln.png', 'text': 'PLN'},
+      ],
+      // 'isExpanded': false,
+    },
+    // Add more categories as needed
+  ];
+
+>>>>>>> Stashed changes
   @override
   Widget build(BuildContext context) {
     return Scaffold(

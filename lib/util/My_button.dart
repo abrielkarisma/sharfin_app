@@ -45,6 +45,7 @@ class MyButton extends StatelessWidget {
             ),
           ),
         ),
+<<<<<<< Updated upstream
         SizedBox(height: 3,),
         Text(
           buttonText,
@@ -52,6 +53,14 @@ class MyButton extends StatelessWidget {
           maxLines: 1, // Limits the text to one line
           overflow: TextOverflow
               .ellipsis, // Truncates the text with an ellipsis when it overflows // Adjust fontSize based on screen width
+=======
+        Padding(
+          padding: const EdgeInsets.only(top: 5),
+          child: Text(
+            buttonText,
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500), // Adjust fontSize based on screen width
+          ),
+>>>>>>> Stashed changes
         )
       ],
     );
