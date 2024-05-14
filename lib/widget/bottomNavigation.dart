@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:sharfin_app/data/models/Insight.dart';
 import 'package:sharfin_app/view/ebooks.dart';
 import 'package:sharfin_app/view/homepage.dart';
 import 'package:sharfin_app/view/insight.dart';
@@ -23,7 +24,7 @@ class _bottomNavigationState extends State<bottomNavigation> {
 
   List<Widget> pages = [
     HomePage(),
-    insight(),
+    InsightPage(),
     ebooks(),
     Profile(),
   ];

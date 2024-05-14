@@ -42,7 +42,7 @@ class PrayerTimesService {
     DateTime date = tz.TZDateTime.from(_currentDate, location);
     Coordinates coordinates = Coordinates(latitude, longitude);
     CalculationParameters params = CalculationMethod.Singapore();
-    params.madhab = Madhab.Hanafi;
+    params.madhab = Madhab.Shafi;
     PrayerTimes prayerTimes = PrayerTimes(coordinates, date, params);
 
     _tanggal = DateFormat('EEEE, dd MMM yyyy').format(_currentDate).toString();

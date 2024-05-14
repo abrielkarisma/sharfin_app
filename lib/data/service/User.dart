@@ -1,17 +1,20 @@
 import 'package:dio/dio.dart';
 import 'package:sharfin_app/data/models/User.dart';
 
-class AuthService {
-  Future<Response> register(User model) async {
-    final dio = Dio();
-    final data = model.toJson(); // Now includes 'name' property
+class UserService {
+  final Dio _dio = Dio();
 
+  Future<void> registerUser(User user) async {
     try {
-      final response =
-          await dio.post("https://reqres.in/api/register", data: data);
-      return response;
-    } on DioError catch (e) {
-      throw Exception(e.message);
+      final response = await _dio.post(
+        'http://192.168.1.14:8888/api/auth/register',
+        data: user.toJson(),
+      );
+      print(response
+          .data); // Ini bisa Anda sesuaikan dengan kebutuhan, misalnya menampilkan respons atau melakukan sesuatu setelah pendaftaran berhasil.
+    } catch (error) {
+      print('Error registering user: $error');
+      throw Exception('Failed to register user');
     }
   }
 }

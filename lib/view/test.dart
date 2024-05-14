@@ -1,59 +1,86 @@
+// register_page.dart
 import 'package:flutter/material.dart';
-import 'package:sharfin_app/data/service/JamSholat.dart';
-import 'package:sharfin_app/widget/loading.dart';
+import 'package:sharfin_app/data/service/User.dart';
+import 'package:sharfin_app/data/models/User.dart';
 
-class Test extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   @override
-  State<Test> createState() => _TestState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _TestState extends State<Test> {
-  final prayerTimesService = PrayerTimesService();
-  bool isLoading = true;
+class _RegisterPageState extends State<RegisterPage> {
+  final UserService _userService = UserService();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
+  void _register() {
+    final String name = _nameController.text.trim();
+    final String email = _emailController.text.trim();
+    final String password = _passwordController.text.trim();
 
-  Future<void> fetchData() async {
-    await prayerTimesService.getPrayerTimes();
-    setState(() {
-      isLoading = false;
-    });
+    if (name.isNotEmpty && email.isNotEmpty && password.isNotEmpty) {
+      final User user = User(name: name, email: email, password: password);
+      _userService.registerUser(user);
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Please fill in all fields.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Prayer Times'),
+        title: Text('Register'),
       ),
-      body: isLoading
-          ? loading()
-          : SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(prayerTimesService.address),
-                    SizedBox(height: 16.0),
-                    if (prayerTimesService.timeUntilNextPrayer.inSeconds > 0)
-                      Text(
-                        'Next Prayer: ${prayerTimesService.nextPrayerName} (${formatDuration(prayerTimesService.timeUntilNextPrayer)})',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    if (prayerTimesService.timeUntilNextPrayer.inSeconds <= 0)
-                      Text(
-                        'Next prayer has already passed. Please refer to prayer times for tomorrow.',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                  ],
-                ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: _nameController,
+              decoration: InputDecoration(
+                labelText: 'Name',
               ),
             ),
+            TextField(
+              controller: _emailController,
+              decoration: InputDecoration(
+                labelText: 'Email',
+              ),
+            ),
+            TextField(
+              controller: _passwordController,
+              obscureText: true,
+              decoration: InputDecoration(
+                labelText: 'Password',
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _register,
+              child: Text('Register'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

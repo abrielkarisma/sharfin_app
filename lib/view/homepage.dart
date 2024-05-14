@@ -9,9 +9,10 @@ import "package:sharfin_app/data/service/Ebook.dart";
 import "package:sharfin_app/data/service/Insight.dart";
 import "package:sharfin_app/util/My_button.dart";
 import "package:sharfin_app/util/My_card.dart";
+import "package:sharfin_app/view/detailInsight.dart";
+import "package:sharfin_app/view/ebookDetails.dart";
 import "package:sharfin_app/view/ebooks.dart";
 import "package:sharfin_app/view/insight.dart";
-import "package:sharfin_app/view/insightDetails.dart";
 import "package:sharfin_app/view/islamicFeature.dart";
 import "package:sharfin_app/view/semuaMenuPage.dart";
 import 'package:flutter_svg/svg.dart';
@@ -25,7 +26,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final Future<List<Insight>>? insights = InsightService.getImageInsight();
+  final Future<List<Insight>>? insights = InsightService.getImageInsights();
 
   final Future<List<Ebook>>? ebooks = EbookService.getImageEbook();
 
@@ -403,14 +404,14 @@ class _HomePageState extends State<HomePage> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  detailInsight(
-                                                      id: insight.id)));
+                                                  DetailInsight(
+                                                      uuid: insight.uuid)));
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                         image: DecorationImage(
-                                          image: NetworkImage(insight.image),
+                                          image: NetworkImage("insight.img"),
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -492,14 +493,14 @@ class _HomePageState extends State<HomePage> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  detailInsight(
-                                                      id: insight.id)));
+                                                  DetailInsight(
+                                                      uuid: insight.uuid)));
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                         image: DecorationImage(
-                                          image: NetworkImage(insight.image),
+                                          image: NetworkImage("insight.img"),
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -581,7 +582,7 @@ class _HomePageState extends State<HomePage> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              detailInsight(id: ebook.id),
+                                              detailEbook(id: ebook.id),
                                         ),
                                       );
                                     },

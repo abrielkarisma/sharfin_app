@@ -1,22 +1,22 @@
 import 'package:sharfin_app/data/models/Insight.dart';
 
 class Insight {
-  final String id;
+  final String uuid;
   final String title;
-  final String description;
-  final String image;
+  final String text;
+  final List<String> img;
 
   const Insight({
-    required this.id,
+    required this.uuid,
     required this.title,
-    required this.description,
-    required this.image,
+    required this.text,
+    required this.img,
   });
 
   factory Insight.fromJson(Map<String, dynamic> json) => Insight(
-        id: json['id'] as String,
+        uuid: json['uuid'] as String,
         title: json['title'] as String,
-        description: json['description'] as String,
-        image: json['image'] as String,
+        text: json['text'] as String,
+        img: List<String>.from(json['img']),
       );
 }

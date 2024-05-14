@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:sharfin_app/data/models/Insight.dart';
-import 'package:sharfin_app/data/service/Insight.dart';
-import 'package:sharfin_app/view/insightDetails.dart';
+import 'package:sharfin_app/data/models/Insight.dart'; // Ubah nama file Insight.dart menjadi insight.dart
+import 'package:sharfin_app/data/service/Insight.dart'; // Ubah nama file Insight.dart menjadi insight.dart
+import 'package:sharfin_app/view/detailInsight.dart';
 
-class insight extends StatefulWidget {
-  const insight({super.key});
+class InsightPage extends StatefulWidget {
+  const InsightPage({Key? key}) : super(key: key);
 
   @override
-  State<insight> createState() => _insightState();
+  _InsightPageState createState() => _InsightPageState();
 }
 
-class _insightState extends State<insight> {
-  final Future<List<Insight>>? insights =
-      InsightService.getImageInsight(); // Get insights
+class _InsightPageState extends State<InsightPage> {
+  late Future<List<Insight>> _insightsFuture;
+  final InsightService _insightService = InsightService();
+
+  @override
+  void initState() {
+    super.initState();
+    _insightsFuture = InsightService.getImageInsights();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,25 +36,30 @@ class _insightState extends State<insight> {
       ),
       body: Center(
         child: FutureBuilder<List<Insight>>(
-          future: InsightService.getImageInsight(), // Use insights future
+          future: _insightsFuture,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final List<Insight> insightsData = snapshot.data!;
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else if (snapshot.hasData) {
+              List<Insight> insights = snapshot.data ?? [];
               return Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: GridView.count(
                   crossAxisCount: 2,
                   childAspectRatio: 16.5 / 20,
-                  children: List.generate(insightsData.length, (index) {
-                    final insight = insightsData[index]; // Access insight data
-
+                  children: List.generate(insights.length, (index) {
+                    Insight insight = insights[index];
+                    String imageUrl =
+                        "http://192.168.1.14:8888${insight.img.first}";
                     return GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => detailInsight(
-                                id: insight.id), // Pass ID directly
+                            builder: (context) =>
+                                DetailInsight(uuid: insight.uuid),
                           ),
                         );
                       },
@@ -64,8 +75,7 @@ class _insightState extends State<insight> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
                                 child: Image.network(
-                                  insight
-                                      .image, // Use image from Insight object
+                                  imageUrl,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -77,10 +87,9 @@ class _insightState extends State<insight> {
                   }),
                 ),
               );
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
+            } else {
+              return Text('No data available');
             }
-            return Center(child: CircularProgressIndicator());
           },
         ),
       ),

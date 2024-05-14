@@ -5,6 +5,7 @@ import 'package:sharfin_app/bloc/ayat_bloc.dart';
 import 'package:sharfin_app/cubit/Surat/surat_cubit.dart';
 import 'package:sharfin_app/cubit/ayat/ayat_cubit.dart';
 import 'package:sharfin_app/data/api_service.dart';
+import 'package:sharfin_app/data/models/Insight.dart';
 import 'package:sharfin_app/view/ayatPage.dart';
 import 'package:sharfin_app/view/detailInsight.dart';
 import 'package:sharfin_app/view/homepage.dart';
@@ -17,6 +18,7 @@ import 'package:sharfin_app/view/registerPage.dart';
 import 'package:sharfin_app/view/splashScreen.dart';
 import 'package:sharfin_app/view/others/syaratketentuan.dart';
 import 'package:http/http.dart' as http;
+import 'package:sharfin_app/view/test.dart';
 import 'package:sharfin_app/widget/bottomNavigation.dart';
 
 void main() {
@@ -79,7 +81,9 @@ class _MyAppState extends State<MyApp> {
         home: FutureBuilder(
           builder: (context, snapshot) {
             if (hasPermission) {
-              return bottomNavigation(selectedIndex: 0);
+              return bottomNavigation(
+                selectedIndex: 0,
+              );
             } else {
               return const Scaffold(
                 backgroundColor: Color.fromARGB(255, 48, 48, 48),
