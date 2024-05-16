@@ -1,13 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sharfin_app/data/models/User.dart';
 import 'package:sharfin_app/data/service/User.dart';
-import 'package:sharfin_app/data/service/Users.dart';
-import 'package:sharfin_app/view/homepage.dart';
 import 'package:sharfin_app/view/loginPage.dart';
-import 'dart:convert';
-import 'package:sharfin_app/view/onBoarding.dart';
 import 'package:sharfin_app/widget/bottomNavigation.dart';
 
 class register extends StatefulWidget {
@@ -45,14 +39,14 @@ class _registerState extends State<register> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Error'),
-              content: Text('Please enter a valid email address.'),
+              title: const Text('Error'),
+              content: const Text('Please enter a valid email address.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );
@@ -67,14 +61,14 @@ class _registerState extends State<register> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Error'),
-              content: Text('Password and Confirm Password must match.'),
+              title: const Text('Error'),
+              content: const Text('Password and Confirm Password must match.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );
@@ -90,7 +84,7 @@ class _registerState extends State<register> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => bottomNavigation(
+              builder: (context) => const bottomNavigation(
                     selectedIndex: 0,
                   )),
         );
@@ -101,14 +95,14 @@ class _registerState extends State<register> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text('Please fill in all fields.'),
+            title: const Text('Error'),
+            content: const Text('Please fill in all fields.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -122,15 +116,15 @@ class _registerState extends State<register> {
     return Scaffold(
         body: SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.all(24),
+        padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.only(top: 54),
-              child: Text(
+              padding: const EdgeInsets.only(top: 54),
+              child: const Text(
                 "Sharfin.",
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: "Poppins",
                   fontSize: 38,
                   fontWeight: FontWeight.w700,
@@ -141,10 +135,10 @@ class _registerState extends State<register> {
               ),
             ),
             Container(
-                padding: EdgeInsets.only(top: 5),
-                child: Text(
+                padding: const EdgeInsets.only(top: 5),
+                child: const Text(
                   "Daftarkan akunmu disini.",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: "Poppins",
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
@@ -153,14 +147,14 @@ class _registerState extends State<register> {
                   ),
                   textAlign: TextAlign.center,
                 )),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Container(
-                padding: EdgeInsets.only(top: 20),
-                child: Text(
+                padding: const EdgeInsets.only(top: 20),
+                child: const Text(
                   "Nama Lengkap",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: "Poppins",
                     fontSize: 13,
                     fontWeight: FontWeight.w400,
@@ -170,7 +164,7 @@ class _registerState extends State<register> {
                   textAlign: TextAlign.center,
                 )),
             Container(
-                padding: EdgeInsets.only(top: 8),
+                padding: const EdgeInsets.only(top: 8),
                 child: SizedBox(
                   height: 55.0,
                   child: TextFormField(
@@ -184,10 +178,10 @@ class _registerState extends State<register> {
                   ),
                 )),
             Container(
-                padding: EdgeInsets.only(top: 20),
-                child: Text(
+                padding: const EdgeInsets.only(top: 20),
+                child: const Text(
                   "Email",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: "Poppins",
                     fontSize: 13,
                     fontWeight: FontWeight.w400,
@@ -197,7 +191,7 @@ class _registerState extends State<register> {
                   textAlign: TextAlign.center,
                 )),
             Container(
-                padding: EdgeInsets.only(top: 8),
+                padding: const EdgeInsets.only(top: 8),
                 child: SizedBox(
                   height: 55.0,
                   child: TextFormField(
@@ -211,10 +205,10 @@ class _registerState extends State<register> {
                   ),
                 )),
             Container(
-                padding: EdgeInsets.only(top: 20),
-                child: Text(
+                padding: const EdgeInsets.only(top: 20),
+                child: const Text(
                   "Password",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: "Poppins",
                     fontSize: 13,
                     fontWeight: FontWeight.w400,
@@ -258,10 +252,10 @@ class _registerState extends State<register> {
               ),
             ),
             Container(
-                padding: EdgeInsets.only(top: 20),
-                child: Text(
+                padding: const EdgeInsets.only(top: 20),
+                child: const Text(
                   "Re-type Password",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: "Poppins",
                     fontSize: 13,
                     fontWeight: FontWeight.w400,
@@ -302,23 +296,23 @@ class _registerState extends State<register> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 60,
             ),
             Container(
-              padding: EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 20),
               child: FilledButton(
                   onPressed: () {
                     _register();
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
-                        Color(0XFF15AC97)), // Adjust color
+                        const Color(0XFF15AC97)), // Adjust color
                     foregroundColor: MaterialStateProperty.all(
                         Colors.white), // Adjust text color
-                    padding: MaterialStateProperty.all(EdgeInsets.symmetric(
+                    padding: MaterialStateProperty.all(const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 10)), // Adjust padding
-                    minimumSize: MaterialStateProperty.all(Size(400, 50)),
+                    minimumSize: MaterialStateProperty.all(const Size(400, 50)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
@@ -326,9 +320,9 @@ class _registerState extends State<register> {
                       ),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     "Daftar",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -338,14 +332,14 @@ class _registerState extends State<register> {
                     textAlign: TextAlign.left,
                   )),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Container(
               child: RichText(
                   textAlign: TextAlign.center,
-                  text: TextSpan(
-                      style: const TextStyle(
+                  text: const TextSpan(
+                      style: TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
@@ -354,39 +348,39 @@ class _registerState extends State<register> {
                       children: <TextSpan>[
                         TextSpan(
                           text: "Dengan mendaftar, kamu telah menyetujui ",
-                          style: const TextStyle(color: Colors.black),
+                          style: TextStyle(color: Colors.black),
                         ),
                         TextSpan(
                           text: "Syarat & Ketentuan ",
-                          style: const TextStyle(color: Color(0XFF15AC97)),
+                          style: TextStyle(color: Color(0XFF15AC97)),
                         ),
                         TextSpan(
                           text: "Serta ",
-                          style: const TextStyle(color: Colors.black),
+                          style: TextStyle(color: Colors.black),
                         ),
                         TextSpan(
                           text: "Kebijakan Privasi ",
-                          style: const TextStyle(color: Color(0XFF15AC97)),
+                          style: TextStyle(color: Color(0XFF15AC97)),
                         ),
                         TextSpan(
                           text: "Refoodbish ",
-                          style: const TextStyle(color: Colors.black),
+                          style: TextStyle(color: Colors.black),
                         ),
                       ])),
             ),
             Container(
-                padding: EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 10),
                 child: Center(
                     child: TextButton(
                   onPressed: () {
                     Navigator.of(context)
                         .pushReplacement(MaterialPageRoute(builder: (context) {
-                      return login();
+                      return const login();
                     }));
                   },
-                  child: Text(
+                  child: const Text(
                     "Sudah punya akun? Masuk aja",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 12,
                       fontWeight: FontWeight.w400,

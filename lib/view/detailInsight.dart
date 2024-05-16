@@ -5,7 +5,7 @@ import 'package:sharfin_app/data/service/Insight.dart';
 class DetailInsight extends StatefulWidget {
   final String uuid;
 
-  const DetailInsight({Key? key, required this.uuid}) : super(key: key);
+  const DetailInsight({super.key, required this.uuid});
 
   @override
   _DetailInsightState createState() => _DetailInsightState();
@@ -24,7 +24,7 @@ class _DetailInsightState extends State<DetailInsight> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Detail Insight",
           style: TextStyle(
             fontFamily: "Poppins",
@@ -38,26 +38,26 @@ class _DetailInsightState extends State<DetailInsight> {
         future: _insightFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (snapshot.hasData) {
             Insight insight = snapshot.data!;
             return SingleChildScrollView(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     insight.title,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: Color(0xFF14142B),
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Row(
                     children: [
                       ClipRRect(
@@ -68,8 +68,8 @@ class _DetailInsightState extends State<DetailInsight> {
                           height: 24,
                         ),
                       ),
-                      SizedBox(width: 8),
-                      Text(
+                      const SizedBox(width: 8),
+                      const Text(
                         "David Kendrick",
                         style: TextStyle(
                           fontFamily: "Poppins",
@@ -80,15 +80,15 @@ class _DetailInsightState extends State<DetailInsight> {
                       )
                     ],
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     insight.text,
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ListView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: insight.img.length,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -102,7 +102,7 @@ class _DetailInsightState extends State<DetailInsight> {
               ),
             );
           } else {
-            return Center(child: Text('No data available'));
+            return const Center(child: Text('No data available'));
           }
         },
       ),

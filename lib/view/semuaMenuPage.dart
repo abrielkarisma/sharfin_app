@@ -47,7 +47,7 @@ class _MenuPageState extends State<MenuPage> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
               showSearch(context: context, delegate: SearchBarDelegate());
             },
@@ -57,12 +57,12 @@ class _MenuPageState extends State<MenuPage> {
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           return ListView.builder(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             itemCount: categories.length,
             itemBuilder: (BuildContext context, int index) {
               return ExpansionPanelList(
                 elevation: 1,
-                expandedHeaderPadding: EdgeInsets.all(0),
+                expandedHeaderPadding: const EdgeInsets.all(0),
                 expansionCallback: (int panelIndex, bool isExpanded) { isExpanded;
                   // setState(() {
                   // categories[index]['isExpanded'] = !isExpanded;});
@@ -85,7 +85,7 @@ class _MenuPageState extends State<MenuPage> {
                     body: GridView.count( // Adjust the spacing between columns as needed
                       crossAxisCount: 4,
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       children: List.generate(
                         categories[index]['items'].length,
                         (itemIndex) {
@@ -128,7 +128,7 @@ class SearchBarDelegate extends SearchDelegate<String> {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: Icon(Icons.clear),
+        icon: const Icon(Icons.clear),
         onPressed: () {
           query = '';
         },
@@ -139,7 +139,7 @@ class SearchBarDelegate extends SearchDelegate<String> {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.arrow_back),
+      icon: const Icon(Icons.arrow_back),
       onPressed: () {
         close(context, '');
       },
@@ -157,7 +157,7 @@ class SearchBarDelegate extends SearchDelegate<String> {
   @override
   Widget buildSuggestions(BuildContext context) {
     // Build suggestions that appear when typing in the search bar
-    return Center(
+    return const Center(
       child: Text('Search Suggestions'),
     );
   }

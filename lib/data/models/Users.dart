@@ -1,4 +1,3 @@
-import 'package:sharfin_app/data/models/Users.dart';
 
 class Users {
   final String id;

@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:sharfin_app/data/models/Users.dart';
-import 'package:sharfin_app/view/profile.dart';
 
 class UsersService {
   Future<Users?> getUsers(String id) async {
@@ -18,5 +17,6 @@ class UsersService {
     } catch (e) {
       throw Exception(e.toString());
     }
+    return null;
   }
 }

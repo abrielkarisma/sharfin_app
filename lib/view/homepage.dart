@@ -1,25 +1,21 @@
-import "package:flutter/cupertino.dart";
-import "package:flutter/material.dart";
-import "package:flutter/rendering.dart";
-import "package:flutter/widgets.dart";
-import "package:persistent_bottom_nav_bar/persistent_tab_view.dart";
-import "package:sharfin_app/data/models/Ebook.dart";
-import "package:sharfin_app/data/models/Insight.dart";
-import "package:sharfin_app/data/service/Ebook.dart";
-import "package:sharfin_app/data/service/Insight.dart";
-import "package:sharfin_app/util/My_button.dart";
-import "package:sharfin_app/util/My_card.dart";
-import "package:sharfin_app/view/detailInsight.dart";
-import "package:sharfin_app/view/ebookDetails.dart";
-import "package:sharfin_app/view/ebooks.dart";
-import "package:sharfin_app/view/insight.dart";
-import "package:sharfin_app/view/islamicFeature.dart";
-import "package:sharfin_app/view/semuaMenuPage.dart";
-import 'package:flutter_svg/svg.dart';
-import "package:sharfin_app/widget/bottomNavigation.dart";
+import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:sharfin_app/data/models/Ebook.dart';
+import 'package:sharfin_app/data/models/Insight.dart';
+import 'package:sharfin_app/data/service/Ebook.dart';
+import 'package:sharfin_app/data/service/Insight.dart';
+import 'package:sharfin_app/util/My_button.dart';
+import 'package:sharfin_app/util/My_card.dart';
+import 'package:sharfin_app/view/detailInsight.dart';
+import 'package:sharfin_app/view/ebookDetails.dart';
+import 'package:sharfin_app/view/islamicFeature.dart';
+import 'package:sharfin_app/view/semuaMenuPage.dart';
+import 'package:jwt_decode/jwt_decode.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sharfin_app/widget/bottomNavigation.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -27,23 +23,52 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final Future<List<Insight>>? insights = InsightService.getImageInsights();
-
+  String? _token;
+  String? _name; // Variable to store the decoded name
   final Future<List<Ebook>>? ebooks = EbookService.getImageEbook();
 
   bool _obsecureText = true;
   final _controller = PageController();
 
-  void toogleVisibility() {
+  void toggleVisibility() {
     setState(() {
       _obsecureText = !_obsecureText;
     });
   }
 
   @override
+  void initState() {
+    super.initState();
+    _getTokenFromSharedPreferences();
+  }
+
+  Future<void> _getTokenFromSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    if (token != null) {
+      setState(() {
+        _token = token;
+        _decodeToken(token);
+      });
+    }
+  }
+
+  void _decodeToken(String token) {
+    Map<String, dynamic> decodedToken = Jwt.parseJwt(token);
+    setState(() {
+      _name = decodedToken['name'];
+    });
+    if (_name != null) {
+      print(
+          'Username: $_name '); // Print inside setState to ensure it's updated
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 245, 245, 245),
+      backgroundColor: const Color.fromARGB(255, 245, 245, 245),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
@@ -64,8 +89,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Text(
-                            "Ammar",
-                            style: TextStyle(
+                            _name ??
+                                "", // Display the name or an empty string if null
+                            style: const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.w600),
                           ),
                         ],
@@ -77,25 +103,25 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   )),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Container(
                   width: double.infinity,
-                  padding: EdgeInsets.all(17),
+                  padding: const EdgeInsets.all(17),
                   decoration: BoxDecoration(
-                      color: Color(0xff15ac97),
+                      color: const Color(0xff15ac97),
                       borderRadius: BorderRadius.circular(16),
-                      image: DecorationImage(
+                      image: const DecorationImage(
                           image: AssetImage("assets/Circle.png"),
                           fit: BoxFit.fill)),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("Saldo Saya",
@@ -107,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Row(
                         children: [
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.only(right: 4),
                             child: Text(
                               "Rp",
@@ -117,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                                   fontSize: 18),
                             ),
                           ),
-                          Container(
+                          SizedBox(
                             width: 120,
                             child: TextFormField(
                               initialValue:
@@ -125,7 +151,7 @@ class _HomePageState extends State<HomePage> {
                               obscureText:
                                   _obsecureText, // Toggle visibility based on state
                               readOnly: true,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
                                   fontWeight: FontWeight
@@ -141,7 +167,7 @@ class _HomePageState extends State<HomePage> {
                                     color: Colors.white,
                                     size: 16,
                                   ),
-                                  onPressed: toogleVisibility,
+                                  onPressed: () {},
                                 ),
                               ),
                             ),
@@ -150,17 +176,18 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Container(
                         width: double.infinity,
-                        padding: EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           boxShadow: [
                             BoxShadow(
-                                color: Color(0xff887aa6).withOpacity(0.12),
+                                color:
+                                    const Color(0xff887aa6).withOpacity(0.12),
                                 blurRadius: 56,
                                 spreadRadius: 10,
-                                offset: Offset(0.0, 13.0))
+                                offset: const Offset(0.0, 13.0))
                           ],
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
@@ -201,9 +228,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Container(
-                padding: EdgeInsets.all(13),
+                padding: const EdgeInsets.all(13),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -219,7 +246,7 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => MenuPage(),
+                                      builder: (context) => const MenuPage(),
                                     ),
                                   );
                                 },
@@ -231,7 +258,7 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => MenuPage(),
+                                      builder: (context) => const MenuPage(),
                                     ),
                                   );
                                 },
@@ -243,7 +270,7 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => MenuPage(),
+                                      builder: (context) => const MenuPage(),
                                     ),
                                   );
                                 },
@@ -255,14 +282,14 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => MenuPage(),
+                                      builder: (context) => const MenuPage(),
                                     ),
                                   );
                                 },
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Row(
@@ -274,7 +301,7 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => MenuPage(),
+                                      builder: (context) => const MenuPage(),
                                     ),
                                   );
                                 },
@@ -286,7 +313,7 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => MenuPage(),
+                                      builder: (context) => const MenuPage(),
                                     ),
                                   );
                                 },
@@ -297,7 +324,7 @@ class _HomePageState extends State<HomePage> {
                                 pathss: () {
                                   PersistentNavBarNavigator.pushNewScreen(
                                     context,
-                                    screen: IslamPage(),
+                                    screen: const IslamPage(),
                                     withNavBar: false,
                                   );
                                 },
@@ -309,7 +336,7 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => MenuPage(),
+                                      builder: (context) => const MenuPage(),
                                     ),
                                   );
                                 },
@@ -322,15 +349,15 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
-              Container(
+              SizedBox(
                 height: 200,
                 child: PageView(
                   scrollDirection: Axis.horizontal,
                   controller: _controller,
-                  children: [
+                  children: const [
                     MyCard(
                       iconImagePath: "assets/Image.png",
                     ),
@@ -344,13 +371,13 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       "Insight",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -363,13 +390,13 @@ class _HomePageState extends State<HomePage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  bottomNavigation(selectedIndex: 1),
+                                  const bottomNavigation(selectedIndex: 1),
                             ),
                           );
                         },
-                        child: Text(
+                        child: const Text(
                           "Lihat Semua",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: "Poppins",
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
@@ -387,7 +414,7 @@ class _HomePageState extends State<HomePage> {
                     return SingleChildScrollView(
                       child: Column(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 150,
                             width: screenWidth,
                             child: ListView.builder(
@@ -410,7 +437,7 @@ class _HomePageState extends State<HomePage> {
                                     child: Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
-                                        image: DecorationImage(
+                                        image: const DecorationImage(
                                           image: NetworkImage("insight.img"),
                                           fit: BoxFit.cover,
                                         ),
@@ -427,19 +454,19 @@ class _HomePageState extends State<HomePage> {
                       ),
                     );
                   } else if (snapshot.hasError) {
-                    return Center(child: Text('Error fetching insights'));
+                    return const Center(child: Text('Error fetching insights'));
                   }
                   return const Center(child: CircularProgressIndicator());
                 },
               ),
               Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       "Reels",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -452,13 +479,13 @@ class _HomePageState extends State<HomePage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  bottomNavigation(selectedIndex: 1),
+                                  const bottomNavigation(selectedIndex: 1),
                             ),
                           );
                         },
-                        child: Text(
+                        child: const Text(
                           "Lihat Semua",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: "Poppins",
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
@@ -476,7 +503,7 @@ class _HomePageState extends State<HomePage> {
                     return SingleChildScrollView(
                       child: Column(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 150,
                             width: screenWidth,
                             child: ListView.builder(
@@ -499,7 +526,7 @@ class _HomePageState extends State<HomePage> {
                                     child: Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
-                                        image: DecorationImage(
+                                        image: const DecorationImage(
                                           image: NetworkImage("insight.img"),
                                           fit: BoxFit.cover,
                                         ),
@@ -516,19 +543,19 @@ class _HomePageState extends State<HomePage> {
                       ),
                     );
                   } else if (snapshot.hasError) {
-                    return Center(child: Text('Error fetching insights'));
+                    return const Center(child: Text('Error fetching insights'));
                   }
                   return const Center(child: CircularProgressIndicator());
                 },
               ),
               Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       "Ebook",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -541,13 +568,13 @@ class _HomePageState extends State<HomePage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  bottomNavigation(selectedIndex: 2),
+                                  const bottomNavigation(selectedIndex: 2),
                             ),
                           );
                         },
-                        child: Text(
+                        child: const Text(
                           "Lihat Semua",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: "Poppins",
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
@@ -565,7 +592,7 @@ class _HomePageState extends State<HomePage> {
                     return SingleChildScrollView(
                       child: Column(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 200,
                             width: screenWidth,
                             child: ListView.builder(
@@ -606,12 +633,12 @@ class _HomePageState extends State<HomePage> {
                       ),
                     );
                   } else if (snapshot.hasError) {
-                    return Center(child: Text('Error fetching Ebook'));
+                    return const Center(child: Text('Error fetching Ebook'));
                   }
                   return const Center(child: CircularProgressIndicator());
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               )
             ],
@@ -640,25 +667,27 @@ class InsightsPage extends StatelessWidget {
     },
   ];
 
+  InsightsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Insights'),
+        title: const Text('Insights'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Text(
+            const Text(
               'All Insights:',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             for (Map<String, dynamic> insight in insights)
               Card(
-                margin: EdgeInsets.symmetric(vertical: 8),
+                margin: const EdgeInsets.symmetric(vertical: 8),
                 child: ListTile(
                   leading: CircleAvatar(
                     backgroundImage: AssetImage(insight['image']),
@@ -684,7 +713,7 @@ Widget buildColumn(double screenWidth, IconData icon, String text) {
     children: [
       Container(
         height: containerHeight,
-        margin: EdgeInsets.symmetric(horizontal: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 10),
         padding: EdgeInsets.symmetric(horizontal: paddingValue),
         decoration: BoxDecoration(
           color: Colors.transparent,
@@ -693,11 +722,11 @@ Widget buildColumn(double screenWidth, IconData icon, String text) {
         ),
         child: Icon(
           icon,
-          color: Color(0xff15ac97),
+          color: const Color(0xff15ac97),
           size: iconSize,
         ),
       ),
-      SizedBox(height: 5),
+      const SizedBox(height: 5),
       Text(
         text,
         style: TextStyle(fontSize: textSize),

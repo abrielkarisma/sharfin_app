@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:sharfin_app/data/models/Insight.dart';
-import 'package:sharfin_app/view/insight.dart';
 
 class InsightService {
   static Future<List<Insight>> getImageInsights() async {

@@ -1,7 +1,5 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
 class KiblatPage extends StatefulWidget {
   const KiblatPage({super.key});
@@ -33,7 +31,7 @@ class _QiblahScreenState extends State<KiblatPage> with SingleTickerProviderStat
         ),
         centerTitle: true,
         ),
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         body: StreamBuilder(
           stream: FlutterQiblah.qiblahStream,
           builder: (context, snapshot) {
@@ -61,8 +59,8 @@ class _QiblahScreenState extends State<KiblatPage> with SingleTickerProviderStat
                               angle: animation!.value,
                               child: Image.asset('assets/Qibla.png',width: 200, height: 200,)),
                         )), 
-                    Text('Lihat panah dengan icon Kabah untuk', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
-                    Text('menghadap Kiblat',style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400))
+                    const Text('Lihat panah dengan icon Kabah untuk', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+                    const Text('menghadap Kiblat',style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400))
 
                   ]),
             );

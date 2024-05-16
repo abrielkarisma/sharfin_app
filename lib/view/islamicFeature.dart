@@ -1,20 +1,16 @@
-import 'dart:ui';
 
-import 'package:adhan/adhan.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:sharfin_app/view/jamSholat.dart';
 import 'package:sharfin_app/view/qiblaPage.dart';
 import 'package:sharfin_app/view/quranPage.dart';
 import 'package:sharfin_app/data/service/JamSholat.dart';
 
 class IslamPage extends StatefulWidget {
+  const IslamPage({super.key});
+
   @override
   State<IslamPage> createState() => _IslamPageState();
 }
@@ -43,7 +39,7 @@ class _IslamPageState extends State<IslamPage> {
     });
 
     // Simulate loading delay
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       setState(() {
         _isLoading = false;
       });
@@ -55,8 +51,8 @@ class _IslamPageState extends State<IslamPage> {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(color: Colors.white),
-        title: Text(
+        leading: const BackButton(color: Colors.white),
+        title: const Text(
           'Fitur Islami',
           style: TextStyle(
             fontFamily: 'Poppins',
@@ -65,10 +61,10 @@ class _IslamPageState extends State<IslamPage> {
           ),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff00a455),
+        backgroundColor: const Color(0xff00a455),
         actions: [
           IconButton(
-            icon: Icon(Icons.refresh, color: Colors.white),
+            icon: const Icon(Icons.refresh, color: Colors.white),
             onPressed: () {
               if (!_isLoading) {
                 _handleRefresh();
@@ -79,7 +75,7 @@ class _IslamPageState extends State<IslamPage> {
       ),
       body: Center(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -119,7 +115,7 @@ class _IslamPageState extends State<IslamPage> {
                                       color: Colors.white,
                                     ),
                                   ),
-                                  Container(
+                                  SizedBox(
                                     height: 20,
                                     child: Text(
                                       '(-${formatDuration(prayerTimesService.timeUntilNextPrayer)})',
@@ -161,7 +157,7 @@ class _IslamPageState extends State<IslamPage> {
                               ),
                               Text(
                                 HijriCalendar.now()
-                                    .toFormat("dd MMMM yyyy" + " H"),
+                                    .toFormat("dd MMMM yyyy" " H"),
                                 style: const TextStyle(
                                   fontFamily: "Poppins",
                                   fontSize: 12,
@@ -177,17 +173,17 @@ class _IslamPageState extends State<IslamPage> {
                   ),
                 ),
                 Container(
-                    padding: EdgeInsets.only(top: 11),
+                    padding: const EdgeInsets.only(top: 11),
                     child: IntrinsicWidth(
                       child: Container(
                         height: 26,
                         decoration: BoxDecoration(
-                            color: Color(0xFF000000).withOpacity(0.25),
+                            color: const Color(0xFF000000).withOpacity(0.25),
                             borderRadius: BorderRadius.circular(100)),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Image(
+                            const Image(
                               image: Svg("assets/LocationWhite.svg"),
                             ),
                             Flexible(
@@ -212,13 +208,13 @@ class _IslamPageState extends State<IslamPage> {
                         ),
                       ),
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 80,
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: 300,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.contain,
                       image: AssetImage("assets/mosque2.png"),
@@ -240,7 +236,7 @@ class _IslamPageState extends State<IslamPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => PrayTime()));
+                                  builder: (context) => const PrayTime()));
                           // Add your logic here for Top up
                         },
                       ),
@@ -261,7 +257,7 @@ class _IslamPageState extends State<IslamPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => KiblatPage(),
+                                builder: (context) => const KiblatPage(),
                               ));
                           // Add your logic here for Tarik Tunai
                         },
@@ -274,7 +270,7 @@ class _IslamPageState extends State<IslamPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => QuranPage()));
+                                  builder: (context) => const QuranPage()));
                           // Add your logic here for Mutasi
                         },
                       ),
@@ -307,7 +303,7 @@ Widget buildColumn(
       children: [
         Container(
           height: containerHeight,
-          margin: EdgeInsets.symmetric(horizontal: 10),
+          margin: const EdgeInsets.symmetric(horizontal: 10),
           padding: EdgeInsets.symmetric(horizontal: paddingValue),
           decoration: BoxDecoration(
             color: Colors.white10,
@@ -320,7 +316,7 @@ Widget buildColumn(
             height: imageSize,
           ),
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Text(
           text,
           style: TextStyle(fontSize: textSize, color: Colors.white),

@@ -4,7 +4,7 @@ import 'package:sharfin_app/data/service/Insight.dart'; // Ubah nama file Insigh
 import 'package:sharfin_app/view/detailInsight.dart';
 
 class InsightPage extends StatefulWidget {
-  const InsightPage({Key? key}) : super(key: key);
+  const InsightPage({super.key});
 
   @override
   _InsightPageState createState() => _InsightPageState();
@@ -24,9 +24,9 @@ class _InsightPageState extends State<InsightPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Insight",
-          style: const TextStyle(
+          style: TextStyle(
             fontFamily: "Poppins",
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -39,7 +39,7 @@ class _InsightPageState extends State<InsightPage> {
           future: _insightsFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (snapshot.hasData) {
@@ -68,8 +68,8 @@ class _InsightPageState extends State<InsightPage> {
                         fit: StackFit.expand,
                         children: [
                           Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
                               width: 165,
                               height: 200,
                               child: ClipRRect(
@@ -88,7 +88,7 @@ class _InsightPageState extends State<InsightPage> {
                 ),
               );
             } else {
-              return Text('No data available');
+              return const Text('No data available');
             }
           },
         ),

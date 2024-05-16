@@ -1,4 +1,3 @@
-import 'package:sharfin_app/data/models/Insight.dart';
 
 class Insight {
   final String uuid;

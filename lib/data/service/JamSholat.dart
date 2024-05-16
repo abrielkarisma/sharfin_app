@@ -1,5 +1,4 @@
 import 'package:adhan_dart/adhan_dart.dart';
-import 'package:flutter/foundation.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hijri/hijri_calendar.dart';
@@ -72,7 +71,7 @@ class PrayerTimesService {
     DateTime now = tz.TZDateTime.from(_currentDate, location);
     _timeUntilNextPrayer = nextPrayer.time!.difference(now);
 
-    _nextPrayerName = allPrayers[currentPrayerIndex].name!;
+    _nextPrayerName = allPrayers[currentPrayerIndex].name;
   }
 
   String get address => _address;

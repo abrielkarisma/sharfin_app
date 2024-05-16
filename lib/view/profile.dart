@@ -3,7 +3,6 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:sharfin_app/data/models/Users.dart';
 import 'package:sharfin_app/data/service/Users.dart';
 
-import 'package:flutter/gestures.dart';
 import 'package:sharfin_app/view/onBoarding.dart';
 
 class Profile extends StatefulWidget {
@@ -14,7 +13,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  UsersService _usersService = UsersService();
+  final UsersService _usersService = UsersService();
   Users? user;
 
   @override
@@ -25,7 +24,7 @@ class _ProfileState extends State<Profile> {
 
   Future<void> _fetchData() async {
     try {
-      final String userId =
+      const String userId =
           '/1/'; // Assuming this is the correct user ID format
       user = await _usersService.getUsers(userId);
       setState(() {}); // Update UI if using state management
@@ -38,9 +37,9 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Profil",
-          style: const TextStyle(
+          style: TextStyle(
             fontFamily: "Poppins",
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -49,7 +48,7 @@ class _ProfileState extends State<Profile> {
         ),
       ),
       body: user == null
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Padding(
               padding: const EdgeInsets.all(16.0),
               child: SingleChildScrollView(
@@ -61,7 +60,7 @@ class _ProfileState extends State<Profile> {
                       Stack(
                         alignment: Alignment.bottomRight,
                         children: [
-                          Container(
+                          SizedBox(
                             width: 100,
                             height: 100,
                             child: ClipRRect(
@@ -76,14 +75,14 @@ class _ProfileState extends State<Profile> {
                               print("bisa bang");
                             },
                             child: Container(
-                              child: Image(
+                              child: const Image(
                                   image: AssetImage("assets/editPhoto.png")),
                             ),
                           ),
                         ],
                       ),
                       Container(
-                        padding: EdgeInsets.only(top: 12),
+                        padding: const EdgeInsets.only(top: 12),
                         child: Text(
                           user!.name,
                           style: const TextStyle(
@@ -95,7 +94,7 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(top: 16),
+                        padding: const EdgeInsets.only(top: 16),
                         child: GestureDetector(
                           onTap: () {
                             print("bisa");
@@ -109,7 +108,7 @@ class _ProfileState extends State<Profile> {
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(16.0),
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       color: Color(0x1F887AA6),
                                       offset: Offset(0, 13),
@@ -122,20 +121,20 @@ class _ProfileState extends State<Profile> {
                                 child: Row(
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.only(
+                                      padding: const EdgeInsets.only(
                                           left: 28,
                                           top: 8,
                                           bottom: 8,
                                           right: 8),
-                                      child: Image(
+                                      child: const Image(
                                           image: Svg("assets/profileBlue.svg")),
                                     ),
-                                    Container(
+                                    const SizedBox(
                                       width: 239,
                                       height: 21,
                                       child: Text(
                                         "Pengaturan Akun",
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontFamily: "Poppins",
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
@@ -145,7 +144,7 @@ class _ProfileState extends State<Profile> {
                                       ),
                                     ),
                                     Container(
-                                      padding: EdgeInsets.only(left: 8),
+                                      padding: const EdgeInsets.only(left: 8),
                                       child: Icon(
                                         Icons.arrow_forward_ios_sharp,
                                         size: 24,
@@ -160,7 +159,7 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(top: 16),
+                        padding: const EdgeInsets.only(top: 16),
                         child: GestureDetector(
                           onTap: () {
                             print("bisa");
@@ -174,7 +173,7 @@ class _ProfileState extends State<Profile> {
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(16.0),
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       color: Color(0x1F887AA6),
                                       offset: Offset(0, 13),
@@ -187,20 +186,20 @@ class _ProfileState extends State<Profile> {
                                 child: Row(
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.only(
+                                      padding: const EdgeInsets.only(
                                           left: 28,
                                           top: 8,
                                           bottom: 8,
                                           right: 8),
                                       child:
-                                          Image(image: Svg("assets/lock.svg")),
+                                          const Image(image: Svg("assets/lock.svg")),
                                     ),
-                                    Container(
+                                    const SizedBox(
                                       width: 239,
                                       height: 21,
                                       child: Text(
                                         "Ubah Password",
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontFamily: "Poppins",
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
@@ -210,7 +209,7 @@ class _ProfileState extends State<Profile> {
                                       ),
                                     ),
                                     Container(
-                                      padding: EdgeInsets.only(left: 8),
+                                      padding: const EdgeInsets.only(left: 8),
                                       child: Icon(
                                         Icons.arrow_forward_ios_sharp,
                                         size: 24,
@@ -225,7 +224,7 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(top: 16),
+                        padding: const EdgeInsets.only(top: 16),
                         child: GestureDetector(
                           onTap: () {
                             print("bisa");
@@ -239,7 +238,7 @@ class _ProfileState extends State<Profile> {
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(16.0),
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       color: Color(0x1F887AA6),
                                       offset: Offset(0, 13),
@@ -252,20 +251,20 @@ class _ProfileState extends State<Profile> {
                                 child: Row(
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.only(
+                                      padding: const EdgeInsets.only(
                                           left: 28,
                                           top: 8,
                                           bottom: 8,
                                           right: 8),
-                                      child: Image(
+                                      child: const Image(
                                           image: Svg("assets/starBlue.svg")),
                                     ),
-                                    Container(
+                                    const SizedBox(
                                       width: 239,
                                       height: 21,
                                       child: Text(
                                         "Beri Rating Kami",
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontFamily: "Poppins",
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
@@ -275,7 +274,7 @@ class _ProfileState extends State<Profile> {
                                       ),
                                     ),
                                     Container(
-                                      padding: EdgeInsets.only(left: 8),
+                                      padding: const EdgeInsets.only(left: 8),
                                       child: Icon(
                                         Icons.arrow_forward_ios_sharp,
                                         size: 24,
@@ -290,7 +289,7 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(top: 16),
+                        padding: const EdgeInsets.only(top: 16),
                         child: GestureDetector(
                           onTap: () {
                             print("bisa");
@@ -304,7 +303,7 @@ class _ProfileState extends State<Profile> {
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(16.0),
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       color: Color(0x1F887AA6),
                                       offset: Offset(0, 13),
@@ -317,20 +316,20 @@ class _ProfileState extends State<Profile> {
                                 child: Row(
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.only(
+                                      padding: const EdgeInsets.only(
                                           left: 28,
                                           top: 8,
                                           bottom: 8,
                                           right: 8),
-                                      child: Image(
+                                      child: const Image(
                                           image: Svg("assets/notesBlue.svg")),
                                     ),
-                                    Container(
+                                    const SizedBox(
                                       width: 239,
                                       height: 21,
                                       child: Text(
                                         "Syarat & Ketentuan",
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontFamily: "Poppins",
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
@@ -340,7 +339,7 @@ class _ProfileState extends State<Profile> {
                                       ),
                                     ),
                                     Container(
-                                      padding: EdgeInsets.only(left: 8),
+                                      padding: const EdgeInsets.only(left: 8),
                                       child: Icon(
                                         Icons.arrow_forward_ios_sharp,
                                         size: 24,
@@ -355,7 +354,7 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(top: 16),
+                        padding: const EdgeInsets.only(top: 16),
                         child: GestureDetector(
                           onTap: () {
                             print("bisa");
@@ -369,7 +368,7 @@ class _ProfileState extends State<Profile> {
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(16.0),
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       color: Color(0x1F887AA6),
                                       offset: Offset(0, 13),
@@ -382,20 +381,20 @@ class _ProfileState extends State<Profile> {
                                 child: Row(
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.only(
+                                      padding: const EdgeInsets.only(
                                           left: 28,
                                           top: 8,
                                           bottom: 8,
                                           right: 8),
-                                      child: Image(
+                                      child: const Image(
                                           image: Svg("assets/notesBlue.svg")),
                                     ),
-                                    Container(
+                                    const SizedBox(
                                       width: 239,
                                       height: 21,
                                       child: Text(
                                         "Kebijakan Privasi",
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontFamily: "Poppins",
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
@@ -405,7 +404,7 @@ class _ProfileState extends State<Profile> {
                                       ),
                                     ),
                                     Container(
-                                      padding: EdgeInsets.only(left: 8),
+                                      padding: const EdgeInsets.only(left: 8),
                                       child: Icon(
                                         Icons.arrow_forward_ios_sharp,
                                         size: 24,
@@ -420,23 +419,23 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(top: 16),
+                        padding: const EdgeInsets.only(top: 16),
                         child: GestureDetector(
                           onTap: () {
                             showModalBottomSheet(
-                              backgroundColor: Color(0xFFFFFFFF),
+                              backgroundColor: const Color(0xFFFFFFFF),
                               context: context,
                               builder: (BuildContext context) {
                                 return SizedBox(
                                   width: 500,
                                   height: 360,
                                   child: Container(
-                                    padding: EdgeInsets.all(20.0),
+                                    padding: const EdgeInsets.all(20.0),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        SizedBox(height: 20),
-                                        Text(
+                                        const SizedBox(height: 20),
+                                        const Text(
                                           "Apakah kamu yakin akan keluar aplikasi?",
                                           style: TextStyle(
                                             fontFamily: "Poppins",
@@ -446,8 +445,8 @@ class _ProfileState extends State<Profile> {
                                           ),
                                           textAlign: TextAlign.center,
                                         ),
-                                        SizedBox(height: 8.0),
-                                        SizedBox(
+                                        const SizedBox(height: 8.0),
+                                        const SizedBox(
                                           height: 32,
                                         ),
                                         Container(
@@ -457,30 +456,30 @@ class _ProfileState extends State<Profile> {
                                                 .pushReplacement(
                                                     MaterialPageRoute(
                                                         builder: (context) {
-                                              return onboarding();
+                                              return const onboarding();
                                             }));
                                           },
                                           style: ButtonStyle(
                                             backgroundColor:
-                                                MaterialStateProperty.all(Color(
+                                                MaterialStateProperty.all(const Color(
                                                     0xffFFF2F4)), // Adjust color
                                             foregroundColor:
                                                 MaterialStateProperty.all(Colors
                                                     .white), // Adjust text color
                                             padding: MaterialStateProperty.all(
-                                                EdgeInsets.symmetric(
+                                                const EdgeInsets.symmetric(
                                                     horizontal: 20,
                                                     vertical:
                                                         10)), // Adjust padding
                                             minimumSize:
                                                 MaterialStateProperty.all(
-                                                    Size(327, 48)),
+                                                    const Size(327, 48)),
                                             shape: MaterialStateProperty.all<
                                                 RoundedRectangleBorder>(
                                               RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(12.0),
-                                                side: BorderSide(
+                                                side: const BorderSide(
                                                   color: Color.fromARGB(
                                                       255,
                                                       255,
@@ -491,7 +490,7 @@ class _ProfileState extends State<Profile> {
                                               ),
                                             ),
                                           ),
-                                          child: Text("Ya, Logout",
+                                          child: const Text("Ya, Logout",
                                               style: TextStyle(
                                                 fontFamily: "Poppins",
                                                 fontSize: 16,
@@ -500,12 +499,12 @@ class _ProfileState extends State<Profile> {
                                               )),
                                         )),
                                         Container(
-                                          padding: EdgeInsets.only(top: 28),
+                                          padding: const EdgeInsets.only(top: 28),
                                           child: TextButton(
                                             onPressed: () {
                                               Navigator.pop(context);
                                             },
-                                            child: Text(
+                                            child: const Text(
                                               "Batal",
                                               style: TextStyle(
                                                 fontFamily: "Poppins",
@@ -532,7 +531,7 @@ class _ProfileState extends State<Profile> {
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(16.0),
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       color: Color(0x1F887AA6),
                                       offset: Offset(0, 13),
@@ -545,20 +544,20 @@ class _ProfileState extends State<Profile> {
                                 child: Row(
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.only(
+                                      padding: const EdgeInsets.only(
                                           left: 28,
                                           top: 8,
                                           bottom: 8,
                                           right: 8),
-                                      child: Image(
+                                      child: const Image(
                                           image: Svg("assets/logout.svg")),
                                     ),
-                                    Container(
+                                    const SizedBox(
                                       width: 239,
                                       height: 21,
                                       child: Text(
                                         "Logout",
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontFamily: "Poppins",
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
@@ -568,7 +567,7 @@ class _ProfileState extends State<Profile> {
                                       ),
                                     ),
                                     Container(
-                                      padding: EdgeInsets.only(left: 8),
+                                      padding: const EdgeInsets.only(left: 8),
                                       child: Icon(
                                         Icons.arrow_forward_ios_sharp,
                                         size: 24,

@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharfin_app/bloc/ayat_bloc.dart';
 import 'package:sharfin_app/data/models/surat_model.dart';
@@ -8,9 +6,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class AyatPage extends StatefulWidget {
   const AyatPage({
-    Key? key,
+    super.key,
     required this.surat,
-  }) : super(key: key);
+  });
   final Surah surat;
 
   @override
@@ -30,7 +28,7 @@ class _AyatPageState extends State<AyatPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(widget.surat.name, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),),
+        title: Text(widget.surat.name, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),),
         centerTitle: true,
       ),
       body: BlocBuilder<AyatBloc, AyatState>(
@@ -60,7 +58,7 @@ class _AyatPageState extends State<AyatPage> {
                                 child: Center(
                                   child: Text(
                                     "${ayat.number.inSurah}",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w500,
                                         color: Color(0xffa0a3bd)),
@@ -71,9 +69,9 @@ class _AyatPageState extends State<AyatPage> {
                           ),
                           Expanded(
                               child: Text(
-                            '${ayat.arab}',
+                            ayat.arab,
                             textAlign: TextAlign.right,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w400),
                           )),
                         ],
@@ -95,7 +93,7 @@ class _AyatPageState extends State<AyatPage> {
                                 child: Center(
                                   child: Text(
                                     "${ayat.number.inSurah}.",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w500,
                                     ),
@@ -108,7 +106,7 @@ class _AyatPageState extends State<AyatPage> {
                         Flexible(
                             child: Text(
                           '${ayat.translation} ',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
                           ),

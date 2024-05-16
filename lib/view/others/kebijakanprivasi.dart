@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class kebijakanprivasi extends StatelessWidget {
   const kebijakanprivasi({super.key});
@@ -11,16 +10,16 @@ class kebijakanprivasi extends StatelessWidget {
         title: Row(children: [
           GestureDetector(
             onTap: () {},
-            child: Image(
+            child: const Image(
               image: AssetImage("assets/cancel.png"),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 40,
           ),
-          Text(
+          const Text(
             "Kebijakan Privasi",
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: "Poppins",
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -29,7 +28,7 @@ class kebijakanprivasi extends StatelessWidget {
           ),
         ]),
       ),
-      body: Padding(
+      body: const Padding(
         padding: EdgeInsets.all(16),
         child: SizedBox(
             width: 363,

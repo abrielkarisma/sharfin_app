@@ -44,22 +44,22 @@ class _ebookContentState extends State<ebookContent> {
       body: Center(
         child: SingleChildScrollView(
           child: isLoading
-              ? CircularProgressIndicator()
+              ? const CircularProgressIndicator()
               : Column(
                   children: [
                     Stack(children: [
-                      Container(
+                      SizedBox(
                           width: 415,
                           height: 519,
                           child:
                               Image.network(ebook!.image, fit: BoxFit.cover)),
                       Container(
-                        padding: EdgeInsets.only(left: 16, top: 60),
+                        padding: const EdgeInsets.only(left: 16, top: 60),
                         child: GestureDetector(
                           onTap: () {
                             Navigator.pop(context);
                           },
-                          child: Icon(
+                          child: const Icon(
                             Icons.arrow_back_rounded,
                             color: Colors.white,
                             size: 26,
@@ -70,7 +70,7 @@ class _ebookContentState extends State<ebookContent> {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Container(
-                        padding: EdgeInsets.only(top: 20),
+                        padding: const EdgeInsets.only(top: 20),
                         child: Text(
                           ebook != null
                               ? ebook!.content +
@@ -78,7 +78,7 @@ class _ebookContentState extends State<ebookContent> {
                                   ebook!.content +
                                   ebook!.content
                               : "",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: "Poppins",
                             fontSize: 16,
                             fontWeight: FontWeight.w500,

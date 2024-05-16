@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter/gestures.dart';
 
 class profilguest extends StatefulWidget {
@@ -14,11 +12,11 @@ class _profilguestState extends State<profilguest> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFFFFFF),
+      backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Profil",
-          style: const TextStyle(
+          style: TextStyle(
             fontFamily: "Poppins",
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -28,21 +26,21 @@ class _profilguestState extends State<profilguest> {
       ),
       body: Center(
         child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(children: [
             Container(
-              padding: EdgeInsets.only(top: 32),
-              child: Image(
+              padding: const EdgeInsets.only(top: 32),
+              child: const Image(
                 image: AssetImage("assets/profunlog.png"),
                 width: 125,
                 height: 125,
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 16),
-              child: Text(
+              padding: const EdgeInsets.only(top: 16),
+              child: const Text(
                 "Kamu Belum Terautentikasi",
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: "Poppins",
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -51,10 +49,10 @@ class _profilguestState extends State<profilguest> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 16),
-              child: Text(
+              padding: const EdgeInsets.only(top: 16),
+              child: const Text(
                 "Silahkan masuk atau mendaftar terlebih dahulu",
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: "Poppins",
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
@@ -63,23 +61,23 @@ class _profilguestState extends State<profilguest> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 16),
+              padding: const EdgeInsets.only(top: 16),
               child: FilledButton(
                   onPressed: () {
                     showModalBottomSheet(
-                      backgroundColor: Color(0xFFFFFFFF),
+                      backgroundColor: const Color(0xFFFFFFFF),
                       context: context,
                       builder: (BuildContext context) {
                         return SizedBox(
                           width: 500,
                           height: 360,
                           child: Container(
-                            padding: EdgeInsets.all(20.0),
+                            padding: const EdgeInsets.all(20.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                SizedBox(height: 20),
-                                Text(
+                                const SizedBox(height: 20),
+                                const Text(
                                   "Masuk atau Daftar",
                                   style: TextStyle(
                                     fontFamily: "Poppins",
@@ -88,12 +86,12 @@ class _profilguestState extends State<profilguest> {
                                     color: Color(0XFF14142B),
                                   ),
                                 ),
-                                SizedBox(height: 8.0),
+                                const SizedBox(height: 8.0),
                                 SizedBox(
                                   width: 290,
                                   child: Text.rich(
                                     TextSpan(children: [
-                                      TextSpan(
+                                      const TextSpan(
                                           text:
                                               "Dengan mendaftar saya menyetujui ",
                                           style: TextStyle(
@@ -104,7 +102,7 @@ class _profilguestState extends State<profilguest> {
                                           )),
                                       TextSpan(
                                         text: "Syarat & Ketentuan",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontFamily: "Poppins",
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
@@ -116,7 +114,7 @@ class _profilguestState extends State<profilguest> {
                                                 "Syarat & Ketentuan pressed!");
                                           },
                                       ),
-                                      TextSpan(
+                                      const TextSpan(
                                           text: " yang berlaku dan ",
                                           style: TextStyle(
                                             fontFamily: "Poppins",
@@ -126,7 +124,7 @@ class _profilguestState extends State<profilguest> {
                                           )),
                                       TextSpan(
                                         text: " Kebijakan Privasi",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontFamily: "Poppins",
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
@@ -141,7 +139,7 @@ class _profilguestState extends State<profilguest> {
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 32,
                                 ),
                                 Container(
@@ -155,18 +153,18 @@ class _profilguestState extends State<profilguest> {
                                             MaterialStateProperty.all(Colors
                                                 .white), // Adjust text color
                                         padding: MaterialStateProperty.all(
-                                            EdgeInsets.symmetric(
+                                            const EdgeInsets.symmetric(
                                                 horizontal: 20,
                                                 vertical:
                                                     10)), // Adjust padding
                                         minimumSize: MaterialStateProperty.all(
-                                            Size(327, 48)),
+                                            const Size(327, 48)),
                                         shape: MaterialStateProperty.all<
                                             RoundedRectangleBorder>(
                                           RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(12.0),
-                                            side: BorderSide(
+                                            side: const BorderSide(
                                               color: Color(
                                                   0xFFD9DBE9), // Border color
                                               width: 1.0, // Border width
@@ -174,7 +172,7 @@ class _profilguestState extends State<profilguest> {
                                           ),
                                         ),
                                       ),
-                                      child: Row(
+                                      child: const Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
@@ -189,7 +187,7 @@ class _profilguestState extends State<profilguest> {
                                             ),
                                             Text(
                                               "Lanjutkan Dengan Google",
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                 fontFamily: "Poppins",
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w500,
@@ -201,12 +199,12 @@ class _profilguestState extends State<profilguest> {
                                           ])),
                                 ),
                                 Container(
-                                  padding: EdgeInsets.only(top: 28),
+                                  padding: const EdgeInsets.only(top: 28),
                                   child: TextButton(
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       "Batal",
                                       style: TextStyle(
                                         fontFamily: "Poppins",
@@ -226,12 +224,12 @@ class _profilguestState extends State<profilguest> {
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
-                        Color(0xFF15AC97)), // Adjust color
+                        const Color(0xFF15AC97)), // Adjust color
                     foregroundColor: MaterialStateProperty.all(
                         Colors.white), // Adjust text color
-                    padding: MaterialStateProperty.all(EdgeInsets.symmetric(
+                    padding: MaterialStateProperty.all(const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 10)), // Adjust padding
-                    minimumSize: MaterialStateProperty.all(Size(198, 48)),
+                    minimumSize: MaterialStateProperty.all(const Size(198, 48)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
@@ -239,9 +237,9 @@ class _profilguestState extends State<profilguest> {
                       ),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     "Masuk atau Daftar",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 16,
                       fontWeight: FontWeight.normal,

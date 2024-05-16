@@ -1,12 +1,9 @@
-import "dart:convert";
-import 'package:http/http.dart' as http;
-import "package:dio/dio.dart";
 import "package:flutter/material.dart";
 import 'package:flutter_svg/flutter_svg.dart';
-import "package:sharfin_app/data/models/juz_model.dart";
 import "package:sharfin_app/view/juzAyatPage.dart";
+
 class JuzPage extends StatefulWidget {
-  const JuzPage({Key? key});
+  const JuzPage({super.key});
 
   @override
   State<JuzPage> createState() => _JuzPageState();
@@ -35,7 +32,7 @@ class _JuzPageState extends State<JuzPage> {
         {'text': 'Al-Anbiya Ayat 1'},
         {'text': 'Al-Muminun Ayat 1'},
         {'text': 'Al-Furqan Ayat 21'},
-        {'text': 'An-Naml Ayat 56'}, 
+        {'text': 'An-Naml Ayat 56'},
         {'text': 'Al-Ankabut Ayat 46'},
         {'text': 'Al-Ahzab Ayat 31'},
         {'text': 'Yasin Ayat 28'},
@@ -45,7 +42,7 @@ class _JuzPageState extends State<JuzPage> {
         {'text': 'Adz Dzariyat Ayat 31'},
         {'text': 'Al-Mujadilah Ayat 1'},
         {'text': 'Al-Mulk Ayat 1'},
-        {'text': 'An-Naba Ayat 1'},  
+        {'text': 'An-Naba Ayat 1'},
       ],
     },
   ];
@@ -86,7 +83,7 @@ class _JuzPageState extends State<JuzPage> {
                       child: Center(
                         child: Text(
                           "${index + 1}",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               color: Color(0xffa0a3bd)),
@@ -97,9 +94,16 @@ class _JuzPageState extends State<JuzPage> {
                 ),
                 title: Text(
                   'Juz ${index + 1}',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w500),
                 ),
-                subtitle: Text(item['text'], style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Color(0xffa0a3bd)), ), // Display text from the 'items' list
+                subtitle: Text(
+                  item['text'],
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xffa0a3bd)),
+                ), // Display text from the 'items' list
               ),
             ),
           );

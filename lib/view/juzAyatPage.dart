@@ -9,7 +9,7 @@ import 'package:sharfin_app/data/models/juz_model.dart';
 class JuzAyatPage extends StatefulWidget {
   final int? juzIndex;
 
-  const JuzAyatPage({Key? key, required this.juzIndex}) : super(key: key);
+  const JuzAyatPage({super.key, required this.juzIndex});
 
   @override
   State<JuzAyatPage> createState() => _JuzAyatPageState();
@@ -35,7 +35,7 @@ class _JuzAyatPageState extends State<JuzAyatPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Juz ${widget.juzIndex}',
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
+            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
         centerTitle: true,
       ),
       body: FutureBuilder<Juz>(
@@ -45,7 +45,7 @@ class _JuzAyatPageState extends State<JuzAyatPage> {
               itemBuilder: (context, index) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   // Show circular progress indicator while fetching data
-                  return Align(
+                  return const Align(
                       alignment: Alignment.center,
                       child: CircularProgressIndicator());
                 }
@@ -67,7 +67,7 @@ class _JuzAyatPageState extends State<JuzAyatPage> {
                                   child: Center(
                                     child: Text(
                                       '${juz.number.inSurah}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w500,
                                           color: Color(0xffa0a3bd)),
@@ -78,9 +78,9 @@ class _JuzAyatPageState extends State<JuzAyatPage> {
                             ),
                             Expanded(
                                 child: Text(
-                              '${juz.text.arab}',
+                              juz.text.arab,
                               textAlign: TextAlign.right,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.w400),
                             )),
                           ],
@@ -102,7 +102,7 @@ class _JuzAyatPageState extends State<JuzAyatPage> {
                                   child: Center(
                                     child: Text(
                                       '${juz.number.inSurah}.',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -129,6 +129,7 @@ class _JuzAyatPageState extends State<JuzAyatPage> {
                   // Handle error
                   return Text('Error: ${snapshot.error}');
                 }
+                return null;
               },
             )),
         // Display juz-specific content here

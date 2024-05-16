@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
-import 'package:sharfin_app/data/models/Insight.dart';
 import 'package:sharfin_app/view/ebooks.dart';
 import 'package:sharfin_app/view/homepage.dart';
 import 'package:sharfin_app/view/insight.dart';
@@ -8,7 +6,7 @@ import 'package:sharfin_app/view/profile.dart';
 
 class bottomNavigation extends StatefulWidget {
   final int selectedIndex;
-  bottomNavigation({Key? key, required this.selectedIndex}) : super(key: key);
+  const bottomNavigation({super.key, required this.selectedIndex});
   @override
   _bottomNavigationState createState() => _bottomNavigationState();
 }
@@ -23,10 +21,10 @@ class _bottomNavigationState extends State<bottomNavigation> {
   }
 
   List<Widget> pages = [
-    HomePage(),
-    InsightPage(),
-    ebooks(),
-    Profile(),
+    const HomePage(),
+    const InsightPage(),
+    const ebooks(),
+    const Profile(),
   ];
 
   void _onItemTapped(int index) {
@@ -48,7 +46,7 @@ class _bottomNavigationState extends State<bottomNavigation> {
     return Scaffold(
       body: pageCaller(_bottomNavIndex),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.transparent,
         ),
         child: BottomNavigationBar(
@@ -114,7 +112,7 @@ class _bottomNavigationState extends State<bottomNavigation> {
           unselectedItemColor: Colors.grey,
           showUnselectedLabels: true,
           currentIndex: _bottomNavIndex,
-          selectedItemColor: Color(0xFF15AC97),
+          selectedItemColor: const Color(0xFF15AC97),
           showSelectedLabels: true,
           onTap: _onItemTapped,
         ),

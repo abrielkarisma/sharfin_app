@@ -18,9 +18,9 @@ class _ebooksState extends State<ebooks> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Ebook",
-          style: const TextStyle(
+          style: TextStyle(
             fontFamily: "Poppins",
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -57,8 +57,8 @@ class _ebooksState extends State<ebooks> {
                         fit: StackFit.expand,
                         children: [
                           Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
                               width: 165,
                               height: 200,
                               child: ClipRRect(
@@ -79,7 +79,7 @@ class _ebooksState extends State<ebooks> {
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             }
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           },
         ),
       ),

@@ -4,7 +4,7 @@ import 'package:sharfin_app/view/juzPage.dart';
 import 'package:sharfin_app/view/suraPage.dart';
 
 class QuranPage extends StatelessWidget {
-  const QuranPage({Key? key}) : super(key: key);
+  const QuranPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class QuranPage extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {},
           ),
         ],
@@ -48,7 +48,7 @@ class QuranPage extends StatelessWidget {
                   ),
                   ),
             ],
-            body: TabBarView(
+            body: const TabBarView(
               children: [
                 JuzPage(),
                 SuratPage(),
@@ -64,14 +64,14 @@ class QuranPage extends StatelessWidget {
   Column _lastread() {
     return Column(
       children: [
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Stack(
           children: [
             Container(
               height: 131,
               width: 343,
               decoration: BoxDecoration(
-                color: Color(0xff15ac97),
+                color: const Color(0xff15ac97),
                 borderRadius: BorderRadius.circular(16),
               ),
             ),
@@ -85,8 +85,8 @@ class QuranPage extends StatelessWidget {
               right: 0,
               child: SvgPicture.asset('assets/book.svg'),
             ),
-            Padding(
-              padding: const EdgeInsets.all(18),
+            const Padding(
+              padding: EdgeInsets.all(18),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

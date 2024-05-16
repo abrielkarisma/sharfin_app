@@ -17,4 +17,27 @@ class UserService {
       throw Exception('Failed to register user');
     }
   }
+
+  Future<Map<String, dynamic>> login(String email, String password) async {
+    try {
+      final response = await _dio.post(
+        'http://192.168.1.14:8888/api/auth/login',
+        data: {
+          'email': email,
+          'password': password,
+        },
+      );
+
+      return response.data;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        return e.response!.data;
+      } else {
+        return {
+          'message': 'An error occurred',
+          'success': false,
+        };
+      }
+    }
+  }
 }

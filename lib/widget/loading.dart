@@ -7,7 +7,7 @@ class loading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return const SizedBox(
       width: 24,
       height: 24,
       child: CircularProgressIndicator(
@@ -25,7 +25,7 @@ class loadingWhite extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return const SizedBox(
       width: 24,
       height: 24,
       child: CircularProgressIndicator(
@@ -43,7 +43,7 @@ class loadingRed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return const SizedBox(
       width: 24,
       height: 24,
       child: CircularProgressIndicator(

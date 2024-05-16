@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:adhan_dart/adhan_dart.dart';
 import 'package:timezone/timezone.dart' as tz;
@@ -14,6 +11,8 @@ import 'package:lat_lng_to_timezone/lat_lng_to_timezone.dart' as tzmap;
 import 'package:sharfin_app/widget/loading.dart';
 
 class PrayTime extends StatefulWidget {
+  const PrayTime({super.key});
+
   @override
   State<PrayTime> createState() => _PrayTimeState();
 }
@@ -114,12 +113,12 @@ class _PrayTimeState extends State<PrayTime> {
             //   ),
             // ),
             Container(
-              padding: EdgeInsets.only(left: 12),
+              padding: const EdgeInsets.only(left: 12),
               width: 255,
               height: 25,
-              child: Text(
+              child: const Text(
                 'Jadwal Sholat',
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: "Poppins",
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -132,20 +131,20 @@ class _PrayTimeState extends State<PrayTime> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               child: isLoading
-                  ? loadingRed()
+                  ? const loadingRed()
                   : Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image(image: Svg("assets/Location.svg")),
+                        const Image(image: Svg("assets/Location.svg")),
                         Container(
-                          padding: EdgeInsets.only(left: 4),
+                          padding: const EdgeInsets.only(left: 4),
                           child: Text(address,
                               style: const TextStyle(
                                 fontFamily: "Poppins",
@@ -158,19 +157,19 @@ class _PrayTimeState extends State<PrayTime> {
                     ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 24),
+              padding: const EdgeInsets.only(top: 24),
               child: Stack(
                 alignment: Alignment.center,
                 children: [
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
-                      color: Color(0xFF4E4B66),
+                      color: const Color(0xFF4E4B66),
                     ),
                     width: 343,
                     height: 71,
                   ),
-                  Image(image: Svg("assets/Line.svg")),
+                  const Image(image: Svg("assets/Line.svg")),
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -179,25 +178,25 @@ class _PrayTimeState extends State<PrayTime> {
                         onTap: () {
                           setState(() {
                             currentDate =
-                                currentDate.subtract(Duration(days: 1));
+                                currentDate.subtract(const Duration(days: 1));
                             getPrayerTimes(currentDate);
                             print(currentDate);
                           });
                         },
-                        child: Icon(
+                        child: const Icon(
                           Icons.arrow_back_sharp,
                           size: 24,
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 16,
                       ),
-                      Container(
+                      SizedBox(
                         width: 200,
                         height: 39,
                         child: isLoading
-                            ? Center(child: loadingWhite())
+                            ? const Center(child: loadingWhite())
                             : Column(
                                 children: [
                                   Text(
@@ -211,7 +210,7 @@ class _PrayTimeState extends State<PrayTime> {
                                     textAlign: TextAlign.center,
                                   ),
                                   Text(
-                                    hijriyah.toFormat("dd MMMM yyyy" + " H"),
+                                    hijriyah.toFormat("dd MMMM yyyy" " H"),
                                     style: const TextStyle(
                                       fontFamily: "Poppins",
                                       fontSize: 12,
@@ -223,18 +222,18 @@ class _PrayTimeState extends State<PrayTime> {
                                 ],
                               ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 16,
                       ),
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            currentDate = currentDate.add(Duration(days: 1));
+                            currentDate = currentDate.add(const Duration(days: 1));
                             getPrayerTimes(currentDate);
                             print(currentDate);
                           });
                         },
-                        child: Icon(
+                        child: const Icon(
                           Icons.arrow_forward_sharp,
                           size: 24,
                           color: Colors.white,
@@ -247,17 +246,17 @@ class _PrayTimeState extends State<PrayTime> {
             ),
             Container(
               width: 343,
-              padding: EdgeInsets.only(top: 24),
+              padding: const EdgeInsets.only(top: 24),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
+                  const SizedBox(
                     width: 291,
                     height: 21,
                     child: Text(
                       "Imsak",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -267,9 +266,9 @@ class _PrayTimeState extends State<PrayTime> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 12),
+                    padding: const EdgeInsets.only(left: 12),
                     child: isLoading
-                        ? loading()
+                        ? const loading()
                         : Text(
                             imsyak,
                             style: const TextStyle(
@@ -283,7 +282,7 @@ class _PrayTimeState extends State<PrayTime> {
                 ],
               ),
             ),
-            Divider(
+            const Divider(
               indent: 16,
               endIndent: 16,
               color: Colors.grey,
@@ -291,17 +290,17 @@ class _PrayTimeState extends State<PrayTime> {
             ),
             Container(
               width: 343,
-              padding: EdgeInsets.only(top: 24),
+              padding: const EdgeInsets.only(top: 24),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
+                  const SizedBox(
                     width: 291,
                     height: 21,
                     child: Text(
                       "Subuh",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -311,9 +310,9 @@ class _PrayTimeState extends State<PrayTime> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 12),
+                    padding: const EdgeInsets.only(left: 12),
                     child: isLoading
-                        ? loading()
+                        ? const loading()
                         : Text(
                             subuh,
                             style: const TextStyle(
@@ -327,7 +326,7 @@ class _PrayTimeState extends State<PrayTime> {
                 ],
               ),
             ),
-            Divider(
+            const Divider(
               indent: 16,
               endIndent: 16,
               color: Colors.grey,
@@ -335,17 +334,17 @@ class _PrayTimeState extends State<PrayTime> {
             ),
             Container(
               width: 343,
-              padding: EdgeInsets.only(top: 24),
+              padding: const EdgeInsets.only(top: 24),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
+                  const SizedBox(
                     width: 291,
                     height: 21,
                     child: Text(
                       "Fajar",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -355,9 +354,9 @@ class _PrayTimeState extends State<PrayTime> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 12),
+                    padding: const EdgeInsets.only(left: 12),
                     child: isLoading
-                        ? loading()
+                        ? const loading()
                         : Text(
                             fajar,
                             style: const TextStyle(
@@ -371,7 +370,7 @@ class _PrayTimeState extends State<PrayTime> {
                 ],
               ),
             ),
-            Divider(
+            const Divider(
               indent: 16,
               endIndent: 16,
               color: Colors.grey,
@@ -379,17 +378,17 @@ class _PrayTimeState extends State<PrayTime> {
             ),
             Container(
               width: 343,
-              padding: EdgeInsets.only(top: 24),
+              padding: const EdgeInsets.only(top: 24),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
+                  const SizedBox(
                     width: 291,
                     height: 21,
                     child: Text(
                       "Dzuhur",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -399,9 +398,9 @@ class _PrayTimeState extends State<PrayTime> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 12),
+                    padding: const EdgeInsets.only(left: 12),
                     child: isLoading
-                        ? loading()
+                        ? const loading()
                         : Text(
                             dhuhur,
                             style: const TextStyle(
@@ -415,7 +414,7 @@ class _PrayTimeState extends State<PrayTime> {
                 ],
               ),
             ),
-            Divider(
+            const Divider(
               indent: 16,
               endIndent: 16,
               color: Colors.grey,
@@ -423,17 +422,17 @@ class _PrayTimeState extends State<PrayTime> {
             ),
             Container(
               width: 343,
-              padding: EdgeInsets.only(top: 24),
+              padding: const EdgeInsets.only(top: 24),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
+                  const SizedBox(
                     width: 291,
                     height: 21,
                     child: Text(
                       "Ashar",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -443,9 +442,9 @@ class _PrayTimeState extends State<PrayTime> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 12),
+                    padding: const EdgeInsets.only(left: 12),
                     child: isLoading
-                        ? loading()
+                        ? const loading()
                         : Text(
                             ashar,
                             style: const TextStyle(
@@ -459,7 +458,7 @@ class _PrayTimeState extends State<PrayTime> {
                 ],
               ),
             ),
-            Divider(
+            const Divider(
               indent: 16,
               endIndent: 16,
               color: Colors.grey,
@@ -467,17 +466,17 @@ class _PrayTimeState extends State<PrayTime> {
             ),
             Container(
               width: 343,
-              padding: EdgeInsets.only(top: 24),
+              padding: const EdgeInsets.only(top: 24),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
+                  const SizedBox(
                     width: 291,
                     height: 21,
                     child: Text(
                       "Maghrib",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -487,9 +486,9 @@ class _PrayTimeState extends State<PrayTime> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 12),
+                    padding: const EdgeInsets.only(left: 12),
                     child: isLoading
-                        ? loading()
+                        ? const loading()
                         : Text(
                             maghrib,
                             style: const TextStyle(
@@ -503,7 +502,7 @@ class _PrayTimeState extends State<PrayTime> {
                 ],
               ),
             ),
-            Divider(
+            const Divider(
               indent: 16,
               endIndent: 16,
               color: Colors.grey,
@@ -511,17 +510,17 @@ class _PrayTimeState extends State<PrayTime> {
             ),
             Container(
               width: 343,
-              padding: EdgeInsets.only(top: 24),
+              padding: const EdgeInsets.only(top: 24),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
+                  const SizedBox(
                     width: 291,
                     height: 21,
                     child: Text(
                       "Isya",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -531,9 +530,9 @@ class _PrayTimeState extends State<PrayTime> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 12),
+                    padding: const EdgeInsets.only(left: 12),
                     child: isLoading
-                        ? loading()
+                        ? const loading()
                         : Text(
                             isya,
                             style: const TextStyle(
@@ -547,7 +546,7 @@ class _PrayTimeState extends State<PrayTime> {
                 ],
               ),
             ),
-            Divider(
+            const Divider(
               indent: 16,
               endIndent: 16,
               color: Colors.grey,

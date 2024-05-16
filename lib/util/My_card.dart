@@ -4,9 +4,9 @@ class MyCard extends StatelessWidget {
  final String iconImagePath;
 
   const MyCard ({
-    Key? key, 
+    super.key, 
 required this.iconImagePath,
-  }) : super(key :key);
+  });
 
   @override 
   Widget build(BuildContext context) {

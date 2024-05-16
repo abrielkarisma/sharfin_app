@@ -1,10 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:sharfin_app/view/homepage.dart';
 import 'package:sharfin_app/view/loginPage.dart';
-import 'package:sharfin_app/view/profileguest.dart';
-import 'package:sharfin_app/view/splashScreen.dart';
 import 'package:sharfin_app/widget/bottomNavigation.dart';
 
 class onboarding extends StatefulWidget {
@@ -26,7 +21,7 @@ class _onboardingState extends State<onboarding> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF15AC97),
+      backgroundColor: const Color(0xFF15AC97),
       body: PageView(
         controller: controller,
         onPageChanged: (index) {
@@ -36,15 +31,15 @@ class _onboardingState extends State<onboarding> {
         },
         children: [
           Container(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     top: 68,
                   ),
-                  child: Stack(alignment: Alignment.bottomCenter, children: [
+                  child: const Stack(alignment: Alignment.bottomCenter, children: [
                     Image(
                       image: AssetImage("assets/obd1.png"),
                       width: 326,
@@ -56,9 +51,9 @@ class _onboardingState extends State<onboarding> {
                   ]),
                 ),
                 Container(
-                  child: Text(
+                  child: const Text(
                     "Selamat Datang di Aplikasi Sharfin",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 32,
                       fontWeight: FontWeight.w600,
@@ -67,10 +62,10 @@ class _onboardingState extends State<onboarding> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(top: 16),
-                  child: Text(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: const Text(
                     "Sharfin adalah aplikasi inovatif yang bertujuan untuk mendidik dan memberdayakan masyarakat dalam pengelolaan keuangan syariah.",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: "Jakarta Sans",
                       fontSize: 14,
                       fontWeight: FontWeight.normal,
@@ -79,11 +74,11 @@ class _onboardingState extends State<onboarding> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(top: 24),
+                  padding: const EdgeInsets.only(top: 24),
                   child: FilledButton(
                       onPressed: () {
                         controller.nextPage(
-                            duration: Duration(milliseconds: 500),
+                            duration: const Duration(milliseconds: 500),
                             curve: Curves.easeInOut);
                       },
                       style: ButtonStyle(
@@ -91,9 +86,9 @@ class _onboardingState extends State<onboarding> {
                             Colors.white), // Adjust color
                         foregroundColor: MaterialStateProperty.all(
                             Colors.white), // Adjust text color
-                        padding: MaterialStateProperty.all(EdgeInsets.symmetric(
+                        padding: MaterialStateProperty.all(const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10)), // Adjust padding
-                        minimumSize: MaterialStateProperty.all(Size(343, 48)),
+                        minimumSize: MaterialStateProperty.all(const Size(343, 48)),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
@@ -102,9 +97,9 @@ class _onboardingState extends State<onboarding> {
                           ),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         "Lanjut",
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontFamily: "Poppins",
                           fontSize: 16,
                           fontWeight: FontWeight.normal,
@@ -118,15 +113,15 @@ class _onboardingState extends State<onboarding> {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     top: 68,
                   ),
-                  child: Stack(alignment: Alignment.bottomCenter, children: [
+                  child: const Stack(alignment: Alignment.bottomCenter, children: [
                     Image(
                       image: AssetImage("assets/obd2.png"),
                       width: 326,
@@ -138,9 +133,9 @@ class _onboardingState extends State<onboarding> {
                   ]),
                 ),
                 Container(
-                  child: Text(
+                  child: const Text(
                     "Jelajahi Fitur Unggulan Sharfin",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 32,
                       fontWeight: FontWeight.w600,
@@ -149,12 +144,12 @@ class _onboardingState extends State<onboarding> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(top: 16),
-                  child: SizedBox(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: const SizedBox(
                     width: 370,
                     child: Text(
                       "Jelajahi beragam fitur unggulan Sharfin yang dirancang untuk membantu Anda memahami dan menerapkan prinsip-prinsip keuangan syariah.",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: "Jakarta Sans",
                         fontSize: 14,
                         fontWeight: FontWeight.normal,
@@ -165,16 +160,16 @@ class _onboardingState extends State<onboarding> {
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Container(
-                    padding: EdgeInsets.only(top: 24),
+                    padding: const EdgeInsets.only(top: 24),
                     child: TextButton(
                         onPressed: () {
                           controller.previousPage(
-                              duration: Duration(milliseconds: 500),
+                              duration: const Duration(milliseconds: 500),
                               curve: Curves.easeInOut);
                         },
-                        child: Text(
+                        child: const Text(
                           "Kembali",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: "Poppins",
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
@@ -183,15 +178,15 @@ class _onboardingState extends State<onboarding> {
                           ),
                         )),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 151,
                   ),
                   Container(
-                    padding: EdgeInsets.only(top: 24),
+                    padding: const EdgeInsets.only(top: 24),
                     child: FilledButton(
                         onPressed: () {
                           controller.nextPage(
-                              duration: Duration(milliseconds: 500),
+                              duration: const Duration(milliseconds: 500),
                               curve: Curves.easeInOut);
                         },
                         style: ButtonStyle(
@@ -200,10 +195,10 @@ class _onboardingState extends State<onboarding> {
                           foregroundColor: MaterialStateProperty.all(
                               Colors.white), // Adjust text color
                           padding: MaterialStateProperty.all(
-                              EdgeInsets.symmetric(
+                              const EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 10)), // Adjust padding
-                          minimumSize: MaterialStateProperty.all(Size(97, 48)),
+                          minimumSize: MaterialStateProperty.all(const Size(97, 48)),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
@@ -212,9 +207,9 @@ class _onboardingState extends State<onboarding> {
                             ),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           "Lanjut",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: "Poppins",
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
@@ -229,25 +224,25 @@ class _onboardingState extends State<onboarding> {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(padding: EdgeInsets.only(top: 8)),
+                const Padding(padding: EdgeInsets.only(top: 8)),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context)
                         .pushReplacement(MaterialPageRoute(builder: (context) {
-                      return bottomNavigation(
+                      return const bottomNavigation(
                         selectedIndex: 0,
                       );
                     }));
                   },
-                  child: SizedBox(
+                  child: const SizedBox(
                     width: 320,
                     child: Text(
                       "Lewati",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -258,10 +253,10 @@ class _onboardingState extends State<onboarding> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     top: 16,
                   ),
-                  child: Stack(alignment: Alignment.bottomCenter, children: [
+                  child: const Stack(alignment: Alignment.bottomCenter, children: [
                     Image(
                       image: AssetImage("assets/obd3.png"),
                       width: 326,
@@ -273,9 +268,9 @@ class _onboardingState extends State<onboarding> {
                   ]),
                 ),
                 Container(
-                  child: Text(
+                  child: const Text(
                     "Bergabung dengan Komunitas Sharfin",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 32,
                       fontWeight: FontWeight.w600,
@@ -284,10 +279,10 @@ class _onboardingState extends State<onboarding> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(top: 16),
-                  child: Text(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: const Text(
                     "Mari gabung untuk bertukar ide, berbagi pengalaman, dan belajar dari pengguna lain yang tertarik pada keuangan syariah.",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: "Jakarta Sans",
                       fontSize: 14,
                       fontWeight: FontWeight.normal,
@@ -296,7 +291,7 @@ class _onboardingState extends State<onboarding> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(top: 24),
+                  padding: const EdgeInsets.only(top: 24),
                   child: FilledButton(
                       onPressed: () {},
                       style: ButtonStyle(
@@ -304,9 +299,9 @@ class _onboardingState extends State<onboarding> {
                             Colors.white), // Adjust color
                         foregroundColor: MaterialStateProperty.all(
                             Colors.white), // Adjust text color
-                        padding: MaterialStateProperty.all(EdgeInsets.symmetric(
+                        padding: MaterialStateProperty.all(const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10)), // Adjust padding
-                        minimumSize: MaterialStateProperty.all(Size(343, 48)),
+                        minimumSize: MaterialStateProperty.all(const Size(343, 48)),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
@@ -315,7 +310,7 @@ class _onboardingState extends State<onboarding> {
                           ),
                         ),
                       ),
-                      child: Row(
+                      child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image(
@@ -328,7 +323,7 @@ class _onboardingState extends State<onboarding> {
                             ),
                             Text(
                               "Lanjutkan Dengan Google",
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontFamily: "Poppins",
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
@@ -340,12 +335,12 @@ class _onboardingState extends State<onboarding> {
                           ])),
                 ),
                 Container(
-                  padding: EdgeInsets.only(top: 8),
+                  padding: const EdgeInsets.only(top: 8),
                   child: FilledButton(
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
                             MaterialPageRoute(builder: (context) {
-                          return login();
+                          return const login();
                         }));
                       },
                       style: ButtonStyle(
@@ -353,9 +348,9 @@ class _onboardingState extends State<onboarding> {
                             Colors.white), // Adjust color
                         foregroundColor: MaterialStateProperty.all(
                             Colors.white), // Adjust text color
-                        padding: MaterialStateProperty.all(EdgeInsets.symmetric(
+                        padding: MaterialStateProperty.all(const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10)), // Adjust padding
-                        minimumSize: MaterialStateProperty.all(Size(343, 48)),
+                        minimumSize: MaterialStateProperty.all(const Size(343, 48)),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
@@ -364,12 +359,12 @@ class _onboardingState extends State<onboarding> {
                           ),
                         ),
                       ),
-                      child: Row(
+                      child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               "Masuk Dengan Akun Anda",
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontFamily: "Poppins",
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,

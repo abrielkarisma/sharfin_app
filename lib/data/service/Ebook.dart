@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:sharfin_app/data/models/Ebook.dart';
-import 'package:sharfin_app/view/ebooks.dart';
 
 class EbookService {
   Future<Ebook?> getEbook(String id) async {
@@ -19,6 +18,7 @@ class EbookService {
     } catch (e) {
       throw Exception(e.toString());
     }
+    return null;
   }
 
   static Future<List<Ebook>>? getImageEbook() async {

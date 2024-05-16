@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:sharfin_app/view/onboarding.dart';
 
 class splashScreen extends StatefulWidget {
+  const splashScreen({super.key});
+
   @override
   _splashScreenState createState() => _splashScreenState();
 }
@@ -13,9 +15,9 @@ class _splashScreenState extends State<splashScreen> {
   @override
   void initState() {
     super.initState();
-    timer = Timer(Duration(seconds: 2), () {
+    timer = Timer(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => onboarding()),
+        MaterialPageRoute(builder: (_) => const onboarding()),
       );
     });
   }
@@ -28,7 +30,7 @@ class _splashScreenState extends State<splashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
         backgroundColor: Color(0xFF14B5AE),
         body: Center(
           child: Image(

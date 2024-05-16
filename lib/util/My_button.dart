@@ -1,7 +1,5 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:sharfin_app/view/semuaMenuPage.dart';
 
 class MyButton extends StatelessWidget {
   final String iconImagePath;
@@ -9,11 +7,11 @@ class MyButton extends StatelessWidget {
   final VoidCallback pathss;
 
   const MyButton({
-    Key? key,
+    super.key,
     required this.iconImagePath,
     required this.buttonText,
     required this.pathss,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +39,7 @@ class MyButton extends StatelessWidget {
         ),
         Text(
           buttonText,
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500), // Adjust fontSize based on screen width
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500), // Adjust fontSize based on screen width
         )
       ],
     );
