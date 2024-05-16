@@ -1,8 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sharfin_app/view/jamSholat.dart';
 import 'package:sharfin_app/view/qiblaPage.dart';
 import 'package:sharfin_app/view/quranPage.dart';
@@ -18,32 +19,87 @@ class IslamPage extends StatefulWidget {
 class _IslamPageState extends State<IslamPage> {
   final prayerTimesService = PrayerTimesService();
   bool _isLoading = false;
+  bool hasPermission = false;
+  String? _locationError;
+
+  Future<void> getPermission() async {
+    if (await Permission.location.serviceStatus.isEnabled) {
+      var status = await Permission.location.status;
+      if (status.isGranted) {
+        hasPermission = true;
+        _fetchLocation();
+      } else {
+        Permission.location.request().then((value) {
+          setState(() {
+            hasPermission = (value == PermissionStatus.granted);
+          });
+          if (value == PermissionStatus.granted) {
+            _fetchLocation();
+          }
+        });
+      }
+    } else {
+      setState(() {
+        _locationError = 'Location service is disabled.';
+      });
+    }
+  }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    fetchSholat();
+    getPermission();
   }
 
-  Future<void> fetchSholat() async {
-    await prayerTimesService.getPrayerTimes();
+  Future<void> fetchSholat(double latitude, double longitude) async {
+    await prayerTimesService.getPrayerTimes(
+        latitude: latitude, longitude: longitude);
     setState(() {
       _isLoading = false;
     });
   }
 
   void _handleRefresh() {
+    if (!_isLoading) {
+      _fetchLocation();
+    }
+  }
+
+  Future<void> _fetchLocation() async {
     setState(() {
       _isLoading = true;
     });
 
-    // Simulate loading delay
-    Future.delayed(const Duration(seconds: 2), () {
+    // Check if location permission is granted
+    var status = await Permission.location.request();
+    if (status.isGranted) {
+      try {
+        // Get device location
+        Position position = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high);
+
+        // Define latitude and longitude
+        double latitude = position.latitude;
+        double longitude = position.longitude;
+
+        // Fetch prayer times for the obtained location
+        await fetchSholat(latitude, longitude);
+
+        setState(() {
+          _isLoading = false;
+        });
+      } catch (e) {
+        setState(() {
+          _isLoading = false;
+          _locationError = "Failed to fetch location. Please try again.";
+        });
+      }
+    } else {
       setState(() {
         _isLoading = false;
+        _locationError = "Location permission denied.";
       });
-    });
+    }
   }
 
   @override

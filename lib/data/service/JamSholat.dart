@@ -15,7 +15,7 @@ class PrayerTimesService {
   String _nextPrayerName = "";
   Duration _timeUntilNextPrayer = Duration.zero;
 
-  Future<void> getPrayerTimes() async {
+  Future<void> getPrayerTimes({required double latitude, required double longitude}) async {
     LocationPermission permission;
     permission = await Geolocator.requestPermission();
     Position position = await Geolocator.getCurrentPosition(
