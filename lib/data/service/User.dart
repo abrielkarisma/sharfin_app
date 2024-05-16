@@ -7,7 +7,7 @@ class UserService {
   Future<void> registerUser(User user) async {
     try {
       final response = await _dio.post(
-        'http://192.168.1.14:8888/api/auth/register',
+        'http://192.168.1.126:8888/api/auth/register',
         data: user.toJson(),
       );
       print(response
@@ -21,7 +21,7 @@ class UserService {
   Future<Map<String, dynamic>> login(String email, String password) async {
     try {
       final response = await _dio.post(
-        'http://192.168.1.14:8888/api/auth/login',
+        'http://192.168.1.126:8888/api/auth/login',
         data: {
           'email': email,
           'password': password,

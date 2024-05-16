@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sharfin_app/view/ebooks.dart';
 import 'package:sharfin_app/view/homepage.dart';
 import 'package:sharfin_app/view/insight.dart';
 import 'package:sharfin_app/view/profile.dart';
+import 'package:sharfin_app/view/profileGuest.dart';
 
 class bottomNavigation extends StatefulWidget {
   final int selectedIndex;
@@ -13,6 +15,8 @@ class bottomNavigation extends StatefulWidget {
 
 class _bottomNavigationState extends State<bottomNavigation> {
   int _bottomNavIndex = 0;
+  bool hasToken = false;
+
   @override
   void initState() {
     super.initState();

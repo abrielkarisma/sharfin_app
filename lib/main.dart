@@ -1,19 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sharfin_app/bloc/ayat_bloc.dart';
 import 'package:sharfin_app/cubit/Surat/surat_cubit.dart';
 import 'package:sharfin_app/data/api_service.dart';
 import 'package:sharfin_app/view/homepage.dart';
 import 'package:sharfin_app/view/islamicFeature.dart';
+import 'package:sharfin_app/view/onBoarding.dart';
 import 'package:sharfin_app/view/splashScreen.dart';
+import 'package:sharfin_app/widget/bottomNavigation.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final String initialRoute = await determineInitialRoute();
+  runApp(MyApp(initialRoute: initialRoute));
+}
+
+Future<String> determineInitialRoute() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? token = prefs.getString('token');
+  return token != null ? '/home' : '/splash';
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final String initialRoute;
+
+  const MyApp({Key? key, required this.initialRoute}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +49,14 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomePage(), // Directly using SplashScreen widget
+        initialRoute: initialRoute,
+        routes: {
+          '/home': (context) => const bottomNavigation(
+                selectedIndex: 0,
+              ),
+          '/splash': (context) => const onboarding(),
+          // Add other routes here if needed
+        },
         theme: ThemeData(
           fontFamily: 'Poppins',
           useMaterial3: true,

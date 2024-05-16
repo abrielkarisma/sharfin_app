@@ -83,10 +83,7 @@ class _registerState extends State<register> {
         // Navigasi ke halaman homepage setelah berhasil mendaftar
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-              builder: (context) => const bottomNavigation(
-                    selectedIndex: 0,
-                  )),
+          MaterialPageRoute(builder: (context) => const login()),
         );
       });
     } else {
@@ -310,8 +307,9 @@ class _registerState extends State<register> {
                         const Color(0XFF15AC97)), // Adjust color
                     foregroundColor: MaterialStateProperty.all(
                         Colors.white), // Adjust text color
-                    padding: MaterialStateProperty.all(const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10)), // Adjust padding
+                    padding: MaterialStateProperty.all(
+                        const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10)), // Adjust padding
                     minimumSize: MaterialStateProperty.all(const Size(400, 50)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(

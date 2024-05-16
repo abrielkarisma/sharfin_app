@@ -94,7 +94,7 @@ class _DetailInsightState extends State<DetailInsight> {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Image.network(
-                            "http://192.168.1.14:8888${insight.img[index]}"),
+                            "http://192.168.1.126:8888${insight.img[index]}"),
                       );
                     },
                   ),

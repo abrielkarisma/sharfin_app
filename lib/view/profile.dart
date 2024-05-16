@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sharfin_app/data/models/Users.dart';
 import 'package:sharfin_app/data/service/Users.dart';
 
@@ -31,6 +32,14 @@ class _ProfileState extends State<Profile> {
     } catch (error) {
       print(error); // Handle errors appropriately
     }
+  }
+
+  Future<void> _logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token'); // Remove the token from preferences
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+      return const onboarding(); // Navigate to the onboarding screen
+    }));
   }
 
   @override
@@ -191,8 +200,8 @@ class _ProfileState extends State<Profile> {
                                           top: 8,
                                           bottom: 8,
                                           right: 8),
-                                      child:
-                                          const Image(image: Svg("assets/lock.svg")),
+                                      child: const Image(
+                                          image: Svg("assets/lock.svg")),
                                     ),
                                     const SizedBox(
                                       width: 239,
@@ -452,16 +461,11 @@ class _ProfileState extends State<Profile> {
                                         Container(
                                             child: FilledButton(
                                           onPressed: () {
-                                            Navigator.of(context)
-                                                .pushReplacement(
-                                                    MaterialPageRoute(
-                                                        builder: (context) {
-                                              return const onboarding();
-                                            }));
+                                            _logout();
                                           },
                                           style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all(const Color(
+                                            backgroundColor: MaterialStateProperty
+                                                .all(const Color(
                                                     0xffFFF2F4)), // Adjust color
                                             foregroundColor:
                                                 MaterialStateProperty.all(Colors
@@ -499,7 +503,8 @@ class _ProfileState extends State<Profile> {
                                               )),
                                         )),
                                         Container(
-                                          padding: const EdgeInsets.only(top: 28),
+                                          padding:
+                                              const EdgeInsets.only(top: 28),
                                           child: TextButton(
                                             onPressed: () {
                                               Navigator.pop(context);
