@@ -3,7 +3,7 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sharfin_app/data/models/Users.dart';
 import 'package:sharfin_app/data/service/Users.dart';
-
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:sharfin_app/view/onBoarding.dart';
 
 class Profile extends StatefulWidget {
@@ -16,11 +16,39 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final UsersService _usersService = UsersService();
   Users? user;
+  String? _token;
+  String? _name;
+  String? _email;
 
   @override
   void initState() {
     super.initState();
     _fetchData();
+    _getTokenFromSharedPreferences();
+  }
+
+  Future<void> _getTokenFromSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    if (token != null) {
+      setState(() {
+        _token = token;
+        _decodeToken(token);
+      });
+    }
+  }
+
+  void _decodeToken(String token) {
+    Map<String, dynamic> decodedToken = Jwt.parseJwt(token);
+    setState(() {
+      _name = decodedToken['name'];
+      _email = decodedToken['email'];
+    });
+    if (_name != null) {
+      print(
+          'Username: $_name '); //  Print inside setState to ensure it's updated
+      print('Email: $_email '); // Print inside setState to ensure it's updated
+    }
   }
 
   Future<void> _fetchData() async {
@@ -80,9 +108,7 @@ class _ProfileState extends State<Profile> {
                                 )),
                           ),
                           GestureDetector(
-                            onTap: () {
-                              print("bisa bang");
-                            },
+                            onTap: () {},
                             child: Container(
                               child: const Image(
                                   image: AssetImage("assets/editPhoto.png")),
@@ -93,7 +119,7 @@ class _ProfileState extends State<Profile> {
                       Container(
                         padding: const EdgeInsets.only(top: 12),
                         child: Text(
-                          user!.name,
+                          _name ?? "",
                           style: const TextStyle(
                             fontFamily: "Poppins",
                             fontSize: 18,
