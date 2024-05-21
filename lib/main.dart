@@ -8,8 +8,18 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:sharfin_app/bloc/ayat_bloc.dart';
 import 'package:sharfin_app/cubit/Surat/surat_cubit.dart';
 import 'package:sharfin_app/data/api_service.dart';
+<<<<<<< Updated upstream
 import 'package:sharfin_app/view/others/splashScreen.dart';
 import 'package:http/http.dart' as http;
+=======
+import 'package:sharfin_app/view/homepage.dart';
+import 'package:sharfin_app/view/islamicFeature.dart';
+import 'package:sharfin_app/view/onBoarding.dart';
+import 'package:sharfin_app/view/semuaMenuPage.dart';
+import 'package:sharfin_app/view/splashScreen.dart';
+import 'package:sharfin_app/view/test.dart';
+import 'package:sharfin_app/widget/bottomNavigation.dart';
+>>>>>>> Stashed changes
 
 >>>>>>> Stashed changes
 void main() {
@@ -53,6 +63,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+<<<<<<< Updated upstream
         home: FutureBuilder(  
           builder: (context, snapshot) {
             if (hasPermission) {
@@ -64,11 +75,27 @@ class MyApp extends StatelessWidget {
             }
           },
           future: getPermission(),),
+=======
+        initialRoute: initialRoute,
+        routes: {
+          '/home': (context) => HomePage(),
+          '/splash': (context) => const onboarding(),
+          // Add other routes here if needed
+        },
+>>>>>>> Stashed changes
         theme: ThemeData(
           fontFamily: 'Poppins',
           useMaterial3: true,
           colorSchemeSeed: Color(0XFF15AC97),
         ),
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+      //   title: 'Button API Demo',
+      // theme: ThemeData(
+      //   primarySwatch: Colors.blue,
+      // ),
+      // home: HomePage(),
 >>>>>>> Stashed changes
       ),
     );

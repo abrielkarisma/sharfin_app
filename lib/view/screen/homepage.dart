@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream:lib/view/screen/homepage.dart
 // ignore_for_file: prefer_const_constructors
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
@@ -8,6 +9,27 @@ import "package:sharfin_app/util/My_button.dart";
 import "package:sharfin_app/util/My_card.dart";
 import "package:sharfin_app/view/screen/islamicFeature.dart";
 import "package:sharfin_app/view/others/semuaMenuPage.dart";
+=======
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:sharfin_app/cubit/button/button_cubit.dart';
+import 'package:sharfin_app/data/api_service.dart';
+import 'package:sharfin_app/data/models/Ebook.dart';
+import 'package:sharfin_app/data/models/Insight.dart';
+import 'package:sharfin_app/data/service/Ebook.dart';
+import 'package:sharfin_app/data/service/Insight.dart';
+import 'package:sharfin_app/util/My_button.dart';
+import 'package:sharfin_app/util/My_card.dart';
+import 'package:sharfin_app/view/detailInsight.dart';
+import 'package:sharfin_app/view/ebookDetails.dart';
+import 'package:sharfin_app/view/islamicFeature.dart';
+import 'package:sharfin_app/view/semuaMenuPage.dart';
+import 'package:jwt_decode/jwt_decode.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sharfin_app/widget/bottomNavigation.dart';
+import 'package:http/http.dart' as http;
+>>>>>>> Stashed changes:lib/view/homepage.dart
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -41,6 +63,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+<<<<<<< Updated upstream:lib/view/screen/homepage.dart
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 245, 245, 245),
       body: SingleChildScrollView(
@@ -137,9 +160,113 @@ class _HomePageState extends State<HomePage> {
                                     _obsecureText
                                         ? Icons.visibility_off
                                         : Icons.visibility,
+=======
+    return BlocProvider(
+      create: (context) => ButtonCubit(ApiService(client: http.Client()))..fetchButtons(),
+      child: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 245, 245, 245),
+        body: SingleChildScrollView(
+          child: SafeArea(
+            child: Column(
+              children: [
+                Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Assalamualaikum",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey[500],
+                              ),
+                            ),
+                            Text(
+                              _name ??
+                                  "", // Display the name or an empty string if null
+                              style: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
+                        Icon(
+                          Icons.notifications_outlined,
+                          size: 36,
+                          color: Colors.grey[500],
+                        ),
+                      ],
+                    )),
+                const SizedBox(
+                  height: 25,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(17),
+                    decoration: BoxDecoration(
+                        color: const Color(0xff15ac97),
+                        borderRadius: BorderRadius.circular(16),
+                        image: const DecorationImage(
+                            image: AssetImage("assets/Circle.png"),
+                            fit: BoxFit.fill)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Saldo Saya",
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white)),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(right: 4),
+                              child: Text(
+                                "Rp",
+                                style: TextStyle(
+>>>>>>> Stashed changes:lib/view/homepage.dart
                                     color: Colors.white,
-                                    size: 16,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 120,
+                              child: TextFormField(
+                                initialValue:
+                                    '234567', // Replace with actual balance value
+                                obscureText:
+                                    _obsecureText, // Toggle visibility based on state
+                                readOnly: true,
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight
+                                        .w600), // Make the field read-only
+                                decoration: InputDecoration(
+                                  iconColor: Colors.white,
+                                  border: InputBorder.none,
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      _obsecureText
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      color: Colors.white,
+                                      size: 16,
+                                    ),
+                                    onPressed: () {},
                                   ),
+<<<<<<< Updated upstream:lib/view/screen/homepage.dart
                                   onPressed: toogleVisibility,
                                 ),
                               ),
@@ -491,6 +618,407 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ],
+=======
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                  color:
+                                      const Color(0xff887aa6).withOpacity(0.12),
+                                  blurRadius: 56,
+                                  spreadRadius: 10,
+                                  offset: const Offset(0.0, 13.0))
+                            ],
+                            gradient: const LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.white,
+                                Color(0xffb1f1df),
+                              ],
+                            ),
+                          ),
+                          child: Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  print("container pressed");
+                                },
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    buildColumn(
+                                        screenWidth,
+                                        Icons.account_balance_wallet_outlined,
+                                        "Top up"),
+                                    buildColumn(screenWidth,
+                                        Icons.swap_horiz_outlined, "Transfer"),
+                                    buildColumn(
+                                        screenWidth,
+                                        Icons.arrow_downward_outlined,
+                                        "Tarik Tunai"),
+                                    buildColumn(
+                                        screenWidth, Icons.history, "Mutasi"),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Container(
+                  width: double.infinity,
+                  child: BlocBuilder<ButtonCubit, ButtonState>(
+  builder: (context, state) {
+    if (state is ButtonLoading) {
+      return Center(child: CircularProgressIndicator());
+    } else if (state is ButtonLoaded) {
+      final buttons = state.buttons;
+      return GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 4, // Set the number of columns to 4
+          crossAxisSpacing: 8.0, // Add spacing between buttons horizontally
+          mainAxisSpacing: 8.0, // Add spacing between buttons vertically
+        ),
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: buttons.length,
+        itemBuilder: (context, index) {
+          final button = buttons[index];
+          return MyButton(
+            button: button,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MenuPage(),
+                ),
+              );
+            },
+          );
+        },
+      );
+    } else if (state is ButtonError) {
+      return Center(child: Text('Error: ${state.message}'));
+    } else {
+      return Center(child: Text('No data available'));
+    }
+  },
+),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                SizedBox(
+                  height: 200,
+                  child: PageView(
+                    scrollDirection: Axis.horizontal,
+                    controller: _controller,
+                    children: const [
+                      MyCard(
+                        iconImagePath: "assets/Image.png",
+                      ),
+                      MyCard(
+                        iconImagePath: "assets/Image2.png",
+                      ),
+                      MyCard(
+                        iconImagePath: "assets/Promo.png",
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Insight",
+                        style: TextStyle(
+                          fontFamily: "Poppins",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const bottomNavigation(selectedIndex: 1),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            "Lihat Semua",
+                            style: TextStyle(
+                              fontFamily: "Poppins",
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xFF15AC97),
+                            ),
+                          ))
+                    ],
+                  ),
+                ),
+                FutureBuilder<List<Insight>>(
+                  future: insights,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final List<Insight> insights = snapshot.data!;
+                      return SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 150,
+                              width: screenWidth,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: insights.length,
+                                itemBuilder: (context, index) {
+                                  final insight = insights[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DetailInsight(
+                                                        uuid: insight.uuid)));
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          image: const DecorationImage(
+                                            image: NetworkImage("insight.img"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        width: 125,
+                                        height: 150,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      return const Center(
+                          child: Text('Error fetching insights'));
+                    }
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Reels",
+                        style: TextStyle(
+                          fontFamily: "Poppins",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const bottomNavigation(selectedIndex: 1),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            "Lihat Semua",
+                            style: TextStyle(
+                              fontFamily: "Poppins",
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xFF15AC97),
+                            ),
+                          ))
+                    ],
+                  ),
+                ),
+                FutureBuilder<List<Insight>>(
+                  future: insights,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final List<Insight> insights = snapshot.data!;
+                      return SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 150,
+                              width: screenWidth,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: insights.length,
+                                itemBuilder: (context, index) {
+                                  final insight = insights[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DetailInsight(
+                                                        uuid: insight.uuid)));
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          image: const DecorationImage(
+                                            image: NetworkImage("insight.img"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        width: 103,
+                                        height: 150,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      return const Center(
+                          child: Text('Error fetching insights'));
+                    }
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Ebook",
+                        style: TextStyle(
+                          fontFamily: "Poppins",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const bottomNavigation(selectedIndex: 2),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            "Lihat Semua",
+                            style: TextStyle(
+                              fontFamily: "Poppins",
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xFF15AC97),
+                            ),
+                          ))
+                    ],
+                  ),
+                ),
+                FutureBuilder<List<Ebook>>(
+                  future: ebooks,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final List<Ebook> ebooks = snapshot.data!;
+                      return SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 200,
+                              width: screenWidth,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: ebooks.length,
+                                itemBuilder: (context, index) {
+                                  final ebook = ebooks[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                detailEbook(id: ebook.id),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          image: DecorationImage(
+                                            image: NetworkImage(ebook.image),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        width: 160,
+                                        height: 200,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      return const Center(child: Text('Error fetching Ebook'));
+                    }
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                )
+              ],
+            ),
+>>>>>>> Stashed changes:lib/view/homepage.dart
           ),
         ),
       ),
