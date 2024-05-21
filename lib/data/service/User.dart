@@ -1,17 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:sharfin_app/data/models/User.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserService {
   final Dio _dio = Dio();
+  final String _baseUrl = 'http://192.168.100.72:8888/api/auth';
 
   Future<void> registerUser(User user) async {
     try {
       final response = await _dio.post(
-        'http://192.168.1.126:8888/api/auth/register',
+        '$_baseUrl/register',
         data: user.toJson(),
       );
       print(response
-          .data); // Ini bisa Anda sesuaikan dengan kebutuhan, misalnya menampilkan respons atau melakukan sesuatu setelah pendaftaran berhasil.
+          .data); // Sesuaikan sesuai kebutuhan, misalnya menampilkan respons atau melakukan sesuatu setelah pendaftaran berhasil.
     } catch (error) {
       print('Error registering user: $error');
       throw Exception('Failed to register user');
@@ -21,7 +23,7 @@ class UserService {
   Future<Map<String, dynamic>> login(String email, String password) async {
     try {
       final response = await _dio.post(
-        'http://192.168.1.126:8888/api/auth/login',
+        '$_baseUrl/login',
         data: {
           'email': email,
           'password': password,
@@ -38,6 +40,25 @@ class UserService {
           'success': false,
         };
       }
+    }
+  }
+
+  Future<void> googleLogin() async {
+    try {
+      var dio = Dio();
+      var response = await dio.get('http://your-api-url.com/google_login');
+
+      if (response.statusCode == 200) {
+        // Handle success response, e.g., navigate to the returned URL
+        var googleAuthUrl = response.data['url'];
+        // Use a package like url_launcher to open the URL in a web browser
+        // await launch(googleAuthUrl);
+      } else {
+        // Handle error response
+        print('Failed to login with Google: ${response.statusMessage}');
+      }
+    } catch (e) {
+      print('Error during Google login: $e');
     }
   }
 }

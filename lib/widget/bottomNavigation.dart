@@ -27,7 +27,7 @@ class _bottomNavigationState extends State<bottomNavigation> {
   List<Widget> pages = [
     const HomePage(),
     const InsightPage(),
-    const ebooks(),
+    // const ebooks(),
     const Profile(),
   ];
 

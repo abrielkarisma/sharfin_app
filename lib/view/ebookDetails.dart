@@ -2,47 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:sharfin_app/data/models/Ebook.dart';
 import 'package:sharfin_app/data/service/Ebook.dart';
 import 'package:sharfin_app/view/ebookContent.dart';
+import 'package:sharfin_app/view/test.dart';
 
 class detailEbook extends StatefulWidget {
-  const detailEbook({super.key, required this.id});
+  const detailEbook({super.key, required this.uuid});
+  final String uuid;
 
-  final String id;
   @override
   State<detailEbook> createState() => _detailEbookState();
 }
 
 class _detailEbookState extends State<detailEbook> {
-  Ebook? ebook;
+  late Future<Ebook> _ebookFuture;
 
   @override
   void initState() {
     super.initState();
-    final ebookService = EbookService(); // Create instance
-    _fetchData(ebookService, widget.id); // Pass instance and ID
-  }
-
-  Future<void> _fetchData(EbookService ebookService, String id) async {
-    try {
-      Ebook? result = await ebookService.getEbook(id); // Use string ID
-      if (result != null) {
-        setState(() {
-          ebook = result;
-        });
-      }
-    } catch (e) {
-      print("Error fetching data: $e");
-    }
+    _ebookFuture = EbookService().getEbookByUUID(widget.uuid);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.all(0),
-      child: ebook == null
-          ? const Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              child: Column(
+      body: Padding(
+        padding: const EdgeInsets.all(0),
+        child: FutureBuilder<Ebook>(
+          future: _ebookFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (snapshot.hasData) {
+              Ebook ebook = snapshot.data!;
+              return SingleChildScrollView(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -64,7 +58,8 @@ class _detailEbookState extends State<detailEbook> {
                               child: Row(
                                 children: [
                                   Container(
-                                    padding: const EdgeInsets.only(left: 16, top: 60),
+                                    padding: const EdgeInsets.only(
+                                        left: 16, top: 60),
                                     child: GestureDetector(
                                       onTap: () {
                                         Navigator.pop(context);
@@ -76,7 +71,8 @@ class _detailEbookState extends State<detailEbook> {
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.only(left: 12, top: 60),
+                                    padding: const EdgeInsets.only(
+                                        left: 12, top: 60),
                                     child: Container(
                                       child: const SizedBox(
                                         width: 255,
@@ -92,19 +88,22 @@ class _detailEbookState extends State<detailEbook> {
                                         ),
                                       ),
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
-                            )
+                            ),
                           ],
                         ),
                         Container(
                           padding: const EdgeInsets.only(top: 116),
                           child: SizedBox(
-                              width: 160,
-                              height: 200,
-                              child: Image.network(ebook!.image,
-                                  fit: BoxFit.cover)),
+                            width: 160,
+                            height: 200,
+                            child: Image.network(
+                              'http://192.168.100.86:8888${ebook.thumbnail}',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -116,7 +115,7 @@ class _detailEbookState extends State<detailEbook> {
                             Container(
                               padding: const EdgeInsets.only(top: 8),
                               child: Text(
-                                ebook!.title,
+                                ebook.title,
                                 style: const TextStyle(
                                   fontFamily: "Poppins",
                                   fontSize: 16,
@@ -148,14 +147,14 @@ class _detailEbookState extends State<detailEbook> {
                                       fontWeight: FontWeight.w500,
                                       color: Color(0xFF4E4B66),
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
                             Container(
                               padding: const EdgeInsets.only(top: 8),
-                              child: const Text(
-                                "",
+                              child: Text(
+                                ebook.title,
                                 style: TextStyle(
                                   fontFamily: "Poppins",
                                   fontSize: 14,
@@ -168,7 +167,7 @@ class _detailEbookState extends State<detailEbook> {
                               child: SizedBox(
                                 width: 363,
                                 child: Text(
-                                  ebook!.about,
+                                  ebook.description,
                                   style: const TextStyle(
                                     fontFamily: "Poppins",
                                     fontSize: 14,
@@ -181,52 +180,61 @@ class _detailEbookState extends State<detailEbook> {
                             Container(
                               padding: const EdgeInsets.only(top: 24),
                               child: FilledButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ebookContent(
-                                            id: widget.id), // Pass the id here
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => EbookContent1(
+                                        ebookUrl:
+                                            'http://192.168.100.86:8888${ebook.ebookFile}',
                                       ),
-                                    );
-                                  },
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        const Color(0xFF15AC97)), // Adjust color
-                                    foregroundColor: MaterialStateProperty.all(
-                                        Colors.white), // Adjust text color
-                                    padding: MaterialStateProperty.all(
-                                        const EdgeInsets.symmetric(
-                                            horizontal: 20,
-                                            vertical: 10)), // Adjust padding
-                                    minimumSize: MaterialStateProperty.all(
-                                        const Size(171, 48)),
-                                    shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            12.0), // Adjust radius as desired
-                                      ),
+                                    ),
+                                  );
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      const Color(0xFF15AC97)),
+                                  foregroundColor:
+                                      MaterialStateProperty.all(Colors.white),
+                                  padding: MaterialStateProperty.all(
+                                    const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 10),
+                                  ),
+                                  minimumSize: MaterialStateProperty.all(
+                                      const Size(171, 48)),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12.0),
                                     ),
                                   ),
-                                  child: const Text(
-                                    "Baca Sekarang",
-                                    style: TextStyle(
-                                      fontFamily: "Poppins",
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0XFFFFFFFF),
-                                      height: 18 / 12,
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  )),
+                                ),
+                                child: const Text(
+                                  "Baca Sekarang",
+                                  style: TextStyle(
+                                    fontFamily: "Poppins",
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color(0XFFFFFFFF),
+                                    height: 18 / 12,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
                             ),
                           ],
                         ),
                       ),
                     ),
-                  ]),
-            ),
-    ));
+                  ],
+                ),
+              );
+            } else {
+              return const Center(child: Text('No data available'));
+            }
+          },
+        ),
+      ),
+    );
   }
 }

@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   final Future<List<Insight>>? insights = InsightService.getImageInsights();
   String? _token;
   String? _name; // Variable to store the decoded name
-  final Future<List<Ebook>>? ebooks = EbookService.getImageEbook();
+  // final Future<List<Ebook>>? ebooks = EbookService.getImageEbook();
 
   bool _obsecureText = true;
   final _controller = PageController();
@@ -584,60 +584,60 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              FutureBuilder<List<Ebook>>(
-                future: ebooks,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    final List<Ebook> ebooks = snapshot.data!;
-                    return SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 200,
-                            width: screenWidth,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: ebooks.length,
-                              itemBuilder: (context, index) {
-                                final ebook = ebooks[index];
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              detailEbook(id: ebook.id),
-                                        ),
-                                      );
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        image: DecorationImage(
-                                          image: NetworkImage(ebook.image),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      width: 160,
-                                      height: 200,
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  } else if (snapshot.hasError) {
-                    return const Center(child: Text('Error fetching Ebook'));
-                  }
-                  return const Center(child: CircularProgressIndicator());
-                },
-              ),
+              // FutureBuilder<List<Ebook>>(
+              //   future: ebooks,
+              //   builder: (context, snapshot) {
+              //     if (snapshot.hasData) {
+              //       final List<Ebook> ebooks = snapshot.data!;
+              //       return SingleChildScrollView(
+              //         child: Column(
+              //           children: [
+              //             SizedBox(
+              //               height: 200,
+              //               width: screenWidth,
+              //               child: ListView.builder(
+              //                 scrollDirection: Axis.horizontal,
+              //                 itemCount: ebooks.length,
+              //                 itemBuilder: (context, index) {
+              //                   final ebook = ebooks[index];
+              //                   return Padding(
+              //                     padding: const EdgeInsets.symmetric(
+              //                         horizontal: 8.0),
+              //                     child: GestureDetector(
+              //                       onTap: () {
+              //                         // Navigator.push(
+              //                         //   context,
+              //                         //   MaterialPageRoute(
+              //                         //     builder: (context) =>
+              //                         //         detailEbook(id: ebook.id),
+              //                         //   ),
+              //                         // );
+              //                       },
+              //                       child: Container(
+              //                         decoration: BoxDecoration(
+              //                           borderRadius: BorderRadius.circular(10),
+              //                           image: DecorationImage(
+              //                             image: NetworkImage("ebook.image"),
+              //                             fit: BoxFit.cover,
+              //                           ),
+              //                         ),
+              //                         width: 160,
+              //                         height: 200,
+              //                       ),
+              //                     ),
+              //                   );
+              //                 },
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       );
+              //     } else if (snapshot.hasError) {
+              //       return const Center(child: Text('Error fetching Ebook'));
+              //     }
+              //     return const Center(child: CircularProgressIndicator());
+              //   },
+              // ),
               const SizedBox(
                 height: 20,
               )

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sharfin_app/data/models/Ebook.dart';
 import 'package:sharfin_app/data/service/Ebook.dart';
+import 'package:sharfin_app/view/detailEbook.dart';
 import 'package:sharfin_app/view/ebookDetails.dart';
 
 class ebooks extends StatefulWidget {
@@ -11,8 +12,13 @@ class ebooks extends StatefulWidget {
 }
 
 class _ebooksState extends State<ebooks> {
-  final Future<List<Ebook>>? ebooks =
-      EbookService.getImageEbook(); // Get insights
+  late Future<List<Ebook>> futureEbooks;
+
+  @override
+  void initState() {
+    super.initState();
+    futureEbooks = EbookService().fetchEbooks();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +36,13 @@ class _ebooksState extends State<ebooks> {
       ),
       body: Center(
         child: FutureBuilder<List<Ebook>>(
-          future: EbookService.getImageEbook(), // Use insights future
+          future: futureEbooks,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (snapshot.hasData) {
               final List<Ebook> ebooksData = snapshot.data!;
               return Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -40,15 +50,14 @@ class _ebooksState extends State<ebooks> {
                   crossAxisCount: 2,
                   childAspectRatio: 16.5 / 20,
                   children: List.generate(ebooksData.length, (index) {
-                    final ebook = ebooksData[index]; // Access insight data
+                    final ebook = ebooksData[index];
 
                     return GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                detailEbook(id: ebook.id), // Pass ID directly
+                            builder: (context) => detailEbook(uuid: ebook.uuid),
                           ),
                         );
                       },
@@ -64,7 +73,7 @@ class _ebooksState extends State<ebooks> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
                                 child: Image.network(
-                                  ebook.image, // Use image from Insight object
+                                  'http://192.168.100.72:8888${ebook.thumbnail}',
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -76,10 +85,9 @@ class _ebooksState extends State<ebooks> {
                   }),
                 ),
               );
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
+            } else {
+              return const Center(child: Text('No ebooks found'));
             }
-            return const Center(child: CircularProgressIndicator());
           },
         ),
       ),

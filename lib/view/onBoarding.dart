@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sharfin_app/view/loginPage.dart';
 import 'package:sharfin_app/widget/bottomNavigation.dart';
+import 'package:dio/dio.dart';
+import 'package:sharfin_app/data/service/User.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class onboarding extends StatefulWidget {
   const onboarding({super.key});
@@ -39,7 +42,8 @@ class _onboardingState extends State<onboarding> {
                   padding: const EdgeInsets.only(
                     top: 68,
                   ),
-                  child: const Stack(alignment: Alignment.bottomCenter, children: [
+                  child:
+                      const Stack(alignment: Alignment.bottomCenter, children: [
                     Image(
                       image: AssetImage("assets/obd1.png"),
                       width: 326,
@@ -86,9 +90,12 @@ class _onboardingState extends State<onboarding> {
                             Colors.white), // Adjust color
                         foregroundColor: MaterialStateProperty.all(
                             Colors.white), // Adjust text color
-                        padding: MaterialStateProperty.all(const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10)), // Adjust padding
-                        minimumSize: MaterialStateProperty.all(const Size(343, 48)),
+                        padding: MaterialStateProperty.all(
+                            const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 10)), // Adjust padding
+                        minimumSize:
+                            MaterialStateProperty.all(const Size(343, 48)),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
@@ -121,7 +128,8 @@ class _onboardingState extends State<onboarding> {
                   padding: const EdgeInsets.only(
                     top: 68,
                   ),
-                  child: const Stack(alignment: Alignment.bottomCenter, children: [
+                  child:
+                      const Stack(alignment: Alignment.bottomCenter, children: [
                     Image(
                       image: AssetImage("assets/obd2.png"),
                       width: 326,
@@ -198,7 +206,8 @@ class _onboardingState extends State<onboarding> {
                               const EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 10)), // Adjust padding
-                          minimumSize: MaterialStateProperty.all(const Size(97, 48)),
+                          minimumSize:
+                              MaterialStateProperty.all(const Size(97, 48)),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
@@ -256,7 +265,8 @@ class _onboardingState extends State<onboarding> {
                   padding: const EdgeInsets.only(
                     top: 16,
                   ),
-                  child: const Stack(alignment: Alignment.bottomCenter, children: [
+                  child:
+                      const Stack(alignment: Alignment.bottomCenter, children: [
                     Image(
                       image: AssetImage("assets/obd3.png"),
                       width: 326,
@@ -299,9 +309,12 @@ class _onboardingState extends State<onboarding> {
                             Colors.white), // Adjust color
                         foregroundColor: MaterialStateProperty.all(
                             Colors.white), // Adjust text color
-                        padding: MaterialStateProperty.all(const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10)), // Adjust padding
-                        minimumSize: MaterialStateProperty.all(const Size(343, 48)),
+                        padding: MaterialStateProperty.all(
+                            const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 10)), // Adjust padding
+                        minimumSize:
+                            MaterialStateProperty.all(const Size(343, 48)),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
@@ -338,19 +351,19 @@ class _onboardingState extends State<onboarding> {
                   padding: const EdgeInsets.only(top: 8),
                   child: FilledButton(
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) {
-                          return const login();
-                        }));
+                        googleLogin();
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
                             Colors.white), // Adjust color
                         foregroundColor: MaterialStateProperty.all(
                             Colors.white), // Adjust text color
-                        padding: MaterialStateProperty.all(const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10)), // Adjust padding
-                        minimumSize: MaterialStateProperty.all(const Size(343, 48)),
+                        padding: MaterialStateProperty.all(
+                            const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 10)), // Adjust padding
+                        minimumSize:
+                            MaterialStateProperty.all(const Size(343, 48)),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
@@ -381,5 +394,24 @@ class _onboardingState extends State<onboarding> {
         ],
       ),
     );
+  }
+
+  Future<void> googleLogin() async {
+    try {
+      var dio = Dio();
+      var response = await dio.get('http:192.168.100.86/google_login');
+
+      if (response.statusCode == 200) {
+        // Handle success response, e.g., navigate to the returned URL
+        var googleAuthUrl = response.data['url'];
+        // Use a package like url_launcher to open the URL in a web browser
+        await launch(googleAuthUrl);
+      } else {
+        // Handle error response
+        print('Failed to login with Google: ${response.statusMessage}');
+      }
+    } catch (e) {
+      print('Error during Google login: $e');
+    }
   }
 }
