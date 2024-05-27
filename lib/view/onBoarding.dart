@@ -3,6 +3,7 @@ import 'package:sharfin_app/view/loginPage.dart';
 import 'package:sharfin_app/widget/bottomNavigation.dart';
 import 'package:dio/dio.dart';
 import 'package:sharfin_app/data/service/User.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class onboarding extends StatefulWidget {
@@ -13,12 +14,49 @@ class onboarding extends StatefulWidget {
 }
 
 class _onboardingState extends State<onboarding> {
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  GoogleSignInAccount? _currentUser;
   final controller = PageController();
   @override
   void dispose() {
     controller.dispose();
 
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
+      setState(() {
+        _currentUser = account;
+      });
+    });
+    _googleSignIn.signInSilently();
+  }
+
+  Future<void> _handleSignIn() async {
+    try {
+      final account = await _googleSignIn.signIn();
+      if (account != null) {
+        final auth = await account.authentication;
+        final idToken = auth.idToken;
+
+        // Kirim idToken ke server backend Anda
+        final response = await Dio().post(
+          'http://192.168.100.73/auth/google',
+          data: {'id_token': idToken},
+        );
+
+        if (response.statusCode == 200) {
+          print('Login berhasil');
+        } else {
+          print('Login gagal');
+        }
+      }
+    } catch (error) {
+      print(error);
+    }
   }
 
   @override
@@ -303,7 +341,9 @@ class _onboardingState extends State<onboarding> {
                 Container(
                   padding: const EdgeInsets.only(top: 24),
                   child: FilledButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _handleSignIn();
+                      },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
                             Colors.white), // Adjust color
@@ -351,7 +391,10 @@ class _onboardingState extends State<onboarding> {
                   padding: const EdgeInsets.only(top: 8),
                   child: FilledButton(
                       onPressed: () {
-                        googleLogin();
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) {
+                          return Login();
+                        }));
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
@@ -399,7 +442,7 @@ class _onboardingState extends State<onboarding> {
   Future<void> googleLogin() async {
     try {
       var dio = Dio();
-      var response = await dio.get('http:192.168.100.86/google_login');
+      var response = await dio.get('http:192.168.100.73/google_login');
 
       if (response.statusCode == 200) {
         // Handle success response, e.g., navigate to the returned URL

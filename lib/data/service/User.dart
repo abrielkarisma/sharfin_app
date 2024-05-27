@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class UserService {
   final Dio _dio = Dio();
-  final String _baseUrl = 'http://192.168.100.72:8888/api/auth';
+  final String _baseUrl = 'http://192.168.100.73:8888/api/auth';
 
   Future<void> registerUser(User user) async {
     try {
@@ -46,15 +46,11 @@ class UserService {
   Future<void> googleLogin() async {
     try {
       var dio = Dio();
-      var response = await dio.get('http://your-api-url.com/google_login');
+      var response = await dio.get('http://192.168.100.73/google_login');
 
       if (response.statusCode == 200) {
-        // Handle success response, e.g., navigate to the returned URL
         var googleAuthUrl = response.data['url'];
-        // Use a package like url_launcher to open the URL in a web browser
-        // await launch(googleAuthUrl);
       } else {
-        // Handle error response
         print('Failed to login with Google: ${response.statusMessage}');
       }
     } catch (e) {

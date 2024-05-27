@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:sharfin_app/view/loginPage.dart';
 
 class profilguest extends StatefulWidget {
   const profilguest({super.key});
@@ -199,6 +200,55 @@ class _profilguestState extends State<profilguest> {
                                           ])),
                                 ),
                                 Container(
+                                  padding: const EdgeInsets.only(top: 8),
+                                  child: FilledButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return Login();
+                                        }));
+                                      },
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.white), // Adjust color
+                                        foregroundColor:
+                                            MaterialStateProperty.all(Colors
+                                                .white), // Adjust text color
+                                        padding: MaterialStateProperty.all(
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 20,
+                                                vertical:
+                                                    10)), // Adjust padding
+                                        minimumSize: MaterialStateProperty.all(
+                                            const Size(343, 48)),
+                                        shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                12.0), // Adjust radius as desired
+                                          ),
+                                        ),
+                                      ),
+                                      child: const Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Masuk Dengan Akun Anda",
+                                              style: TextStyle(
+                                                fontFamily: "Poppins",
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500,
+                                                color: Color(0XFF14142B),
+                                                height: 18 / 12,
+                                              ),
+                                              textAlign: TextAlign.left,
+                                            ),
+                                          ])),
+                                ),
+                                Container(
                                   padding: const EdgeInsets.only(top: 28),
                                   child: TextButton(
                                     onPressed: () {
@@ -227,8 +277,9 @@ class _profilguestState extends State<profilguest> {
                         const Color(0xFF15AC97)), // Adjust color
                     foregroundColor: MaterialStateProperty.all(
                         Colors.white), // Adjust text color
-                    padding: MaterialStateProperty.all(const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10)), // Adjust padding
+                    padding: MaterialStateProperty.all(
+                        const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10)), // Adjust padding
                     minimumSize: MaterialStateProperty.all(const Size(198, 48)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(

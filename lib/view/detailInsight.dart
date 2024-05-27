@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sharfin_app/data/models/Insight.dart';
 import 'package:sharfin_app/data/service/Insight.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class DetailInsight extends StatefulWidget {
   final String uuid;
@@ -18,6 +20,10 @@ class _DetailInsightState extends State<DetailInsight> {
   void initState() {
     super.initState();
     _insightFuture = InsightService.getInsightByUUID(widget.uuid);
+  }
+
+  String formatDate(DateTime date) {
+    return DateFormat('dd MMMM yyyy HH:mm:ss', 'id_ID').format(date);
   }
 
   @override
@@ -69,16 +75,26 @@ class _DetailInsightState extends State<DetailInsight> {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      const Text(
-                        "David Kendrick",
+                      Text(
+                        insight.uploadBy,
                         style: TextStyle(
                           fontFamily: "Poppins",
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: Color(0xFF4E4B66),
                         ),
-                      )
+                      ),
                     ],
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    formatDate(insight.createdAt),
+                    style: TextStyle(
+                      fontFamily: "Poppins",
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFF15AC97),
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(

@@ -4,17 +4,18 @@ import 'package:sharfin_app/view/registerPage.dart';
 import 'package:sharfin_app/widget/bottomNavigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class login extends StatefulWidget {
-  const login({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<login> createState() => _loginState();
+  State<Login> createState() => _LoginState();
 }
 
-class _loginState extends State<login> {
+class _LoginState extends State<Login> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final UserService _userService = UserService();
+  bool _isPasswordVisible = false;
 
   void _login() async {
     final email = _emailController.text;
@@ -127,11 +128,24 @@ class _loginState extends State<login> {
                         height: 55.0,
                         child: TextField(
                           controller: _passwordController,
+                          obscureText: !_isPasswordVisible,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(6.0),
                             ),
-                            hintText: '••••••••••••••••',
+                            hintText: '••••••••',
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _isPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _isPasswordVisible = !_isPasswordVisible;
+                                });
+                              },
+                            ),
                           ),
                         ),
                       )),
@@ -150,7 +164,8 @@ class _loginState extends State<login> {
                               const EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 10)), // Adjust padding
-                          minimumSize: MaterialStateProperty.all(const Size(400, 50)),
+                          minimumSize:
+                              MaterialStateProperty.all(const Size(400, 50)),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(

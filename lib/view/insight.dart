@@ -52,7 +52,7 @@ class _InsightPageState extends State<InsightPage> {
                   children: List.generate(insights.length, (index) {
                     Insight insight = insights[index];
                     String imageUrl =
-                        "http://192.168.100.72:8888${insight.img.first}";
+                        "http://192.168.100.73:8888${insight.img.first}";
                     return GestureDetector(
                       onTap: () {
                         Navigator.push(

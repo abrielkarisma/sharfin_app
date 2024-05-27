@@ -22,13 +22,20 @@ class _bottomNavigationState extends State<bottomNavigation> {
     super.initState();
     _bottomNavIndex =
         widget.selectedIndex; // Set the initial index from the parameter
+    _checkToken(); // Check for token when initializing the state
+  }
+
+  Future<void> _checkToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      hasToken = prefs.getString('token') != null;
+    });
   }
 
   List<Widget> pages = [
     const HomePage(),
     const InsightPage(),
-    // const ebooks(),
-    const Profile(),
+    const ebooks(),
   ];
 
   void _onItemTapped(int index) {
@@ -42,7 +49,11 @@ class _bottomNavigationState extends State<bottomNavigation> {
   }
 
   Widget pageCaller(int index) {
-    return pages[index];
+    if (index == 3) {
+      return hasToken ? const Profile() : const profilguest();
+    } else {
+      return pages[index];
+    }
   }
 
   @override

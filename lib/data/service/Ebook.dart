@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:sharfin_app/data/models/Ebook.dart';
 
 class EbookService {
-  String _baseUrl = 'http://192.168.100.86:8888/api/public';
+  String _baseUrl = 'http://192.168.100.73:8888/api/public';
 
   Future<List<Ebook>> fetchEbooks() async {
     try {

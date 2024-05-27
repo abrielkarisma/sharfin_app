@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sharfin_app/data/models/Ebook.dart';
 import 'package:sharfin_app/data/service/Ebook.dart';
 import 'package:sharfin_app/view/ebookContent.dart';
-import 'package:sharfin_app/view/test.dart';
+import 'package:sharfin_app/view/ebookContent.dart';
+import 'package:intl/intl.dart';
 
 class detailEbook extends StatefulWidget {
   const detailEbook({super.key, required this.uuid});
@@ -19,6 +20,10 @@ class _detailEbookState extends State<detailEbook> {
   void initState() {
     super.initState();
     _ebookFuture = EbookService().getEbookByUUID(widget.uuid);
+  }
+
+  String formatDate(DateTime date) {
+    return DateFormat('dd MMMM yyyy HH:mm:ss', 'id_ID').format(date);
   }
 
   @override
@@ -38,7 +43,7 @@ class _detailEbookState extends State<detailEbook> {
               return SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Stack(
                       alignment: Alignment.topCenter,
@@ -100,7 +105,7 @@ class _detailEbookState extends State<detailEbook> {
                             width: 160,
                             height: 200,
                             child: Image.network(
-                              'http://192.168.100.86:8888${ebook.thumbnail}',
+                              'http://192.168.100.73:8888${ebook.thumbnail}',
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -111,6 +116,8 @@ class _detailEbookState extends State<detailEbook> {
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                               padding: const EdgeInsets.only(top: 8),
@@ -139,8 +146,8 @@ class _detailEbookState extends State<detailEbook> {
                                   const SizedBox(
                                     width: 8,
                                   ),
-                                  const Text(
-                                    "David Kendrick",
+                                  Text(
+                                    ebook.uploadBy,
                                     style: TextStyle(
                                       fontFamily: "Poppins",
                                       fontSize: 14,
@@ -151,10 +158,10 @@ class _detailEbookState extends State<detailEbook> {
                                 ],
                               ),
                             ),
+                            SizedBox(height: 8),
                             Container(
-                              padding: const EdgeInsets.only(top: 8),
                               child: Text(
-                                ebook.title,
+                                formatDate(ebook.createdAt),
                                 style: TextStyle(
                                   fontFamily: "Poppins",
                                   fontSize: 14,
@@ -179,46 +186,49 @@ class _detailEbookState extends State<detailEbook> {
                             ),
                             Container(
                               padding: const EdgeInsets.only(top: 24),
-                              child: FilledButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => EbookContent1(
-                                        ebookUrl:
-                                            'http://192.168.100.86:8888${ebook.ebookFile}',
+                              child: Center(
+                                child: FilledButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => EbookContent(
+                                          ebookUrl:
+                                              'http://192.168.100.73:8888${ebook.ebookFile}',
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        const Color(0xFF15AC97)),
+                                    foregroundColor:
+                                        MaterialStateProperty.all(Colors.white),
+                                    padding: MaterialStateProperty.all(
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 10),
+                                    ),
+                                    minimumSize: MaterialStateProperty.all(
+                                        const Size(171, 48)),
+                                    shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
                                       ),
                                     ),
-                                  );
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      const Color(0xFF15AC97)),
-                                  foregroundColor:
-                                      MaterialStateProperty.all(Colors.white),
-                                  padding: MaterialStateProperty.all(
-                                    const EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 10),
                                   ),
-                                  minimumSize: MaterialStateProperty.all(
-                                      const Size(171, 48)),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12.0),
+                                  child: const Text(
+                                    "Baca Sekarang",
+                                    style: TextStyle(
+                                      fontFamily: "Poppins",
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0XFFFFFFFF),
+                                      height: 18 / 12,
                                     ),
+                                    textAlign: TextAlign.left,
                                   ),
-                                ),
-                                child: const Text(
-                                  "Baca Sekarang",
-                                  style: TextStyle(
-                                    fontFamily: "Poppins",
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color(0XFFFFFFFF),
-                                    height: 18 / 12,
-                                  ),
-                                  textAlign: TextAlign.left,
                                 ),
                               ),
                             ),

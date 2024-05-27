@@ -83,7 +83,7 @@ class _registerState extends State<register> {
         // Navigasi ke halaman homepage setelah berhasil mendaftar
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const login()),
+          MaterialPageRoute(builder: (context) => const Login()),
         );
       });
     } else {
@@ -373,7 +373,7 @@ class _registerState extends State<register> {
                   onPressed: () {
                     Navigator.of(context)
                         .pushReplacement(MaterialPageRoute(builder: (context) {
-                      return const login();
+                      return const Login();
                     }));
                   },
                   child: const Text(

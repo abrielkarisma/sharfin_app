@@ -22,10 +22,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final Future<List<Insight>>? insights = InsightService.getImageInsights();
+  late Future<List<Insight>> _insightsFuture;
+  late Future<List<Ebook>> futureEbooks;
+  final InsightService _insightService = InsightService();
+  final EbookService _EbookService = EbookService();
   String? _token;
-  String? _name; // Variable to store the decoded name
-  // final Future<List<Ebook>>? ebooks = EbookService.getImageEbook();
+  String? _name;
 
   bool _obsecureText = true;
   final _controller = PageController();
@@ -39,6 +41,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    _insightsFuture = InsightService.getImageInsights();
+    futureEbooks = EbookService().fetchEbooks();
     _getTokenFromSharedPreferences();
   }
 
@@ -407,10 +411,10 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               FutureBuilder<List<Insight>>(
-                future: insights,
+                future: _insightsFuture,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    final List<Insight> insights = snapshot.data!;
+                    List<Insight> insights = snapshot.data ?? [];
                     return SingleChildScrollView(
                       child: Column(
                         children: [
@@ -421,7 +425,10 @@ class _HomePageState extends State<HomePage> {
                               scrollDirection: Axis.horizontal,
                               itemCount: insights.length,
                               itemBuilder: (context, index) {
-                                final insight = insights[index];
+                                Insight insight = insights[index];
+                                String imageUrl =
+                                    "http://192.168.100.73:8888${insight.img.first}";
+
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 8.0),
@@ -437,8 +444,8 @@ class _HomePageState extends State<HomePage> {
                                     child: Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
-                                        image: const DecorationImage(
-                                          image: NetworkImage("insight.img"),
+                                        image: DecorationImage(
+                                          image: NetworkImage(imageUrl),
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -496,10 +503,10 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               FutureBuilder<List<Insight>>(
-                future: insights,
+                future: _insightsFuture,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    final List<Insight> insights = snapshot.data!;
+                    List<Insight> insights = snapshot.data ?? [];
                     return SingleChildScrollView(
                       child: Column(
                         children: [
@@ -510,7 +517,10 @@ class _HomePageState extends State<HomePage> {
                               scrollDirection: Axis.horizontal,
                               itemCount: insights.length,
                               itemBuilder: (context, index) {
-                                final insight = insights[index];
+                                Insight insight = insights[index];
+                                String imageUrl =
+                                    "http://192.168.100.72:8888${insight.img.first}";
+
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 8.0),
@@ -526,12 +536,12 @@ class _HomePageState extends State<HomePage> {
                                     child: Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
-                                        image: const DecorationImage(
-                                          image: NetworkImage("insight.img"),
+                                        image: DecorationImage(
+                                          image: NetworkImage(imageUrl),
                                           fit: BoxFit.cover,
                                         ),
                                       ),
-                                      width: 103,
+                                      width: 125,
                                       height: 150,
                                     ),
                                   ),
@@ -584,60 +594,62 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              // FutureBuilder<List<Ebook>>(
-              //   future: ebooks,
-              //   builder: (context, snapshot) {
-              //     if (snapshot.hasData) {
-              //       final List<Ebook> ebooks = snapshot.data!;
-              //       return SingleChildScrollView(
-              //         child: Column(
-              //           children: [
-              //             SizedBox(
-              //               height: 200,
-              //               width: screenWidth,
-              //               child: ListView.builder(
-              //                 scrollDirection: Axis.horizontal,
-              //                 itemCount: ebooks.length,
-              //                 itemBuilder: (context, index) {
-              //                   final ebook = ebooks[index];
-              //                   return Padding(
-              //                     padding: const EdgeInsets.symmetric(
-              //                         horizontal: 8.0),
-              //                     child: GestureDetector(
-              //                       onTap: () {
-              //                         // Navigator.push(
-              //                         //   context,
-              //                         //   MaterialPageRoute(
-              //                         //     builder: (context) =>
-              //                         //         detailEbook(id: ebook.id),
-              //                         //   ),
-              //                         // );
-              //                       },
-              //                       child: Container(
-              //                         decoration: BoxDecoration(
-              //                           borderRadius: BorderRadius.circular(10),
-              //                           image: DecorationImage(
-              //                             image: NetworkImage("ebook.image"),
-              //                             fit: BoxFit.cover,
-              //                           ),
-              //                         ),
-              //                         width: 160,
-              //                         height: 200,
-              //                       ),
-              //                     ),
-              //                   );
-              //                 },
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       );
-              //     } else if (snapshot.hasError) {
-              //       return const Center(child: Text('Error fetching Ebook'));
-              //     }
-              //     return const Center(child: CircularProgressIndicator());
-              //   },
-              // ),
+              FutureBuilder<List<Ebook>>(
+                future: futureEbooks,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<Ebook> ebooks = snapshot.data ?? [];
+                    return SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 200,
+                            width: screenWidth,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: ebooks.length,
+                              itemBuilder: (context, index) {
+                                Ebook ebook = ebooks[index];
+                                String imageUrl =
+                                    "http://192.168.100.73:8888${ebook.thumbnail}";
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              detailEbook(uuid: ebook.uuid),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage("ebook.image"),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      width: 160,
+                                      height: 200,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return const Center(child: Text('Error fetching Ebook'));
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                },
+              ),
               const SizedBox(
                 height: 20,
               )

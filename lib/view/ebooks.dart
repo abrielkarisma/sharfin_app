@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sharfin_app/data/models/Ebook.dart';
 import 'package:sharfin_app/data/service/Ebook.dart';
-import 'package:sharfin_app/view/detailEbook.dart';
 import 'package:sharfin_app/view/ebookDetails.dart';
 
 class ebooks extends StatefulWidget {
@@ -73,7 +72,7 @@ class _ebooksState extends State<ebooks> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
                                 child: Image.network(
-                                  'http://192.168.100.72:8888${ebook.thumbnail}',
+                                  'http://192.168.100.73:8888${ebook.thumbnail}',
                                   fit: BoxFit.cover,
                                 ),
                               ),
