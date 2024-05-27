@@ -38,22 +38,43 @@ class _SuratPageState extends State<SuratPage> {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
                       return AyatPage(surat: surat);
-                    }
-                    )
-                    );
+                    }));
                   },
                   child: Card(
                     color: Colors.white,
-                      child: ListTile(
-                        tileColor: Colors.white,
-                        leading: Stack(children: [
+                    child: ListTile(
+                      tileColor: Colors.white,
+                      leading: Stack(
+                        children: [
                           SvgPicture.asset('assets/border_nomer.svg'),
-                          SizedBox(height: 32, width: 32, child: Center(child: Text("${surat.number}", style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w500, color: Color(0xffa0a3bd)),),),)
-                        ],),
-                        title: Text(surat.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
-                        subtitle:
-                            Text('${surat.revelation} . ${surat.numberOfAyahs} Ayat.', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Color(0xffa0a3bd)),),
+                          SizedBox(
+                            height: 32,
+                            width: 32,
+                            child: Center(
+                              child: Text(
+                                "${surat.number}",
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color(0xffa0a3bd)),
+                              ),
+                            ),
+                          )
+                        ],
                       ),
+                      title: Text(
+                        surat.name,
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500),
+                      ),
+                      subtitle: Text(
+                        '${surat.revelation} . ${surat.numberOfAyahs} Ayat.',
+                        style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xffa0a3bd)),
+                      ),
+                    ),
                   ),
                 );
               },
