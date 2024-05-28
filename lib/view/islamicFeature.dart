@@ -8,6 +8,7 @@ import 'package:sharfin_app/view/jamSholat.dart';
 import 'package:sharfin_app/view/qiblaPage.dart';
 import 'package:sharfin_app/view/quranPage.dart';
 import 'package:sharfin_app/data/service/JamSholat.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class IslamPage extends StatefulWidget {
   const IslamPage({super.key});
@@ -130,8 +131,8 @@ class _IslamPageState extends State<IslamPage> {
         ],
       ),
       body: Center(
-        child: SingleChildScrollView(
-          child: Container(
+        child: ListView(
+          children: [Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -241,9 +242,7 @@ class _IslamPageState extends State<IslamPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Image(
-                                image: Svg("assets/LocationWhite.svg"),
-                              ),
+                              SvgPicture.asset("assets/LocationWhite.svg"),
                               Flexible(
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -335,12 +334,80 @@ class _IslamPageState extends State<IslamPage> {
                       ],
                     ),
                   ),
+                  SizedBox(height: 20,),
+                  Container(
+                    child: _lastread(),
+                  ),
+                  SizedBox(height: 20,)
                 ],
               ),
             ),
           ),
+          ]
         ),
       ),
+    );
+  }
+  Column _lastread() {
+    return Column(
+      children: [
+        const SizedBox(height: 16),
+        Stack(
+          children: [
+            Container(
+              height: 131,
+              width: 343,
+              decoration: BoxDecoration(
+                color: const Color(0xff15ac97),
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+            Positioned(
+              top: 0,
+              right: 0,
+              child: SvgPicture.asset('assets/Circle.svg'),
+            ),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: SvgPicture.asset('assets/book.svg'),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Terakhir Dibaca',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(height: 29),
+                  Text(
+                    'Al-fatihah',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    'Ayat 1',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ],
     );
   }
 }

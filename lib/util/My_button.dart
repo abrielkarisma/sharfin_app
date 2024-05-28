@@ -1,47 +1,60 @@
-
 import 'package:flutter/material.dart';
+import 'package:sharfin_app/data/models/button.dart';
 
 class MyButton extends StatelessWidget {
-  final String iconImagePath;
-  final String buttonText;
-  final VoidCallback pathss;
+  final ButtonApi button;
+  final VoidCallback onPressed;
 
   const MyButton({
-    super.key,
-    required this.iconImagePath,
-    required this.buttonText,
-    required this.pathss,
-  });
+    Key? key,
+    required this.button,
+    required this.onPressed,
+  }) : super(key: key);
+@override
+Widget build(BuildContext context) {
+  final screenWidth = MediaQuery.of(context).size.width;
 
-  @override
-  Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: pathss,
-          child: Container(
-            height: screenWidth * 0.2, // Adjust height based on screen width
-            margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.02), // Adjust margin based on screen width
-            padding: EdgeInsets.all(screenWidth * 0.045), // Adjust padding based on screen width
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(30), // Adjust borderRadius based on screen width
-            ),
-            child: Center(
-              child: Image.asset(
-                iconImagePath,
-                height: screenWidth * 0.1, // Adjust image height based on screen width
+  return Column(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Container(
+        width: screenWidth * 0.2, // Constrain the width
+        margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
+        child: GestureDetector(
+          onTap: onPressed,
+          child: Column(
+            children: [
+              Container(
+                width: screenWidth * 0.2,
+                height: screenWidth * 0.2,
+                padding: EdgeInsets.all(screenWidth * 0.045),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Center(
+                  child: Image.network(
+                    button.fullIconUrl,
+                    height: screenWidth * 0.1,
+                  ),
+                ),
               ),
-            ),
+              SizedBox(height: screenWidth * 0.02),
+              Text(
+                overflow: TextOverflow.ellipsis,
+                button.name,
+                textAlign: TextAlign.center, // Center the text
+                style: TextStyle(
+                  fontSize: screenWidth * 0.04,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
           ),
         ),
-        Text(
-          buttonText,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500), // Adjust fontSize based on screen width
-        )
-      ],
-    );
-  }
+      ),
+    ],
+  );
+}
+
 }

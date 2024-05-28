@@ -1,5 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:sharfin_app/cubit/button/button_cubit.dart';
+import 'package:sharfin_app/data/api_service.dart';
 import 'package:sharfin_app/data/models/Ebook.dart';
 import 'package:sharfin_app/data/models/Insight.dart';
 import 'package:sharfin_app/data/service/Ebook.dart';
@@ -13,6 +17,7 @@ import 'package:sharfin_app/view/semuaMenuPage.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sharfin_app/widget/bottomNavigation.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -234,125 +239,50 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 20),
               Container(
-                padding: const EdgeInsets.all(13),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Center(
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              MyButton(
-                                iconImagePath: "assets/paket_data.png",
-                                buttonText: "Pulsa & Paket",
-                                pathss: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const MenuPage(),
-                                    ),
-                                  );
-                                },
-                              ),
-                              MyButton(
-                                iconImagePath: "assets/Internet.png",
-                                buttonText: "Internet",
-                                pathss: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const MenuPage(),
-                                    ),
-                                  );
-                                },
-                              ),
-                              MyButton(
-                                iconImagePath: "assets/pln.png",
-                                buttonText: "PLN",
-                                pathss: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const MenuPage(),
-                                    ),
-                                  );
-                                },
-                              ),
-                              MyButton(
-                                iconImagePath: "assets/pdam.png",
-                                buttonText: "PDAM",
-                                pathss: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const MenuPage(),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            children: [
-                              MyButton(
-                                iconImagePath: "assets/tiket kereta.png",
-                                buttonText: "Tiket Kereta",
-                                pathss: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const MenuPage(),
-                                    ),
-                                  );
-                                },
-                              ),
-                              MyButton(
-                                iconImagePath: "assets/e-commerce.png",
-                                buttonText: "E-Commerce",
-                                pathss: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const MenuPage(),
-                                    ),
-                                  );
-                                },
-                              ),
-                              MyButton(
-                                iconImagePath: "assets/islami.png",
-                                buttonText: "Fitur Islami",
-                                pathss: () {
-                                  PersistentNavBarNavigator.pushNewScreen(
-                                    context,
-                                    screen: const IslamPage(),
-                                    withNavBar: false,
-                                  );
-                                },
-                              ),
-                              MyButton(
-                                iconImagePath: "assets/lainnya.png",
-                                buttonText: "lainnya",
-                                pathss: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const MenuPage(),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+  height: 200.0, // Provide a finite height
+  child: BlocProvider(
+    create: (context) => ButtonCubit(ApiService(dio: Dio()))..fetchButtons(),
+    child: Scaffold(
+      backgroundColor: Colors.transparent,
+      body: BlocBuilder<ButtonCubit, ButtonState>(
+        builder: (context, state) {
+          if (state is ButtonLoading) {
+            return Center(child: CircularProgressIndicator());
+          } else if (state is ButtonLoaded) {
+            final buttons = state.buttons;
+            return GridView.builder(
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4, // 4 buttons per row
+                childAspectRatio: 1.0, // Adjust as needed
               ),
+              itemCount: buttons.length,
+              itemBuilder: (context, index) {
+                final button = buttons[index];
+                return MyButton(
+                  button: button,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MenuPage(),
+                      ),
+                    );
+                  },
+                );
+              },
+            );
+          } else if (state is ButtonError) {
+            return Center(child: Text('Error: ${state.message}'));
+          } else {
+            return Center(child: Text('No data available'));
+          }
+        },
+      ),
+    ),
+  ),
+),
+
               const SizedBox(
                 height: 25,
               ),

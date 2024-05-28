@@ -74,8 +74,8 @@ class _onboardingState extends State<onboarding> {
           });
         },
         children: [
-          SingleChildScrollView(
-            child: Container(
+          ListView(shrinkWrap: true, children: [
+            Container(
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -162,9 +162,9 @@ class _onboardingState extends State<onboarding> {
                 ],
               ),
             ),
-          ),
-          SingleChildScrollView(
-            child: Container(
+          ]),
+          ListView(children: [
+            Container(
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -278,9 +278,9 @@ class _onboardingState extends State<onboarding> {
                 ],
               ),
             ),
-          ),
-          SingleChildScrollView(
-            child: Container(
+          ]),
+          ListView(children: [
+            Container(
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -445,7 +445,7 @@ class _onboardingState extends State<onboarding> {
                 ],
               ),
             ),
-          ),
+          ]),
         ],
       ),
     );
