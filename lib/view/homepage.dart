@@ -239,11 +239,11 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 20),
               Container(
-  color: Colors.transparent,
   height: 200.0, // Provide a finite height
   child: BlocProvider(
     create: (context) => ButtonCubit(ApiService(dio: Dio()))..fetchButtons(),
     child: Scaffold(
+      backgroundColor: Colors.transparent,
       body: BlocBuilder<ButtonCubit, ButtonState>(
         builder: (context, state) {
           if (state is ButtonLoading) {

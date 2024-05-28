@@ -80,29 +80,31 @@ class _MenuPageState extends State<MenuPage> {
                             ),
                           );
                         },
-                        body: GridView.builder(
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4, // Set the number of columns to 4
-                            crossAxisSpacing: 8.0, // Add spacing between buttons horizontally
-                            mainAxisSpacing: 8.0, // Add spacing between buttons vertically
+                        body: SizedBox(
+                          height: 150,
+                          child: GridView.builder(
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4, // Set the number of columns to 4
+                              crossAxisSpacing: 8.0, // Add spacing between buttons horizontally
+                              mainAxisSpacing: 8.0, // Add spacing between buttons vertically
+                            ),
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: categoryButtons.length,
+                            itemBuilder: (context, index) {
+                              final button = categoryButtons[index];
+                              return MyButton(
+                                button: button,
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MenuPage(),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                           ),
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: categoryButtons.length,
-                          itemBuilder: (context, index) {
-                            final button = categoryButtons[index];
-                            return MyButton(
-                              button: button,
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => MenuPage(),
-                                  ),
-                                );
-                              },
-                            );
-                          },
                         ),
                         isExpanded: _isExpanded, // Set expansion state
                       ),

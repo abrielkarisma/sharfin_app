@@ -10,41 +10,51 @@ class MyButton extends StatelessWidget {
     required this.button,
     required this.onPressed,
   }) : super(key: key);
+@override
+Widget build(BuildContext context) {
+  final screenWidth = MediaQuery.of(context).size.width;
 
-  @override
-  Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    return Column(
-      children: [
-        GestureDetector(
+  return Column(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Container(
+        width: screenWidth * 0.2, // Constrain the width
+        margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
+        child: GestureDetector(
           onTap: onPressed,
-          child: Container(
-            width: screenWidth * 0.2,
-            height: screenWidth * 0.2,
-            margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
-            padding: EdgeInsets.all(screenWidth * 0.045),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Center(
-              child: Image.network(
-                button.fullIconUrl,
-                height: screenWidth * 0.1,
+          child: Column(
+            children: [
+              Container(
+                width: screenWidth * 0.2,
+                height: screenWidth * 0.2,
+                padding: EdgeInsets.all(screenWidth * 0.045),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Center(
+                  child: Image.network(
+                    button.fullIconUrl,
+                    height: screenWidth * 0.1,
+                  ),
+                ),
               ),
-            ),
+              SizedBox(height: screenWidth * 0.02),
+              Text(
+                overflow: TextOverflow.ellipsis,
+                button.name,
+                textAlign: TextAlign.center, // Center the text
+                style: TextStyle(
+                  fontSize: screenWidth * 0.04,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
           ),
         ),
-        SizedBox(height: screenWidth * 0.02),
-        Text(
-          button.name,
-          style: TextStyle(
-            fontSize: screenWidth * 0.04,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
+}
+
 }
