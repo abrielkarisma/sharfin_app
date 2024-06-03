@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:sharfin_app/data/models/Insight.dart';
 
 class InsightService {
-  static final String _baseUrl = 'http://192.168.100.73:8888/api/public';
+  static final String _baseUrl = 'https://api.rumaloka.id/api/public';
 
   static Future<List<Insight>> getImageInsights() async {
     try {

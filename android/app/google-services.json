@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "2925605053",
+    "project_id": "sharfin-b697f",
+    "storage_bucket": "sharfin-b697f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:2925605053:android:2ac6b15a0716852a9ac7d4",
+        "android_client_info": {
+          "package_name": "com.example.sharfin_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBm-U9yAbpnYJMKRXLyvs8rw6bN_48t5oE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

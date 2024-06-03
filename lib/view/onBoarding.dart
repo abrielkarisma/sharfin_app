@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sharfin_app/data/models/User.dart';
+import 'package:sharfin_app/data/service/Google.dart';
 import 'package:sharfin_app/view/loginPage.dart';
 import 'package:sharfin_app/widget/bottomNavigation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
 import 'package:sharfin_app/data/service/User.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -16,7 +20,12 @@ class onboarding extends StatefulWidget {
 }
 
 class _onboardingState extends State<onboarding> {
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final TextEditingController _emailController = TextEditingController();
+  final UserService _userService = UserService();
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    clientId:
+        "570248776640-17k0dl1qbu0jelvmff5dlodg2ci197ou.apps.googleusercontent.com",
+  );
   GoogleSignInAccount? _currentUser;
   final controller = PageController();
   @override
@@ -37,29 +46,214 @@ class _onboardingState extends State<onboarding> {
     _googleSignIn.signInSilently();
   }
 
-  Future<void> _handleSignIn() async {
-    try {
-      final account = await _googleSignIn.signIn();
-      if (account != null) {
-        final auth = await account.authentication;
-        final idToken = auth.idToken;
-        print(idToken);
-
-        // Kirim idToken ke server backend Anda
-        final response = await Dio().post(
-          'http://192.168.100.73/auth/google_mobile_callback',
-          data: {'id_token': idToken},
-        );
-
-        if (response.statusCode == 200) {
-          print('Login berhasil');
-        } else {
-          print('Login gagal');
-        }
-      }
-    } catch (error) {
-      print(error);
+  // Function to handle Google Sign-In
+  Future<void> _handleSignIn(BuildContext context) async {
+    var googleUser = await LoginAPI.login();
+    if (googleUser != null) {
+      print("login successful");
+      print("User Display Name: ${googleUser.displayName}");
+      print("User Email: ${googleUser.email}");
+      _emailController.text = googleUser.email;
+      var user = User(
+        name: googleUser.displayName ?? "",
+        email: googleUser.email,
+        password: "",
+      );
+      await login(context, user);
     }
+  }
+
+  Future<void> login(BuildContext context, User user) async {
+    final email = _emailController.text;
+    final password = '';
+
+    final response = await _userService.login(email, password);
+
+    if (response['message'] == 'Unregistered') {
+      _showRegistrationModal(context, user);
+    } else if (response['message'] == 'Incorrect Password') {
+      print("sudah terdaftar");
+      try {
+        await _userService.registerGoogle(
+          user.name,
+          user.email,
+          password,
+          (String? token, String? error) async {
+            if (token != null) {
+              final data = response['data']['token'];
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              await prefs.setString('token', data);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Login successful!')),
+              );
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => bottomNavigation(selectedIndex: 0)),
+              );
+            } else {
+              print('Error during registration: $error');
+            }
+          },
+        );
+      } catch (error) {
+        print('Error registering user: $error');
+      }
+    } else {
+      // Handle other possible responses
+      print("Other response: ${response['message']}");
+    }
+  }
+
+  void _showRegistrationModal(BuildContext context, User user) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        TextEditingController _passwordInput = TextEditingController();
+        TextEditingController _retypePasswordInput = TextEditingController();
+        String? errorMessage;
+
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return AlertDialog(
+              title: Text(
+                'Anda baru di Sharfin',
+                style: TextStyle(
+                  fontFamily: "Poppins",
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF15AC97),
+                ),
+              ),
+              content: Container(
+                width: 300,
+                height: 180,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Atur Passwordmu terlebih dahulu untuk menggunakan login manual",
+                      style: TextStyle(
+                        fontFamily: "Poppins",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
+                    TextField(
+                      controller: _passwordInput,
+                      decoration: InputDecoration(
+                        hintText: 'Masukkan Password',
+                        hintStyle: TextStyle(
+                          fontFamily: "Poppins",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                        ),
+                      ),
+                      obscureText: true,
+                    ),
+                    TextField(
+                      controller: _retypePasswordInput,
+                      decoration: InputDecoration(
+                        hintText: 'Tulis Ulang Password',
+                        hintStyle: TextStyle(
+                          fontFamily: "Poppins",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                        ),
+                      ),
+                      obscureText: true,
+                    ),
+                    if (errorMessage != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          errorMessage!,
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontFamily: "Poppins",
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                FilledButton(
+                  onPressed: () async {
+                    if (_passwordInput.text != _retypePasswordInput.text) {
+                      setState(() {
+                        errorMessage = "Password Tidak Sama";
+                      });
+                    } else {
+                      setState(() {
+                        errorMessage = null;
+                      });
+                      try {
+                        _userService.registerGoogle(
+                            user.name, user.email, _passwordInput.text,
+                            (String? token, String? error) async {
+                          if (token != null) {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            await prefs.setString('token', token);
+                            // Use the main context to navigate
+                            Navigator.of(context).pop(); // Close the dialog
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (context) {
+                                return const bottomNavigation(selectedIndex: 0);
+                              }),
+                            );
+                          } else {
+                            // If an error occurs, display error message
+                            setState(() {
+                              errorMessage = error ?? "Failed to register user";
+                            });
+                          }
+                        });
+                      } catch (error) {
+                        setState(() {
+                          errorMessage = "Failed to register user";
+                        });
+                      }
+                    }
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(const Color(0xFF15AC97)),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                    padding: MaterialStateProperty.all(
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    ),
+                    minimumSize: MaterialStateProperty.all(const Size(120, 42)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                  ),
+                  child: const Text(
+                    "Register",
+                    style: TextStyle(
+                      fontFamily: "Poppins",
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0XFFFFFFFF),
+                      height: 18 / 12,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -353,7 +547,7 @@ class _onboardingState extends State<onboarding> {
                     padding: const EdgeInsets.only(top: 24),
                     child: FilledButton(
                         onPressed: () {
-                          _handleSignIn();
+                          _handleSignIn(context);
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(

@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Text(
                             _name ??
-                                "", // Display the name or an empty string if null
+                                "Guest", // Display the name or an empty string if null
                             style: const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.w600),
                           ),
@@ -239,50 +239,51 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 20),
               Container(
-  height: 200.0, // Provide a finite height
-  child: BlocProvider(
-    create: (context) => ButtonCubit(ApiService(dio: Dio()))..fetchButtons(),
-    child: Scaffold(
-      backgroundColor: Colors.transparent,
-      body: BlocBuilder<ButtonCubit, ButtonState>(
-        builder: (context, state) {
-          if (state is ButtonLoading) {
-            return Center(child: CircularProgressIndicator());
-          } else if (state is ButtonLoaded) {
-            final buttons = state.buttons;
-            return GridView.builder(
-              shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4, // 4 buttons per row
-                childAspectRatio: 1.0, // Adjust as needed
+                height: 200.0, // Provide a finite height
+                child: BlocProvider(
+                  create: (context) =>
+                      ButtonCubit(ApiService(dio: Dio()))..fetchButtons(),
+                  child: Scaffold(
+                    backgroundColor: Colors.transparent,
+                    body: BlocBuilder<ButtonCubit, ButtonState>(
+                      builder: (context, state) {
+                        if (state is ButtonLoading) {
+                          return Center(child: CircularProgressIndicator());
+                        } else if (state is ButtonLoaded) {
+                          final buttons = state.buttons;
+                          return GridView.builder(
+                            shrinkWrap: true,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4, // 4 buttons per row
+                              childAspectRatio: 1.0, // Adjust as needed
+                            ),
+                            itemCount: buttons.length,
+                            itemBuilder: (context, index) {
+                              final button = buttons[index];
+                              return MyButton(
+                                button: button,
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const MenuPage(),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        } else if (state is ButtonError) {
+                          return Center(child: Text('Error: ${state.message}'));
+                        } else {
+                          return Center(child: Text('No data available'));
+                        }
+                      },
+                    ),
+                  ),
+                ),
               ),
-              itemCount: buttons.length,
-              itemBuilder: (context, index) {
-                final button = buttons[index];
-                return MyButton(
-                  button: button,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MenuPage(),
-                      ),
-                    );
-                  },
-                );
-              },
-            );
-          } else if (state is ButtonError) {
-            return Center(child: Text('Error: ${state.message}'));
-          } else {
-            return Center(child: Text('No data available'));
-          }
-        },
-      ),
-    ),
-  ),
-),
-
               const SizedBox(
                 height: 25,
               ),
@@ -357,7 +358,7 @@ class _HomePageState extends State<HomePage> {
                               itemBuilder: (context, index) {
                                 Insight insight = insights[index];
                                 String imageUrl =
-                                    "http://192.168.100.73:8888${insight.img.first}";
+                                    "https://api.rumaloka.id${insight.img.first}";
 
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -449,7 +450,7 @@ class _HomePageState extends State<HomePage> {
                               itemBuilder: (context, index) {
                                 Insight insight = insights[index];
                                 String imageUrl =
-                                    "http://192.168.100.72:8888${insight.img.first}";
+                                    "https://api.rumaloka.id${insight.img.first}";
 
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -541,7 +542,7 @@ class _HomePageState extends State<HomePage> {
                               itemBuilder: (context, index) {
                                 Ebook ebook = ebooks[index];
                                 String imageUrl =
-                                    "http://192.168.100.73:8888${ebook.thumbnail}";
+                                    "https://api.rumaloka.id${ebook.thumbnail}";
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 8.0),

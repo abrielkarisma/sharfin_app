@@ -12,6 +12,7 @@ import 'package:sharfin_app/view/homepage.dart';
 import 'package:sharfin_app/view/islamicFeature.dart';
 import 'package:sharfin_app/view/onBoarding.dart';
 import 'package:sharfin_app/view/splashScreen.dart';
+import 'package:sharfin_app/view/test.dart';
 import 'package:sharfin_app/widget/bottomNavigation.dart';
 
 void main() async {
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
                 selectedIndex: 0,
               ),
           '/splash': (context) => const splashScreen(),
-          '/onboarding' :(context) => const onboarding(),
+          '/onboarding': (context) => const onboarding(),
         },
         theme: ThemeData(
           fontFamily: 'Poppins',

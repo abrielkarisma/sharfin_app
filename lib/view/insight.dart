@@ -47,45 +47,48 @@ class _InsightPageState extends State<InsightPage> {
                 List<Insight> insights = snapshot.data ?? [];
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    childAspectRatio: 16.5 / 20,
-                    children: List.generate(insights.length, (index) {
-                      Insight insight = insights[index];
-                      String imageUrl =
-                          "http://192.168.100.73:8888${insight.img.first}";
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  DetailInsight(uuid: insight.uuid),
-                            ),
-                          );
-                        },
-                        child: Stack(
-                          alignment: Alignment.center,
-                          fit: StackFit.expand,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: SizedBox(
-                                width: 165,
-                                height: 200,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Image.network(
-                                    imageUrl,
-                                    fit: BoxFit.cover,
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: GridView.count(
+                      crossAxisCount: 2,
+                      childAspectRatio: 16.5 / 20,
+                      children: List.generate(insights.length, (index) {
+                        Insight insight = insights[index];
+                        String imageUrl =
+                            "https://api.rumaloka.id${insight.img.first}";
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    DetailInsight(uuid: insight.uuid),
+                              ),
+                            );
+                          },
+                          child: Stack(
+                            alignment: Alignment.center,
+                            fit: StackFit.expand,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                  width: 165,
+                                  height: 200,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: Image.network(
+                                      imageUrl,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
+                            ],
+                          ),
+                        );
+                      }),
+                    ),
                   ),
                 );
               } else {

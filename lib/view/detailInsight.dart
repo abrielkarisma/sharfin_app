@@ -111,7 +111,7 @@ class _DetailInsightState extends State<DetailInsight> {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Image.network(
-                              "http://192.168.1.126:8888${insight.img[index]}"),
+                              "https://api.rumaloka.id${insight.img[index]}"),
                         );
                       },
                     ),

@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class UserService {
   final Dio _dio = Dio();
-  final String _baseUrl = 'http://192.168.100.73:8888/api/auth';
+  final String _baseUrl = 'https://api.rumaloka.id/api/auth';
 
   Future<void> registerUser(User user) async {
     try {
@@ -12,8 +12,25 @@ class UserService {
         '$_baseUrl/register',
         data: user.toJson(),
       );
-      print(response
-          .data); // Sesuaikan sesuai kebutuhan, misalnya menampilkan respons atau melakukan sesuatu setelah pendaftaran berhasil.
+      print(response.data);
+    } catch (error) {
+      print('Error registering user: $error');
+      throw Exception('Failed to register user');
+    }
+  }
+
+  Future<void> registerGoogle(String name, String email, String password,
+      Future<Null> Function(String? token, String? error) param3) async {
+    try {
+      final response = await _dio.post(
+        '$_baseUrl/google_login',
+        data: {
+          'name': name,
+          'email': email,
+          'password': password,
+        },
+      );
+      print(response.data);
     } catch (error) {
       print('Error registering user: $error');
       throw Exception('Failed to register user');
@@ -43,18 +60,25 @@ class UserService {
     }
   }
 
-  Future<void> googleLogin() async {
+  Future<Map<String, dynamic>> checkEmail(String email) async {
     try {
-      var dio = Dio();
-      var response = await dio.get('http://192.168.100.73/google_login');
+      final response = await _dio.post(
+        '$_baseUrl/login',
+        data: {
+          'email': email,
+        },
+      );
 
-      if (response.statusCode == 200) {
-        var googleAuthUrl = response.data['url'];
+      return response.data;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        return e.response!.data;
       } else {
-        print('Failed to login with Google: ${response.statusMessage}');
+        return {
+          'message': 'An error occurred',
+          'success': false,
+        };
       }
-    } catch (e) {
-      print('Error during Google login: $e');
     }
   }
 }

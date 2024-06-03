@@ -106,7 +106,7 @@ class _detailEbookState extends State<detailEbook> {
                               width: 160,
                               height: 200,
                               child: Image.network(
-                                'http://192.168.100.73:8888${ebook.thumbnail}',
+                                'https://api.rumaloka.id${ebook.thumbnail}',
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -196,7 +196,7 @@ class _detailEbookState extends State<detailEbook> {
                                         MaterialPageRoute(
                                           builder: (context) => EbookContent(
                                             ebookUrl:
-                                                'http://192.168.100.73:8888${ebook.ebookFile}',
+                                                'https://api.rumaloka.id${ebook.ebookFile}',
                                           ),
                                         ),
                                       );
