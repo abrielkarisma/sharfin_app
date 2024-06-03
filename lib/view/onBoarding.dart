@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sharfin_app/data/models/User.dart';
+import 'package:sharfin_app/data/models/juz_model.dart';
 import 'package:sharfin_app/data/service/Google.dart';
 import 'package:sharfin_app/view/loginPage.dart';
 import 'package:sharfin_app/widget/bottomNavigation.dart';
@@ -21,6 +22,7 @@ class onboarding extends StatefulWidget {
 
 class _onboardingState extends State<onboarding> {
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   final UserService _userService = UserService();
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     clientId:
@@ -64,7 +66,8 @@ class _onboardingState extends State<onboarding> {
   }
 
   Future<void> login(BuildContext context, User user) async {
-    final email = _emailController.text;
+    final email = user.email;
+    final name = user.name;
     final password = '';
 
     final response = await _userService.login(email, password);
@@ -73,34 +76,13 @@ class _onboardingState extends State<onboarding> {
       _showRegistrationModal(context, user);
     } else if (response['message'] == 'Incorrect Password') {
       print("sudah terdaftar");
-      try {
-        await _userService.registerGoogle(
-          user.name,
-          user.email,
-          password,
-          (String? token, String? error) async {
-            if (token != null) {
-              final data = response['data']['token'];
-              SharedPreferences prefs = await SharedPreferences.getInstance();
-              await prefs.setString('token', data);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Login successful!')),
-              );
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => bottomNavigation(selectedIndex: 0)),
-              );
-            } else {
-              print('Error during registration: $error');
-            }
-          },
-        );
-      } catch (error) {
-        print('Error registering user: $error');
-      }
+      await _userService.sendEmail(name, email, password);
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) {
+          return const bottomNavigation(selectedIndex: 0);
+        }),
+      );
     } else {
-      // Handle other possible responses
       print("Other response: ${response['message']}");
     }
   }
@@ -194,27 +176,14 @@ class _onboardingState extends State<onboarding> {
                         errorMessage = null;
                       });
                       try {
-                        _userService.registerGoogle(
-                            user.name, user.email, _passwordInput.text,
-                            (String? token, String? error) async {
-                          if (token != null) {
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            await prefs.setString('token', token);
-                            // Use the main context to navigate
-                            Navigator.of(context).pop(); // Close the dialog
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(builder: (context) {
-                                return const bottomNavigation(selectedIndex: 0);
-                              }),
-                            );
-                          } else {
-                            // If an error occurs, display error message
-                            setState(() {
-                              errorMessage = error ?? "Failed to register user";
-                            });
-                          }
-                        });
+                        await _userService.registerGoogle(
+                            user.name, user.email, _passwordInput.text);
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (context) {
+                            return const bottomNavigation(selectedIndex: 0);
+                          }),
+                        );
                       } catch (error) {
                         setState(() {
                           errorMessage = "Failed to register user";
