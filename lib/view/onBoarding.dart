@@ -7,7 +7,6 @@ import 'package:sharfin_app/data/models/juz_model.dart';
 import 'package:sharfin_app/data/service/Google.dart';
 import 'package:sharfin_app/view/loginPage.dart';
 import 'package:sharfin_app/widget/bottomNavigation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
 import 'package:sharfin_app/data/service/User.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -33,7 +32,6 @@ class _onboardingState extends State<onboarding> {
   @override
   void dispose() {
     controller.dispose();
-
     super.dispose();
   }
 
@@ -94,6 +92,35 @@ class _onboardingState extends State<onboarding> {
         TextEditingController _passwordInput = TextEditingController();
         TextEditingController _retypePasswordInput = TextEditingController();
         String? errorMessage;
+
+        Future<void> registerButton() async {
+          if (_passwordInput.text.length < 8) {
+            setState(() {
+              errorMessage = "Password harus minimal 8 karakter";
+            });
+          } else if (_passwordInput.text != _retypePasswordInput.text) {
+            setState(() {
+              errorMessage = "Password Tidak Sama";
+            });
+          } else {
+            setState(() {
+              errorMessage = null;
+            });
+            try {
+              await _userService.registerGoogle(
+                  user.name, user.email, _passwordInput.text);
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) {
+                  return const bottomNavigation(selectedIndex: 0);
+                }),
+              );
+            } catch (error) {
+              setState(() {
+                errorMessage = "Failed to register user";
+              });
+            }
+          }
+        }
 
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
@@ -166,31 +193,7 @@ class _onboardingState extends State<onboarding> {
               ),
               actions: <Widget>[
                 FilledButton(
-                  onPressed: () async {
-                    if (_passwordInput.text != _retypePasswordInput.text) {
-                      setState(() {
-                        errorMessage = "Password Tidak Sama";
-                      });
-                    } else {
-                      setState(() {
-                        errorMessage = null;
-                      });
-                      try {
-                        await _userService.registerGoogle(
-                            user.name, user.email, _passwordInput.text);
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) {
-                            return const bottomNavigation(selectedIndex: 0);
-                          }),
-                        );
-                      } catch (error) {
-                        setState(() {
-                          errorMessage = "Failed to register user";
-                        });
-                      }
-                    }
-                  },
+                  onPressed: registerButton,
                   style: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.all(const Color(0xFF15AC97)),

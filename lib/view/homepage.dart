@@ -297,10 +297,10 @@ class _HomePageState extends State<HomePage> {
                       iconImagePath: "assets/Image.png",
                     ),
                     MyCard(
-                      iconImagePath: "assets/Image2.png",
+                      iconImagePath: "assets/Image.png",
                     ),
                     MyCard(
-                      iconImagePath: "assets/Promo.png",
+                      iconImagePath: "assets/Image.png",
                     ),
                   ],
                 ),
@@ -413,13 +413,13 @@ class _HomePageState extends State<HomePage> {
                     ),
                     TextButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  const bottomNavigation(selectedIndex: 1),
-                            ),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) =>
+                          //         const bottomNavigation(selectedIndex: 1),
+                          //   ),
+                          // );
                         },
                         child: const Text(
                           "Lihat Semua",
@@ -433,61 +433,16 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              FutureBuilder<List<Insight>>(
-                future: _insightsFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    List<Insight> insights = snapshot.data ?? [];
-                    return SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 150,
-                            width: screenWidth,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: insights.length,
-                              itemBuilder: (context, index) {
-                                Insight insight = insights[index];
-                                String imageUrl =
-                                    "https://api.rumaloka.id${insight.img.first}";
-
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailInsight(
-                                                      uuid: insight.uuid)));
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        image: DecorationImage(
-                                          image: NetworkImage(imageUrl),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      width: 125,
-                                      height: 150,
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  } else if (snapshot.hasError) {
-                    return const Center(child: Text('Error fetching insights'));
-                  }
-                  return const Center(child: CircularProgressIndicator());
-                },
+              Container(
+                child: Text(
+                  "Segera Hadir",
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey,
+                  ),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(16),

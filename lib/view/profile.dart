@@ -5,6 +5,8 @@ import 'package:sharfin_app/data/models/Users.dart';
 import 'package:sharfin_app/data/service/Users.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:sharfin_app/view/onBoarding.dart';
+import 'package:sharfin_app/view/others/kebijakanprivasi.dart';
+import 'package:sharfin_app/view/others/syaratketentuan.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -64,9 +66,9 @@ class _ProfileState extends State<Profile> {
 
   Future<void> _logout() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('token'); // Remove the token from preferences
+    await prefs.remove('token'); // Hapus token dari preferences
     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
-      return const onboarding(); // Navigate to the onboarding screen
+      return const onboarding(); // Navigasikan ke layar onboarding
     }));
   }
 
@@ -102,9 +104,9 @@ class _ProfileState extends State<Profile> {
                             height: 100,
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(160),
-                                child: Image.network(
-                                  user!.avatar,
-                                  fit: BoxFit.cover,
+                                child: Image(
+                                  image: Svg("assets/profilePict.svg"),
+                                  fit: BoxFit.fill,
                                 )),
                           ),
                           GestureDetector(
@@ -327,7 +329,10 @@ class _ProfileState extends State<Profile> {
                         padding: const EdgeInsets.only(top: 16),
                         child: GestureDetector(
                           onTap: () {
-                            print("bisa");
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (context) {
+                              return const syaratketentuan();
+                            }));
                           },
                           child: Stack(
                             alignment: Alignment.center,
@@ -392,7 +397,10 @@ class _ProfileState extends State<Profile> {
                         padding: const EdgeInsets.only(top: 16),
                         child: GestureDetector(
                           onTap: () {
-                            print("bisa");
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (context) {
+                              return const kebijakanprivasi();
+                            }));
                           },
                           child: Stack(
                             alignment: Alignment.center,

@@ -21,8 +21,8 @@ class UserService {
     }
   }
 
-  Future<void> registerGoogle(String name, String email, String password,
-      Future<Null> Function(String? token, String? error) param3) async {
+  Future<void> registerGoogle(
+      String name, String email, String password) async {
     try {
       final response = await _dio.post(
         '$_baseUrl/google_login',
@@ -35,7 +35,6 @@ class UserService {
       if (response.statusCode == 200 && response.data['success'] == true) {
         print("success");
         final token = response.data['data']['token'];
-        // Simpan token ke shared preferences
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', token);
         print("Token saved: $token");

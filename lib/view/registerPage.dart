@@ -1,7 +1,10 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:sharfin_app/data/models/User.dart';
 import 'package:sharfin_app/data/service/User.dart';
 import 'package:sharfin_app/view/loginPage.dart';
+import 'package:sharfin_app/view/others/kebijakanprivasi.dart';
+import 'package:sharfin_app/view/others/syaratketentuan.dart';
 import 'package:sharfin_app/widget/bottomNavigation.dart';
 
 class register extends StatefulWidget {
@@ -335,36 +338,60 @@ class _registerState extends State<register> {
             ),
             Container(
               child: RichText(
-                  textAlign: TextAlign.center,
-                  text: const TextSpan(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    height: 36 / 24,
+                  ),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: "Dengan mendaftar, kamu telah menyetujui ",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    TextSpan(
+                      text: "Syarat & Ketentuan ",
                       style: TextStyle(
-                        fontFamily: "Poppins",
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        height: 36 / 24,
+                        color: Color(0XFF15AC97),
+                        decoration: TextDecoration
+                            .underline, // Tambahkan dekorasi underline
                       ),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: "Dengan mendaftar, kamu telah menyetujui ",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        TextSpan(
-                          text: "Syarat & Ketentuan ",
-                          style: TextStyle(color: Color(0XFF15AC97)),
-                        ),
-                        TextSpan(
-                          text: "Serta ",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        TextSpan(
-                          text: "Kebijakan Privasi ",
-                          style: TextStyle(color: Color(0XFF15AC97)),
-                        ),
-                        TextSpan(
-                          text: "Refoodbish ",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ])),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (context) {
+                            return const syaratketentuan();
+                          }));
+                        },
+                    ),
+                    TextSpan(
+                      text: "Serta ",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    TextSpan(
+                      text: "Kebijakan Privasi ",
+                      style: TextStyle(
+                        color: Color(0XFF15AC97),
+                        decoration: TextDecoration
+                            .underline, // Tambahkan dekorasi underline
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (context) {
+                            return const kebijakanprivasi();
+                          }));
+                        },
+                    ),
+                    TextSpan(
+                      text: "Refoodbish ",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
+              ),
             ),
             Container(
                 padding: const EdgeInsets.only(top: 10),

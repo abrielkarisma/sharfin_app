@@ -8,15 +8,6 @@ class syaratketentuan extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Row(children: [
-          GestureDetector(
-            onTap: () {},
-            child: const Image(
-              image: AssetImage("assets/cancel.png"),
-            ),
-          ),
-          const SizedBox(
-            width: 40,
-          ),
           const Text(
             "Syarat & Ketentuan",
             style: TextStyle(
