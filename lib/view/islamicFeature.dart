@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sharfin_app/view/jamSholat.dart';
+import 'package:sharfin_app/view/masjidnearby.dart';
 import 'package:sharfin_app/view/qiblaPage.dart';
 import 'package:sharfin_app/view/quranPage.dart';
 import 'package:sharfin_app/data/service/JamSholat.dart';
@@ -106,6 +106,7 @@ class _IslamPageState extends State<IslamPage> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(color: Colors.white),
@@ -133,6 +134,8 @@ class _IslamPageState extends State<IslamPage> {
       body: Center(
         child: ListView(
           children: [Container(
+            width: screenWidth,
+            height: screenHeight,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -153,7 +156,7 @@ class _IslamPageState extends State<IslamPage> {
                   Container(
                     child: Padding(
                       padding:
-                          const EdgeInsets.only(left: 32, right: 32, top: 15),
+                          const EdgeInsets.only(left: 32, right: 32, top: 15,),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -302,7 +305,9 @@ class _IslamPageState extends State<IslamPage> {
                           'assets/Masjid terdekat.png',
                           "Masjid Terdekat",
                           () {
-                            print("Transfer tapped");
+                            Navigator.push(
+                              context, MaterialPageRoute(
+                                builder: (context) => MasjidNearby()));
                             // Add your logic here for Transfer
                           },
                         ),
@@ -338,7 +343,6 @@ class _IslamPageState extends State<IslamPage> {
                   Container(
                     child: _lastread(),
                   ),
-                  SizedBox(height: 20,)
                 ],
               ),
             ),

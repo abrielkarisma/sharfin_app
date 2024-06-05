@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
 import 'package:sharfin_app/cubit/button/button_cubit.dart';
 import 'package:sharfin_app/data/api_service.dart';
 import 'package:sharfin_app/data/models/button.dart';
@@ -20,7 +19,8 @@ class _MenuPageState extends State<MenuPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ButtonCubit(ApiService(dio:Dio()))..fetchButtons(), // Fetch buttons only once
+      create: (context) => ButtonCubit(ApiService(dio: Dio()))
+        ..fetchButtons(), // Fetch buttons only once
       child: Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -81,24 +81,34 @@ class _MenuPageState extends State<MenuPage> {
                           );
                         },
                         body: SizedBox(
-                          height: 150,
+                          height: calculateContainerHeight(categoryButtons.length),
                           child: GridView.builder(
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 4, // Set the number of columns to 4
-                              crossAxisSpacing: 8.0, // Add spacing between buttons horizontally
-                              mainAxisSpacing: 8.0, // Add spacing between buttons vertically
+                              childAspectRatio: 0.7, // Aspect ratio of each child
                             ),
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: categoryButtons.length,
                             itemBuilder: (context, index) {
                               final button = categoryButtons[index];
-                              return MyButton(
-                                button: button,
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => MenuPage(),
+                              return LayoutBuilder(
+                                builder: (context, constraints) {
+                                  // Calculate the height based on the aspect ratio and the width
+                                  double buttonHeight =
+                                      constraints.maxWidth * 0.7;
+                                  return SizedBox(
+                                    height: buttonHeight,
+                                    child: MyButton(
+                                      button: button,
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MenuPage(),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   );
                                 },
@@ -106,6 +116,7 @@ class _MenuPageState extends State<MenuPage> {
                             },
                           ),
                         ),
+
                         isExpanded: _isExpanded, // Set expansion state
                       ),
                     ],
@@ -123,7 +134,6 @@ class _MenuPageState extends State<MenuPage> {
     );
   }
 }
-
 
 class SearchBarDelegate extends SearchDelegate<String> {
   @override
@@ -163,4 +173,13 @@ class SearchBarDelegate extends SearchDelegate<String> {
       child: Text('Search Suggestions'),
     );
   }
+}
+
+double calculateContainerHeight(int numberOfButtons) {
+  // Calculate the number of rows based on the number of buttons and cross axis count
+  int numberOfRows = (numberOfButtons / 4).ceil();
+  // Calculate the height of the container based on the number of rows and button height
+  double buttonHeight = 140; // Set the height of the buttons, adjust as needed
+  double containerHeight = numberOfRows * buttonHeight;
+  return containerHeight;
 }

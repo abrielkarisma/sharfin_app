@@ -6,6 +6,7 @@ import 'package:sharfin_app/cubit/button/button_cubit.dart';
 import 'package:sharfin_app/data/api_service.dart';
 import 'package:sharfin_app/data/models/Ebook.dart';
 import 'package:sharfin_app/data/models/Insight.dart';
+import 'package:sharfin_app/data/models/button.dart';
 import 'package:sharfin_app/data/service/Ebook.dart';
 import 'package:sharfin_app/data/service/Insight.dart';
 import 'package:sharfin_app/util/My_button.dart';
@@ -239,7 +240,7 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 20),
               Container(
-                height: 200.0, // Provide a finite height
+                height: 250.0, // Provide a finite height
                 child: BlocProvider(
                   create: (context) =>
                       ButtonCubit(ApiService(dio: Dio()))..fetchButtons(),
@@ -250,29 +251,74 @@ class _HomePageState extends State<HomePage> {
                         if (state is ButtonLoading) {
                           return Center(child: CircularProgressIndicator());
                         } else if (state is ButtonLoaded) {
-                          final buttons = state.buttons;
-                          return GridView.builder(
-                            shrinkWrap: true,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4, // 4 buttons per row
-                              childAspectRatio: 1.0, // Adjust as needed
+                          final apibuttons = state.buttons.take(6).toList();
+
+                          // Define the two new icons
+                          final newIcons = [
+                            ButtonApi(
+                              uuid: 'new-uuid-1',
+                              name: 'Fitur Islami',
+                              category: 'New',
+                              iconFile: 'assets/islami.png',
+                              isLocal: true, // Replace with actual path
                             ),
-                            itemCount: buttons.length,
-                            itemBuilder: (context, index) {
-                              final button = buttons[index];
-                              return MyButton(
-                                button: button,
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const MenuPage(),
-                                    ),
-                                  );
-                                },
-                              );
-                            },
+                            ButtonApi(
+                              uuid: 'new-uuid-2',
+                              name: 'Lainnya',
+                              category: 'New',
+                              iconFile: 'assets/lainnya.png',
+                              isLocal: true, // Replace with actual path
+                            ),
+                          ];
+
+                          // Combine the API buttons with the new icons
+                          final allButtons = [...apibuttons, ...newIcons];
+
+                          // Limit the item count to 8 (2 rows * 4 columns)
+                          final displayButtons = allButtons.take(8).toList();
+
+                          return SingleChildScrollView(
+                            physics: NeverScrollableScrollPhysics(),
+                            child: GridView.builder(
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
+                                childAspectRatio: 0.7,
+                              ),
+                              itemCount: displayButtons.length,
+                              itemBuilder: (context, index) {
+                                final button = displayButtons[index];
+                                return MyButton(
+                                  button: button,
+                                  onPressed: () {
+                                    if (index >= apibuttons.length) {
+                                      if (index - apibuttons.length == 0) {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    IslamPage()));
+                                      } else if (index - apibuttons.length == 1) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MenuPage(),
+                                          ),
+                                        );
+                                      }
+                                    } else {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const MenuPage(),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                );
+                              },
+                            ),
                           );
                         } else if (state is ButtonError) {
                           return Center(child: Text('Error: ${state.message}'));
