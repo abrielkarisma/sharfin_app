@@ -67,9 +67,10 @@ class _ProfileState extends State<Profile> {
   Future<void> _logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('token'); // Hapus token dari preferences
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
-      return const onboarding(); // Navigasikan ke layar onboarding
-    }));
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => const onboarding()),
+      (Route<dynamic> route) => false, // Menghapus semua rute sebelumnya
+    );
   }
 
   @override
@@ -121,7 +122,7 @@ class _ProfileState extends State<Profile> {
                       Container(
                         padding: const EdgeInsets.only(top: 12),
                         child: Text(
-                          _name ?? "",
+                          _name ?? "Guest",
                           style: const TextStyle(
                             fontFamily: "Poppins",
                             fontSize: 18,
