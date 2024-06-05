@@ -454,8 +454,8 @@ class _onboardingState extends State<onboarding> {
                   const Padding(padding: EdgeInsets.only(top: 8)),
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
                         return const bottomNavigation(
                           selectedIndex: 0,
                         );
@@ -568,7 +568,7 @@ class _onboardingState extends State<onboarding> {
                     padding: const EdgeInsets.only(top: 8),
                     child: FilledButton(
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(
+                          Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                             return Login();
                           }));

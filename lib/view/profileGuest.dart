@@ -205,7 +205,7 @@ class _profilguestState extends State<profilguest> {
                                     padding: const EdgeInsets.only(top: 8),
                                     child: FilledButton(
                                         onPressed: () {
-                                          Navigator.of(context).pushReplacement(
+                                          Navigator.push(context,
                                               MaterialPageRoute(
                                                   builder: (context) {
                                             return Login();

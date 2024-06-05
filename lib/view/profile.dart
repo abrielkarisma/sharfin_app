@@ -329,7 +329,7 @@ class _ProfileState extends State<Profile> {
                         padding: const EdgeInsets.only(top: 16),
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushReplacement(
+                            Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return const syaratketentuan();
                             }));
@@ -397,7 +397,7 @@ class _ProfileState extends State<Profile> {
                         padding: const EdgeInsets.only(top: 16),
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushReplacement(
+                            Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return const kebijakanprivasi();
                             }));

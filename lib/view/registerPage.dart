@@ -360,7 +360,7 @@ class _registerState extends State<register> {
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          Navigator.of(context).pushReplacement(
+                          Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                             return const syaratketentuan();
                           }));
@@ -379,7 +379,7 @@ class _registerState extends State<register> {
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          Navigator.of(context).pushReplacement(
+                          Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                             return const kebijakanprivasi();
                           }));

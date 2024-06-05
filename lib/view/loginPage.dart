@@ -207,7 +207,7 @@ class _LoginState extends State<Login> {
                       child: Center(
                           child: TextButton(
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(
+                          Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                             return const register();
                           }));
