@@ -299,7 +299,8 @@ class _HomePageState extends State<HomePage> {
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     IslamPage()));
-                                      } else if (index - apibuttons.length == 1) {
+                                      } else if (index - apibuttons.length ==
+                                          1) {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -311,7 +312,8 @@ class _HomePageState extends State<HomePage> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => const MenuPage(),
+                                          builder: (context) =>
+                                              const MenuPage(),
                                         ),
                                       );
                                     }
