@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sharfin_app/data/models/Users.dart';
+import 'package:sharfin_app/data/service/Google.dart';
 import 'package:sharfin_app/data/service/Users.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:sharfin_app/view/onBoarding.dart';
 import 'package:sharfin_app/view/others/kebijakanprivasi.dart';
 import 'package:sharfin_app/view/others/syaratketentuan.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -66,7 +68,7 @@ class _ProfileState extends State<Profile> {
 
   Future<void> _logout() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('token'); // Hapus token dari preferences
+    await prefs.remove('token');
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => const onboarding()),
       (Route<dynamic> route) => false, // Menghapus semua rute sebelumnya

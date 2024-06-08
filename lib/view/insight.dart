@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:sharfin_app/data/models/Insight.dart'; // Ubah nama file Insight.dart menjadi insight.dart
-import 'package:sharfin_app/data/service/Insight.dart'; // Ubah nama file Insight.dart menjadi insight.dart
+import 'package:shimmer/shimmer.dart';
+import 'package:sharfin_app/data/models/Insight.dart';
+import 'package:sharfin_app/data/service/Insight.dart';
 import 'package:sharfin_app/view/detailInsight.dart';
 
 class InsightPage extends StatefulWidget {
-  const InsightPage({super.key});
+  const InsightPage({Key? key}) : super(key: key);
 
   @override
   _InsightPageState createState() => _InsightPageState();
@@ -40,7 +41,7 @@ class _InsightPageState extends State<InsightPage> {
             future: _insightsFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
+                return _buildShimmer();
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else if (snapshot.hasData) {
@@ -95,6 +96,30 @@ class _InsightPageState extends State<InsightPage> {
                 return const Text('No data available');
               }
             },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildShimmer() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          child: GridView.count(
+            crossAxisCount: 2,
+            childAspectRatio: 16.5 / 20,
+            children: List.generate(6, (index) {
+              return Container(
+                width: 165,
+                height: 200,
+                color: Colors.white,
+              );
+            }),
           ),
         ),
       ),

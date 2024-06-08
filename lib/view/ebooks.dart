@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:sharfin_app/data/models/Ebook.dart';
 import 'package:sharfin_app/data/service/Ebook.dart';
 import 'package:sharfin_app/view/ebookDetails.dart';
 
-class ebooks extends StatefulWidget {
-  const ebooks({super.key});
+class Ebooks extends StatefulWidget {
+  const Ebooks({super.key});
 
   @override
-  State<ebooks> createState() => _ebooksState();
+  State<Ebooks> createState() => _EbooksState();
 }
 
-class _ebooksState extends State<ebooks> {
+class _EbooksState extends State<Ebooks> {
   late Future<List<Ebook>> futureEbooks;
 
   @override
@@ -39,7 +40,7 @@ class _ebooksState extends State<ebooks> {
             future: futureEbooks,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
+                return _buildShimmer();
               } else if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
               } else if (snapshot.hasData) {
@@ -93,6 +94,30 @@ class _ebooksState extends State<ebooks> {
                 return const Center(child: Text('No ebooks found'));
               }
             },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildShimmer() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          child: GridView.count(
+            crossAxisCount: 2,
+            childAspectRatio: 16.5 / 20,
+            children: List.generate(6, (index) {
+              return Container(
+                width: 165,
+                height: 200,
+                color: Colors.white,
+              );
+            }),
           ),
         ),
       ),

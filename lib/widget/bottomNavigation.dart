@@ -35,7 +35,7 @@ class _bottomNavigationState extends State<bottomNavigation> {
   List<Widget> pages = [
     const HomePage(),
     const InsightPage(),
-    const ebooks(),
+    const Ebooks(),
   ];
 
   void _onItemTapped(int index) {

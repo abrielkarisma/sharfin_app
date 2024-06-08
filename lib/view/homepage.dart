@@ -19,6 +19,7 @@ import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sharfin_app/widget/bottomNavigation.dart';
 import 'package:http/http.dart' as http;
+import 'package:shimmer/shimmer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -69,8 +70,7 @@ class _HomePageState extends State<HomePage> {
       _name = decodedToken['name'];
     });
     if (_name != null) {
-      print(
-          'Username: $_name '); // Print inside setState to ensure it's updated
+      print('Username: $_name ');
     }
   }
 
@@ -99,8 +99,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Text(
-                            _name ??
-                                "Guest", // Display the name or an empty string if null
+                            _name ?? "Guest",
                             style: const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.w600),
                           ),
@@ -164,8 +163,7 @@ class _HomePageState extends State<HomePage> {
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
-                                  fontWeight: FontWeight
-                                      .w600), // Make the field read-only
+                                  fontWeight: FontWeight.w600),
                               decoration: InputDecoration(
                                 iconColor: Colors.white,
                                 border: InputBorder.none,
@@ -177,7 +175,7 @@ class _HomePageState extends State<HomePage> {
                                     color: Colors.white,
                                     size: 16,
                                   ),
-                                  onPressed: () {},
+                                  onPressed: toggleVisibility,
                                 ),
                               ),
                             ),
@@ -260,14 +258,14 @@ class _HomePageState extends State<HomePage> {
                               name: 'Fitur Islami',
                               category: 'New',
                               iconFile: 'assets/islami.png',
-                              isLocal: true, // Replace with actual path
+                              isLocal: true,
                             ),
                             ButtonApi(
                               uuid: 'new-uuid-2',
                               name: 'Lainnya',
                               category: 'New',
                               iconFile: 'assets/lainnya.png',
-                              isLocal: true, // Replace with actual path
+                              isLocal: true,
                             ),
                           ];
 
@@ -392,7 +390,35 @@ class _HomePageState extends State<HomePage> {
               FutureBuilder<List<Insight>>(
                 future: _insightsFuture,
                 builder: (context, snapshot) {
-                  if (snapshot.hasData) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    // Display shimmer effect while loading
+                    return SizedBox(
+                      height: 150,
+                      width: screenWidth,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 3, // Display shimmer for 3 items
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                width: 125,
+                                height: 150,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  } else if (snapshot.hasData) {
                     List<Insight> insights = snapshot.data ?? [];
                     return SingleChildScrollView(
                       child: Column(
@@ -414,11 +440,12 @@ class _HomePageState extends State<HomePage> {
                                   child: GestureDetector(
                                     onTap: () {
                                       Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailInsight(
-                                                      uuid: insight.uuid)));
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              DetailInsight(uuid: insight.uuid),
+                                        ),
+                                      );
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -440,9 +467,10 @@ class _HomePageState extends State<HomePage> {
                       ),
                     );
                   } else if (snapshot.hasError) {
-                    return const Center(child: Text('Error fetching insights'));
+                    return Center(child: Text('Error fetching insights'));
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
                   }
-                  return const Center(child: CircularProgressIndicator());
                 },
               ),
               Padding(
@@ -482,14 +510,23 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Container(
-                child: Text(
-                  "Segera Hadir",
-                  style: TextStyle(
-                    fontFamily: "Poppins",
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.grey,
-                  ),
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.timer,
+                      size: 50,
+                      color: Color(0xFF15AC97),
+                    ),
+                    Text(
+                      "Segera Hadir",
+                      style: TextStyle(
+                        fontFamily: "Poppins",
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Padding(
@@ -537,7 +574,7 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         children: [
                           SizedBox(
-                            height: 200,
+                            height: 150,
                             width: screenWidth,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
@@ -546,29 +583,56 @@ class _HomePageState extends State<HomePage> {
                                 Ebook ebook = ebooks[index];
                                 String imageUrl =
                                     "https://api.rumaloka.id${ebook.thumbnail}";
+
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 8.0),
                                   child: GestureDetector(
                                     onTap: () {
                                       Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              detailEbook(uuid: ebook.uuid),
-                                        ),
-                                      );
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => detailEbook(
+                                                  uuid: ebook.uuid)));
                                     },
                                     child: Container(
+                                      width: 125,
+                                      height: 150,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
-                                        image: DecorationImage(
-                                          image: NetworkImage("ebook.image"),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.network(
+                                          imageUrl,
                                           fit: BoxFit.cover,
+                                          loadingBuilder: (BuildContext context,
+                                              Widget child,
+                                              ImageChunkEvent?
+                                                  loadingProgress) {
+                                            if (loadingProgress == null) {
+                                              return child;
+                                            } else {
+                                              return Shimmer.fromColors(
+                                                baseColor: Colors.grey[300]!,
+                                                highlightColor:
+                                                    Colors.grey[100]!,
+                                                child: Container(
+                                                  width: 125,
+                                                  height: 150,
+                                                  color: Colors.white,
+                                                ),
+                                              );
+                                            }
+                                          },
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return Center(
+                                                child: Icon(Icons.error,
+                                                    color: Colors.red));
+                                          },
                                         ),
                                       ),
-                                      width: 160,
-                                      height: 200,
                                     ),
                                   ),
                                 );
@@ -579,7 +643,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     );
                   } else if (snapshot.hasError) {
-                    return const Center(child: Text('Error fetching Ebook'));
+                    return const Center(child: Text('Error fetching insights'));
                   }
                   return const Center(child: CircularProgressIndicator());
                 },

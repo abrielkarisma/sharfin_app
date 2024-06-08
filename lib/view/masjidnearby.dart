@@ -17,14 +17,14 @@ class MasjidNearby extends StatelessWidget {
           children: [
             Icon(
               Icons.timer,
-              size: 80,
+              size: 120,
               color: Color(0xFF15AC97),
             ),
             SizedBox(height: 20),
             Text(
               'Coming Soon!',
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 30,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF15AC97),
                 fontFamily: 'Poppins',
