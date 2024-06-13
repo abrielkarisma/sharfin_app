@@ -75,7 +75,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    int crossAxisCount = (screenWidth ~/ 100).clamp(1, 4);
+    int itemCount = 4; // Number of items
+    double itemWidth = 100.0; // Width of each item
+    int crossAxisCount = (screenWidth / itemWidth).clamp(1, itemCount).toInt();
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 245, 245, 245),
       body: SingleChildScrollView(
@@ -209,8 +211,13 @@ class _HomePageState extends State<HomePage> {
                               onTap: () {
                                 print("container pressed");
                               },
-                              child: GridView.count(
-                                crossAxisCount:crossAxisCount ,
+                              child: GridView(
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: crossAxisCount,
+                                  mainAxisSpacing: 20,
+                                  crossAxisSpacing: 20,
+                                  childAspectRatio: (itemWidth / 130), // Adjust the height as needed
+                                ),
                                 shrinkWrap:true ,
                                 physics: NeverScrollableScrollPhysics(),
                                 children: [
