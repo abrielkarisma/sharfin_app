@@ -14,7 +14,7 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-  bool _isExpanded = false;
+  Map<int, bool> _isExpanded = {};
 
   @override
   Widget build(BuildContext context) {
@@ -59,12 +59,17 @@ class _MenuPageState extends State<MenuPage> {
                 itemBuilder: (BuildContext context, int index) {
                   final category = categorizedButtons.keys.elementAt(index);
                   final categoryButtons = categorizedButtons[category]!;
+
+                  _isExpanded.putIfAbsent(index, () => false); // Ensure default state is added
+
                   return ExpansionPanelList(
                     elevation: 1,
                     expandedHeaderPadding: const EdgeInsets.all(0),
                     expansionCallback: (int panelIndex, bool isExpanded) {
                       setState(() {
-                        _isExpanded = !_isExpanded;
+                        _isExpanded = {
+                          for (int i = 0; i < categorizedButtons.length; i++) i: i == index ? !isExpanded : false
+                        };
                       });
                     },
                     children: [
@@ -116,8 +121,7 @@ class _MenuPageState extends State<MenuPage> {
                             },
                           ),
                         ),
-
-                        isExpanded: _isExpanded, // Set expansion state
+                        isExpanded: _isExpanded[index]!, // Set expansion state
                       ),
                     ],
                   );
@@ -179,7 +183,7 @@ double calculateContainerHeight(int numberOfButtons) {
   // Calculate the number of rows based on the number of buttons and cross axis count
   int numberOfRows = (numberOfButtons / 4).ceil();
   // Calculate the height of the container based on the number of rows and button height
-  double buttonHeight = 140; // Set the height of the buttons, adjust as needed
+  double buttonHeight = 130; // Set the height of the buttons, adjust as needed
   double containerHeight = numberOfRows * buttonHeight;
   return containerHeight;
 }

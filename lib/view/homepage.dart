@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sharfin_app/cubit/button/button_cubit.dart';
 import 'package:sharfin_app/data/api_service.dart';
 import 'package:sharfin_app/data/models/Ebook.dart';
@@ -18,7 +17,6 @@ import 'package:sharfin_app/view/semuaMenuPage.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sharfin_app/widget/bottomNavigation.dart';
-import 'package:http/http.dart' as http;
 import 'package:shimmer/shimmer.dart';
 
 class HomePage extends StatefulWidget {
@@ -77,6 +75,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    int crossAxisCount = (screenWidth ~/ 100).clamp(1, 4);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 245, 245, 245),
       body: SingleChildScrollView(
@@ -189,7 +188,7 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(20),
                           boxShadow: [
                             BoxShadow(
-                                color:
+                                color:  
                                     const Color(0xff887aa6).withOpacity(0.12),
                                 blurRadius: 56,
                                 spreadRadius: 10,
@@ -210,13 +209,14 @@ class _HomePageState extends State<HomePage> {
                               onTap: () {
                                 print("container pressed");
                               },
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                              child: GridView.count(
+                                crossAxisCount:crossAxisCount ,
+                                shrinkWrap:true ,
+                                physics: NeverScrollableScrollPhysics(),
                                 children: [
                                   buildColumn(
                                       screenWidth,
-                                      Icons.account_balance_wallet_outlined,
+                                      Icons.account_balance_wallet_outlined, 
                                       "Top up"),
                                   buildColumn(screenWidth,
                                       Icons.swap_horiz_outlined, "Transfer"),
