@@ -14,13 +14,10 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-  bool _isExpanded = false;
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ButtonCubit(ApiService(dio: Dio()))
-        ..fetchButtons(), // Fetch buttons only once
+      create: (context) => ButtonCubit(ApiService(dio: Dio()))..fetchButtons(), // Fetch buttons only once
       child: Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -59,16 +56,12 @@ class _MenuPageState extends State<MenuPage> {
                 itemBuilder: (BuildContext context, int index) {
                   final category = categorizedButtons.keys.elementAt(index);
                   final categoryButtons = categorizedButtons[category]!;
-                  return ExpansionPanelList(
+                  return ExpansionPanelList.radio(
                     elevation: 1,
                     expandedHeaderPadding: const EdgeInsets.all(0),
-                    expansionCallback: (int panelIndex, bool isExpanded) {
-                      setState(() {
-                        _isExpanded = !_isExpanded;
-                      });
-                    },
                     children: [
-                      ExpansionPanel(
+                      ExpansionPanelRadio(
+                        value: category,
                         headerBuilder: (BuildContext context, bool isExpanded) {
                           return ListTile(
                             title: Text(
@@ -83,8 +76,7 @@ class _MenuPageState extends State<MenuPage> {
                         body: SizedBox(
                           height: calculateContainerHeight(categoryButtons.length),
                           child: GridView.builder(
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 4, // Set the number of columns to 4
                               childAspectRatio: 0.7, // Aspect ratio of each child
                             ),
@@ -95,8 +87,7 @@ class _MenuPageState extends State<MenuPage> {
                               return LayoutBuilder(
                                 builder: (context, constraints) {
                                   // Calculate the height based on the aspect ratio and the width
-                                  double buttonHeight =
-                                      constraints.maxWidth * 0.7;
+                                  double buttonHeight = constraints.maxWidth * 0.7;
                                   return SizedBox(
                                     height: buttonHeight,
                                     child: MyButton(
@@ -116,8 +107,6 @@ class _MenuPageState extends State<MenuPage> {
                             },
                           ),
                         ),
-
-                        isExpanded: _isExpanded, // Set expansion state
                       ),
                     ],
                   );

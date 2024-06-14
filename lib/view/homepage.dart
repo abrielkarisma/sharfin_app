@@ -75,9 +75,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    int itemCount = 4; // Number of items
-    double itemWidth = 100.0; // Width of each item
-    int crossAxisCount = (screenWidth / itemWidth).clamp(1, itemCount).toInt();
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 245, 245, 245),
       body: SingleChildScrollView(
@@ -190,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(20),
                           boxShadow: [
                             BoxShadow(
-                                color:  
+                                color:
                                     const Color(0xff887aa6).withOpacity(0.12),
                                 blurRadius: 56,
                                 spreadRadius: 10,
@@ -205,38 +202,29 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                         ),
-                        child: Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                print("container pressed");
-                              },
-                              child: GridView(
-                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: crossAxisCount,
-                                  mainAxisSpacing: 20,
-                                  crossAxisSpacing: 20,
-                                  childAspectRatio: (itemWidth / 130), // Adjust the height as needed
-                                ),
-                                shrinkWrap:true ,
-                                physics: NeverScrollableScrollPhysics(),
-                                children: [
-                                  buildColumn(
-                                      screenWidth,
-                                      Icons.account_balance_wallet_outlined, 
-                                      "Top up"),
-                                  buildColumn(screenWidth,
-                                      Icons.swap_horiz_outlined, "Transfer"),
-                                  buildColumn(
-                                      screenWidth,
-                                      Icons.arrow_downward_outlined,
-                                      "Tarik Tunai"),
-                                  buildColumn(
-                                      screenWidth, Icons.history, "Mutasi"),
-                                ],
-                              ),
+                        child: Container(
+                          child: GestureDetector(
+                            onTap: () {
+                              print("container pressed");
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                buildColumn(
+                                    screenWidth,
+                                    Icons.account_balance_wallet_outlined,
+                                    "Top up"),
+                                buildColumn(screenWidth,
+                                    Icons.swap_horiz_outlined, "Transfer"),
+                                buildColumn(
+                                    screenWidth,
+                                    Icons.arrow_downward_outlined,
+                                    "Tarik Tunai"),
+                                buildColumn(
+                                    screenWidth, Icons.history, "Mutasi"),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     ],
@@ -721,8 +709,8 @@ class InsightsPage extends StatelessWidget {
 }
 
 Widget buildColumn(double screenWidth, IconData icon, String text) {
-  double iconSize = screenWidth > 600 ? 40 : 30;
-  double containerHeight = screenWidth > 600 ? 60 : 50;
+  double iconSize = screenWidth > 600 ? 35 : 25;
+  double containerHeight = screenWidth > 600 ? 55 : 45;
   double textSize = screenWidth > 600 ? 14 : 12;
   double paddingValue = screenWidth > 600 ? 20 : 10;
 
