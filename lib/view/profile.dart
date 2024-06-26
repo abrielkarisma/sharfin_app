@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sharfin_app/data/models/Users.dart';
-import 'package:sharfin_app/data/service/Google.dart';
-import 'package:sharfin_app/data/service/Users.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:sharfin_app/view/onBoarding.dart';
 import 'package:sharfin_app/view/others/kebijakanprivasi.dart';
 import 'package:sharfin_app/view/others/syaratketentuan.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -18,7 +15,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final UsersService _usersService = UsersService();
   Users? user;
   String? _token;
   String? _name;
@@ -27,7 +23,6 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     super.initState();
-    _fetchData();
     _getTokenFromSharedPreferences();
   }
 
@@ -52,17 +47,6 @@ class _ProfileState extends State<Profile> {
       print(
           'Username: $_name '); //  Print inside setState to ensure it's updated
       print('Email: $_email '); // Print inside setState to ensure it's updated
-    }
-  }
-
-  Future<void> _fetchData() async {
-    try {
-      const String userId =
-          '/1/'; // Assuming this is the correct user ID format
-      user = await _usersService.getUsers(userId);
-      setState(() {}); // Update UI if using state management
-    } catch (error) {
-      print(error); // Handle errors appropriately
     }
   }
 
